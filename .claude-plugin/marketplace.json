@@ -1,0 +1,94 @@
+{
+  "name": "giobi-skills",
+  "owner": {
+    "name": "Giobi Fasoli",
+    "email": "giobi@giobi.com"
+  },
+  "metadata": {
+    "description": "Brain-native skills for Claude Code. OSINT, creative thinking, static site generation, and more.",
+    "version": "1.0.0",
+    "pluginRoot": "./plugins"
+  },
+  "plugins": [
+    {
+      "name": "brainstorm",
+      "source": "./plugins/brainstorm",
+      "description": "Brainstorm proattivo su progetti, idee, decisioni (zero filtri)",
+      "version": "1.0.0",
+      "category": "creative",
+      "tags": ["brainstorm", "ideas", "creative"]
+    },
+    {
+      "name": "devil",
+      "source": "./plugins/devil",
+      "description": "Devil's advocate — smonta qualsiasi idea, piano o decisione senza pieta",
+      "version": "1.0.0",
+      "category": "creative",
+      "tags": ["devil", "advocate", "critical-thinking"]
+    },
+    {
+      "name": "ghostwriter",
+      "source": "./plugins/ghostwriter",
+      "description": "Ghostwriter — reference di stile per scrivere come il proprietario del brain",
+      "version": "1.0.0",
+      "category": "writing",
+      "tags": ["ghostwriting", "style", "tone"]
+    },
+    {
+      "name": "scar",
+      "source": "./plugins/scar",
+      "description": "S.C.A.R. — Signal, Cause, Action, Reinforcement. Documenta incident e bug fix.",
+      "version": "1.0.0",
+      "category": "devops",
+      "tags": ["incident", "postmortem", "scar", "documentation"]
+    },
+    {
+      "name": "blog",
+      "source": "./plugins/blog",
+      "description": "Blog management — draft, publish, images per Jekyll e WordPress",
+      "version": "1.0.0",
+      "category": "content",
+      "tags": ["blog", "jekyll", "wordpress", "writing"]
+    },
+    {
+      "name": "linkedin",
+      "source": "./plugins/linkedin",
+      "description": "LinkedIn intelligence — query builder, result parser, Proxycurl integration",
+      "version": "1.0.0",
+      "category": "osint",
+      "tags": ["linkedin", "osint", "search"]
+    },
+    {
+      "name": "stalker",
+      "source": "./plugins/stalker",
+      "description": "Stalker — OSINT e ricerca approfondita su qualsiasi soggetto",
+      "version": "1.0.0",
+      "category": "osint",
+      "tags": ["osint", "research", "stalker", "intelligence"]
+    },
+    {
+      "name": "figma",
+      "source": "./plugins/figma",
+      "description": "Figma Parser — estrai design system da file Figma via API",
+      "version": "1.0.0",
+      "category": "design",
+      "tags": ["figma", "design-system", "design"]
+    },
+    {
+      "name": "site-ripper",
+      "source": "./plugins/site-ripper",
+      "description": "Site Ripper — estrai design system da qualsiasi sito web via Playwright",
+      "version": "1.0.0",
+      "category": "design",
+      "tags": ["design", "playwright", "scraping", "css"]
+    },
+    {
+      "name": "pressless",
+      "source": "./plugins/pressless",
+      "description": "PressLess — AI static site generator. WordPress without the weight.",
+      "version": "1.0.0",
+      "category": "web",
+      "tags": ["static-site", "generator", "html", "css"]
+    }
+  ]
+}
