@@ -211,6 +211,32 @@
         "terminal",
         "layout"
       ]
+    },
+    {
+      "name": "public",
+      "source": "./plugins/public",
+      "description": "CRUD for public mini-sites and reports \u2014 static HTML with templates",
+      "version": "1.0.0",
+      "category": "web",
+      "tags": [
+        "static-site",
+        "public",
+        "templates",
+        "html"
+      ]
+    },
+    {
+      "name": "kindle",
+      "source": "./plugins/kindle",
+      "description": "Kindle-style reader \u2014 manage long-form articles as a personal reading site",
+      "version": "1.0.0",
+      "category": "content",
+      "tags": [
+        "reading",
+        "articles",
+        "kindle",
+        "long-form"
+      ]
     }
   ]
 }

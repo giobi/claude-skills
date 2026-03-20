@@ -74,6 +74,12 @@ In Claude Code:
 | **pressless** | AI static site generator — WordPress without the weight |
 | **blog** | Blog management — draft, publish, images for Jekyll/WordPress |
 
+### Content & Publishing
+| Skill | What it does |
+|-------|-------------|
+| **public** | Static mini-sites and reports — CRUD with HTML templates |
+| **kindle** | Personal reading site — Claude generates long-form articles |
+
 ### Meta
 | Skill | What it does |
 |-------|-------------|
