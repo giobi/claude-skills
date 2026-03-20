@@ -11,116 +11,194 @@
   },
   "plugins": [
     {
+      "name": "brain",
+      "source": "./plugins/brain",
+      "description": "Brain package manager \u2014 install, update, list skills from registries",
+      "version": "1.0.0",
+      "category": "meta",
+      "tags": [
+        "package-manager",
+        "install",
+        "brain",
+        "meta"
+      ]
+    },
+    {
       "name": "brainstorm",
       "source": "./plugins/brainstorm",
       "description": "Zero-filter brainstorming on projects, ideas, and decisions",
       "version": "1.0.0",
       "category": "creative",
-      "tags": ["brainstorm", "ideas", "creative"]
+      "tags": [
+        "brainstorm",
+        "ideas",
+        "creative"
+      ]
     },
     {
       "name": "devil",
       "source": "./plugins/devil",
-      "description": "Devil's advocate — ruthlessly challenges any idea, plan, or decision",
+      "description": "Devil's advocate \u2014 ruthlessly challenges any idea, plan, or decision",
       "version": "1.0.0",
       "category": "creative",
-      "tags": ["devil", "advocate", "critical-thinking"]
+      "tags": [
+        "devil",
+        "advocate",
+        "critical-thinking"
+      ]
     },
     {
       "name": "scar",
       "source": "./plugins/scar",
-      "description": "S.C.A.R. — Signal, Cause, Action, Reinforcement. Structured incident documentation.",
+      "description": "S.C.A.R. \u2014 Signal, Cause, Action, Reinforcement. Structured incident documentation.",
       "version": "1.0.0",
       "category": "devops",
-      "tags": ["incident", "postmortem", "scar", "documentation"]
+      "tags": [
+        "incident",
+        "postmortem",
+        "scar",
+        "documentation"
+      ]
     },
     {
       "name": "blog",
       "source": "./plugins/blog",
-      "description": "Blog management — draft, publish, images for Jekyll and WordPress",
+      "description": "Blog management \u2014 draft, publish, images for Jekyll and WordPress",
       "version": "1.0.0",
       "category": "content",
-      "tags": ["blog", "jekyll", "wordpress", "writing"]
+      "tags": [
+        "blog",
+        "jekyll",
+        "wordpress",
+        "writing"
+      ]
     },
     {
       "name": "linkedin",
       "source": "./plugins/linkedin",
-      "description": "LinkedIn intelligence — query builder, result parser, Proxycurl integration",
+      "description": "LinkedIn intelligence \u2014 query builder, result parser, Proxycurl integration",
       "version": "1.0.0",
       "category": "osint",
-      "tags": ["linkedin", "osint", "search"]
+      "tags": [
+        "linkedin",
+        "osint",
+        "search"
+      ]
     },
     {
       "name": "stalker",
       "source": "./plugins/stalker",
-      "description": "Deep OSINT research on any subject — people, companies, domains, concepts",
+      "description": "Deep OSINT research on any subject \u2014 people, companies, domains, concepts",
       "version": "1.0.0",
       "category": "osint",
-      "tags": ["osint", "research", "stalker", "intelligence"]
+      "tags": [
+        "osint",
+        "research",
+        "stalker",
+        "intelligence"
+      ]
     },
     {
       "name": "figma",
       "source": "./plugins/figma",
-      "description": "Figma Parser — extract design system from Figma files via API",
+      "description": "Figma Parser \u2014 extract design system from Figma files via API",
       "version": "1.0.0",
       "category": "design",
-      "tags": ["figma", "design-system", "design"]
+      "tags": [
+        "figma",
+        "design-system",
+        "design"
+      ]
     },
     {
       "name": "site-ripper",
       "source": "./plugins/site-ripper",
-      "description": "Site Ripper — extract design system from any website via Playwright",
+      "description": "Site Ripper \u2014 extract design system from any website via Playwright",
       "version": "1.0.0",
       "category": "design",
-      "tags": ["design", "playwright", "scraping", "css"]
+      "tags": [
+        "design",
+        "playwright",
+        "scraping",
+        "css"
+      ]
     },
     {
       "name": "pressless",
       "source": "./plugins/pressless",
-      "description": "PressLess — AI static site generator. WordPress without the weight.",
+      "description": "PressLess \u2014 AI static site generator. WordPress without the weight.",
       "version": "1.0.0",
       "category": "web",
-      "tags": ["static-site", "generator", "html", "css"]
+      "tags": [
+        "static-site",
+        "generator",
+        "html",
+        "css"
+      ]
     },
     {
       "name": "playralph",
       "source": "./plugins/playralph",
-      "description": "PlayRalph — Playwright diagnostic loop for sites and apps",
+      "description": "PlayRalph \u2014 Playwright diagnostic loop for sites and apps",
       "version": "1.0.0",
       "category": "testing",
-      "tags": ["playwright", "testing", "diagnostic", "qa"]
+      "tags": [
+        "playwright",
+        "testing",
+        "diagnostic",
+        "qa"
+      ]
     },
     {
       "name": "playw",
       "source": "./plugins/playw",
-      "description": "Playwright sidecar — visual verification after every code change",
+      "description": "Playwright sidecar \u2014 visual verification after every code change",
       "version": "1.0.0",
       "category": "testing",
-      "tags": ["playwright", "visual", "verification", "tdd"]
+      "tags": [
+        "playwright",
+        "visual",
+        "verification",
+        "tdd"
+      ]
     },
     {
       "name": "radar",
       "source": "./plugins/radar",
-      "description": "Radar — site audit with ELI5 report + technical details",
+      "description": "Radar \u2014 site audit with ELI5 report + technical details",
       "version": "1.0.0",
       "category": "testing",
-      "tags": ["audit", "testing", "report", "qa"]
+      "tags": [
+        "audit",
+        "testing",
+        "report",
+        "qa"
+      ]
     },
     {
       "name": "snapshot",
       "source": "./plugins/snapshot",
-      "description": "Docker Snapshot — Time Machine for PHP apps",
+      "description": "Docker Snapshot \u2014 Time Machine for PHP apps",
       "version": "1.0.0",
       "category": "devops",
-      "tags": ["docker", "snapshot", "backup", "devops"]
+      "tags": [
+        "docker",
+        "snapshot",
+        "backup",
+        "devops"
+      ]
     },
     {
       "name": "cmd",
       "source": "./plugins/cmd",
-      "description": "Slash command manager — list, create, edit, delete custom commands",
+      "description": "Slash command manager \u2014 list, create, edit, delete custom commands",
       "version": "1.0.0",
       "category": "meta",
-      "tags": ["commands", "meta", "management"]
+      "tags": [
+        "commands",
+        "meta",
+        "management"
+      ]
     }
   ]
 }

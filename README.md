@@ -1,89 +1,126 @@
 # Claude Skills
 
-Brain-native skills for [Claude Code](https://claude.ai/claude-code). Each skill is a self-contained plugin that adds capabilities to your Claude Code sessions.
+Skills for [Claude Code](https://docs.anthropic.com/en/docs/claude-code). Install them in any project or brain.
 
-## Skills
+## Quick Start
 
-### Creative
-| Skill | Description |
-|-------|-------------|
-| **brainstorm** | Zero-filter brainstorming on projects, ideas, and decisions |
-| **devil** | Devil's advocate — ruthlessly challenges any idea, plan, or decision |
+### 1. Bootstrap the package manager
 
-### OSINT & Research
-| Skill | Description |
-|-------|-------------|
-| **stalker** | Deep OSINT research on any subject — people, companies, domains, concepts |
-| **linkedin** | LinkedIn intelligence — query builder, result parser, Proxycurl integration |
-
-### Design
-| Skill | Description |
-|-------|-------------|
-| **figma** | Extract design system from Figma files via API |
-| **site-ripper** | Extract design system from any website via Playwright |
-
-### Testing & QA
-| Skill | Description |
-|-------|-------------|
-| **playralph** | Playwright diagnostic loop for sites and apps |
-| **playw** | Playwright sidecar — visual verification after every code change |
-| **radar** | Site audit with ELI5 report + technical details |
-
-### DevOps
-| Skill | Description |
-|-------|-------------|
-| **scar** | S.C.A.R. — Signal, Cause, Action, Reinforcement. Structured incident docs |
-| **snapshot** | Docker Snapshot — Time Machine for PHP apps |
-
-### Web & Content
-| Skill | Description |
-|-------|-------------|
-| **pressless** | PressLess — AI static site generator. WordPress without the weight |
-| **blog** | Blog management — draft, publish, images for Jekyll and WordPress |
-
-### Meta
-| Skill | Description |
-|-------|-------------|
-| **cmd** | Slash command manager — list, create, edit, delete custom commands |
-
-## Installation
-
-Each skill is a Claude Code plugin. To install:
+Copy the `/brain` skill into your project:
 
 ```bash
-# Install a single skill
-claude plugin install giobi/claude-skills/plugins/brainstorm
-
-# Or clone and symlink
-git clone https://github.com/giobi/claude-skills.git
-cd your-project
-ln -s /path/to/claude-skills/plugins/brainstorm/.claude-plugin .claude-plugin
+# From your project root
+mkdir -p .claude/skills/brain
+curl -sL https://raw.githubusercontent.com/giobi/claude-skills/main/plugins/brain/skills/brain/SKILL.md \
+  -o .claude/skills/brain/SKILL.md
 ```
 
-## Structure
+That's it. Now you have `/brain` available in Claude Code.
+
+### 2. Install skills
+
+In Claude Code:
 
 ```
-plugins/
-├── brainstorm/
-│   ├── .claude-plugin/plugin.json
-│   └── skills/brainstorm/SKILL.md
-├── figma/
-│   ├── .claude-plugin/plugin.json
-│   └── skills/figma/
-│       ├── SKILL.md
-│       └── scripts/figma_parser.py
-└── ...
+/brain install brainstorm
+/brain install stalker
+/brain list --available
 ```
 
-Each plugin follows the Claude Code plugin format:
-- `.claude-plugin/plugin.json` — plugin metadata
-- `skills/{name}/SKILL.md` — skill definition (prompt + instructions)
-- `skills/{name}/scripts/` — supporting scripts (optional)
+### 3. Use them
+
+```
+/brainstorm Should I rewrite this in Rust?
+/stalker acme-corp.com
+/devil Here's my deployment plan...
+```
+
+## Available Skills
+
+### Creative
+| Skill | What it does |
+|-------|-------------|
+| **brainstorm** | Zero-filter brainstorming — ideas without judgement |
+| **devil** | Devil's advocate — ruthlessly tears apart any plan |
+
+### OSINT & Research
+| Skill | What it does |
+|-------|-------------|
+| **stalker** | Deep research on any subject — people, companies, domains |
+| **linkedin** | LinkedIn intelligence with Proxycurl integration |
+
+### Design
+| Skill | What it does |
+|-------|-------------|
+| **figma** | Extract design system from Figma files via API |
+| **site-ripper** | Extract design system from any live website via Playwright |
+
+### Testing & QA
+| Skill | What it does |
+|-------|-------------|
+| **playralph** | Playwright diagnostic loop — finds what's broken |
+| **playw** | Playwright sidecar — visual verification after every change |
+| **radar** | Full site audit with ELI5 summary + technical details |
+
+### DevOps
+| Skill | What it does |
+|-------|-------------|
+| **scar** | S.C.A.R. — structured incident documentation (Signal → Cause → Action → Reinforcement) |
+| **snapshot** | Docker Time Machine — snapshot and restore PHP apps |
+
+### Web & Content
+| Skill | What it does |
+|-------|-------------|
+| **pressless** | AI static site generator — WordPress without the weight |
+| **blog** | Blog management — draft, publish, images for Jekyll/WordPress |
+
+### Meta
+| Skill | What it does |
+|-------|-------------|
+| **cmd** | Manage your own slash commands — list, create, edit, delete |
+| **brain** | This package manager |
+
+## How It Works
+
+Skills are Claude Code [custom slash commands](https://docs.anthropic.com/en/docs/claude-code/tutorials/custom-slash-commands) — a `SKILL.md` file in `.claude/skills/{name}/` that Claude reads when you type `/{name}`.
+
+The `/brain` skill adds package management:
+
+```
+.claude/skills/{name}/     ← Skill code (from registry, replaceable)
+  SKILL.md                  Instructions for Claude
+  *.py                      Supporting scripts (optional)
+
+wiki/skills/               ← Your config (survives updates)
+  .index.yaml               What's installed, versions, sources
+  {name}.md                 Per-skill parameters
+```
+
+When you `/brain update`, code gets replaced but your config stays.
+
+## Skill Parameters
+
+Some skills accept configuration. For example, a writing style skill needs samples of *your* writing. Parameters live in `wiki/skills/{name}.md` and survive updates.
+
+During install, if a skill needs configuration, it asks you interactively.
+
+## Create Your Own Skills
+
+A skill is just a folder with a `SKILL.md`:
+
+```
+.claude/skills/my-skill/
+  SKILL.md        # Instructions (YAML frontmatter + markdown)
+```
+
+To publish, add it to a registry repo following this structure:
+
+```
+plugins/my-skill/
+  .claude-plugin/plugin.json    # {"name":"my-skill","description":"...","version":"1.0.0"}
+  skills/my-skill/SKILL.md      # The skill itself
+```
 
 ## License
 
-MIT
-
-## Author
-
-[Giobi Fasoli](https://giobi.com) — built with [ABChat](https://abchat.it) brain system
+MIT — [Giobi Fasoli](https://giobi.com)
