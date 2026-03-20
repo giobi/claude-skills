@@ -1,19 +1,19 @@
 {
-  "name": "g",
+  "name": "claude-skills",
   "owner": {
     "name": "Giobi Fasoli",
     "email": "giobi@giobi.com"
   },
   "metadata": {
-    "description": "Brain-native skills for Claude Code. OSINT, creative thinking, static site generation, and more.",
-    "version": "1.0.0",
+    "description": "Brain-native skills for Claude Code. OSINT, creative thinking, testing, DevOps, and more.",
+    "version": "1.1.0",
     "pluginRoot": "./plugins"
   },
   "plugins": [
     {
       "name": "brainstorm",
       "source": "./plugins/brainstorm",
-      "description": "Brainstorm proattivo su progetti, idee, decisioni (zero filtri)",
+      "description": "Zero-filter brainstorming on projects, ideas, and decisions",
       "version": "1.0.0",
       "category": "creative",
       "tags": ["brainstorm", "ideas", "creative"]
@@ -21,23 +21,15 @@
     {
       "name": "devil",
       "source": "./plugins/devil",
-      "description": "Devil's advocate — smonta qualsiasi idea, piano o decisione senza pieta",
+      "description": "Devil's advocate — ruthlessly challenges any idea, plan, or decision",
       "version": "1.0.0",
       "category": "creative",
       "tags": ["devil", "advocate", "critical-thinking"]
     },
     {
-      "name": "ghostwriter",
-      "source": "./plugins/ghostwriter",
-      "description": "Ghostwriter — reference di stile per scrivere come il proprietario del brain",
-      "version": "1.0.0",
-      "category": "writing",
-      "tags": ["ghostwriting", "style", "tone"]
-    },
-    {
       "name": "scar",
       "source": "./plugins/scar",
-      "description": "S.C.A.R. — Signal, Cause, Action, Reinforcement. Documenta incident e bug fix.",
+      "description": "S.C.A.R. — Signal, Cause, Action, Reinforcement. Structured incident documentation.",
       "version": "1.0.0",
       "category": "devops",
       "tags": ["incident", "postmortem", "scar", "documentation"]
@@ -45,7 +37,7 @@
     {
       "name": "blog",
       "source": "./plugins/blog",
-      "description": "Blog management — draft, publish, images per Jekyll e WordPress",
+      "description": "Blog management — draft, publish, images for Jekyll and WordPress",
       "version": "1.0.0",
       "category": "content",
       "tags": ["blog", "jekyll", "wordpress", "writing"]
@@ -61,7 +53,7 @@
     {
       "name": "stalker",
       "source": "./plugins/stalker",
-      "description": "Stalker — OSINT e ricerca approfondita su qualsiasi soggetto",
+      "description": "Deep OSINT research on any subject — people, companies, domains, concepts",
       "version": "1.0.0",
       "category": "osint",
       "tags": ["osint", "research", "stalker", "intelligence"]
@@ -69,7 +61,7 @@
     {
       "name": "figma",
       "source": "./plugins/figma",
-      "description": "Figma Parser — estrai design system da file Figma via API",
+      "description": "Figma Parser — extract design system from Figma files via API",
       "version": "1.0.0",
       "category": "design",
       "tags": ["figma", "design-system", "design"]
@@ -77,7 +69,7 @@
     {
       "name": "site-ripper",
       "source": "./plugins/site-ripper",
-      "description": "Site Ripper — estrai design system da qualsiasi sito web via Playwright",
+      "description": "Site Ripper — extract design system from any website via Playwright",
       "version": "1.0.0",
       "category": "design",
       "tags": ["design", "playwright", "scraping", "css"]
@@ -89,6 +81,46 @@
       "version": "1.0.0",
       "category": "web",
       "tags": ["static-site", "generator", "html", "css"]
+    },
+    {
+      "name": "playralph",
+      "source": "./plugins/playralph",
+      "description": "PlayRalph — Playwright diagnostic loop for sites and apps",
+      "version": "1.0.0",
+      "category": "testing",
+      "tags": ["playwright", "testing", "diagnostic", "qa"]
+    },
+    {
+      "name": "playw",
+      "source": "./plugins/playw",
+      "description": "Playwright sidecar — visual verification after every code change",
+      "version": "1.0.0",
+      "category": "testing",
+      "tags": ["playwright", "visual", "verification", "tdd"]
+    },
+    {
+      "name": "radar",
+      "source": "./plugins/radar",
+      "description": "Radar — site audit with ELI5 report + technical details",
+      "version": "1.0.0",
+      "category": "testing",
+      "tags": ["audit", "testing", "report", "qa"]
+    },
+    {
+      "name": "snapshot",
+      "source": "./plugins/snapshot",
+      "description": "Docker Snapshot — Time Machine for PHP apps",
+      "version": "1.0.0",
+      "category": "devops",
+      "tags": ["docker", "snapshot", "backup", "devops"]
+    },
+    {
+      "name": "cmd",
+      "source": "./plugins/cmd",
+      "description": "Slash command manager — list, create, edit, delete custom commands",
+      "version": "1.0.0",
+      "category": "meta",
+      "tags": ["commands", "meta", "management"]
     }
   ]
 }

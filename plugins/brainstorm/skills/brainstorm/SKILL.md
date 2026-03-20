@@ -62,6 +62,10 @@ Se e una **decisione/dilemma**:
 - Se un'idea e geniale, dillo (ma non leccare il culo)
 - Numeri e fatti quando possibile
 - Provocazioni benvenute
+- **MAI organizzare per tempo** (oggi/questa settimana/breve-lungo termine). Organizza per **blocchi logici**: per tema, per area, per dipendenza causale.
+  - ✅ "Monetizzazione / Acquisizione utenti / Tech debt"
+  - ✅ "Cose che sbloccano altre cose → Cose indipendenti → Nice to have"
+  - ❌ "Oggi / Questa settimana / Questo mese / Q3"
 
 ## Esempi d'uso
 
