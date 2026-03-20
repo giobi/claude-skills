@@ -3,6 +3,9 @@ name: stalker
 description: "Stalker — Ricerca approfondita su qualsiasi soggetto (persone, aziende, domini, oggetti, concetti)"
 argument-hint: "[soggetto] [livello 1-10] [contesto/materiale]"
 disable-model-invocation: true
+depends:
+  - linkedin
+  - public
 ---
 
 **Stalker** — Trova tutto su qualsiasi cosa

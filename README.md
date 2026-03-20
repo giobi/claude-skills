@@ -110,6 +110,23 @@ Some skills accept configuration. For example, a writing style skill needs sampl
 
 During install, if a skill needs configuration, it asks you interactively.
 
+## Dependencies
+
+Some skills depend on others:
+
+| Skill | Depends on | Also needs |
+|-------|-----------|------------|
+| **stalker** | linkedin, public | Playwright, Proxycurl (optional) |
+| **playralph** | — | Playwright |
+| **playw** | — | Playwright |
+| **figma** | — | Figma API token |
+| **linkedin** | — | Proxycurl API key (optional) |
+| **public** | — | Web server for public/ dir |
+| **kindle** | — | Web server for articles |
+
+When you `/brain install stalker`, it checks for dependencies and prompts you to install them first.
+Skills that need API keys or external tools include a `POSTINSTALL.md` that guides setup.
+
 ## Create Your Own Skills
 
 A skill is just a folder with a `SKILL.md`:
