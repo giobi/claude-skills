@@ -199,6 +199,18 @@
         "meta",
         "management"
       ]
+    },
+    {
+      "name": "tmux",
+      "source": "./plugins/tmux",
+      "description": "Tmux management \u2014 pane/window titles, layout, move panes",
+      "version": "1.0.0",
+      "category": "devops",
+      "tags": [
+        "tmux",
+        "terminal",
+        "layout"
+      ]
     }
   ]
 }
