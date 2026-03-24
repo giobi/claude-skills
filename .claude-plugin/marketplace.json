@@ -13,7 +13,7 @@
     {
       "name": "brain",
       "source": "./plugins/brain",
-      "description": "Brain package manager \u2014 install, update, list skills from registries",
+      "description": "Brain package manager — install, update, list skills from registries",
       "version": "1.0.0",
       "category": "meta",
       "tags": [
@@ -38,7 +38,7 @@
     {
       "name": "devil",
       "source": "./plugins/devil",
-      "description": "Devil's advocate \u2014 ruthlessly challenges any idea, plan, or decision",
+      "description": "Devil's advocate — ruthlessly challenges any idea, plan, or decision",
       "version": "1.0.0",
       "category": "creative",
       "tags": [
@@ -50,7 +50,7 @@
     {
       "name": "scar",
       "source": "./plugins/scar",
-      "description": "S.C.A.R. \u2014 Signal, Cause, Action, Reinforcement. Structured incident documentation.",
+      "description": "S.C.A.R. — Signal, Cause, Action, Reinforcement. Structured incident documentation.",
       "version": "1.0.0",
       "category": "devops",
       "tags": [
@@ -63,7 +63,7 @@
     {
       "name": "blog",
       "source": "./plugins/blog",
-      "description": "Blog management \u2014 draft, publish, images for Jekyll and WordPress",
+      "description": "Blog management — draft, publish, images for Jekyll and WordPress",
       "version": "1.0.0",
       "category": "content",
       "tags": [
@@ -76,7 +76,7 @@
     {
       "name": "linkedin",
       "source": "./plugins/linkedin",
-      "description": "LinkedIn intelligence \u2014 query builder, result parser, Proxycurl integration",
+      "description": "LinkedIn intelligence — query builder, result parser, Proxycurl integration",
       "version": "1.0.0",
       "category": "osint",
       "tags": [
@@ -88,7 +88,7 @@
     {
       "name": "stalker",
       "source": "./plugins/stalker",
-      "description": "Deep OSINT research on any subject \u2014 people, companies, domains, concepts",
+      "description": "Deep OSINT research on any subject — people, companies, domains, concepts",
       "version": "1.0.0",
       "category": "osint",
       "tags": [
@@ -101,7 +101,7 @@
     {
       "name": "figma",
       "source": "./plugins/figma",
-      "description": "Figma Parser \u2014 extract design system from Figma files via API",
+      "description": "Figma Parser — extract design system from Figma files via API",
       "version": "1.0.0",
       "category": "design",
       "tags": [
@@ -113,7 +113,7 @@
     {
       "name": "site-ripper",
       "source": "./plugins/site-ripper",
-      "description": "Site Ripper \u2014 extract design system from any website via Playwright",
+      "description": "Site Ripper — extract design system from any website via Playwright",
       "version": "1.0.0",
       "category": "design",
       "tags": [
@@ -126,7 +126,7 @@
     {
       "name": "pressless",
       "source": "./plugins/pressless",
-      "description": "PressLess \u2014 AI static site generator. WordPress without the weight.",
+      "description": "PressLess — AI static site generator. WordPress without the weight.",
       "version": "1.0.0",
       "category": "web",
       "tags": [
@@ -139,7 +139,7 @@
     {
       "name": "playralph",
       "source": "./plugins/playralph",
-      "description": "PlayRalph \u2014 Playwright diagnostic loop for sites and apps",
+      "description": "PlayRalph — Playwright diagnostic loop for sites and apps",
       "version": "1.0.0",
       "category": "testing",
       "tags": [
@@ -152,7 +152,7 @@
     {
       "name": "playw",
       "source": "./plugins/playw",
-      "description": "Playwright sidecar \u2014 visual verification after every code change",
+      "description": "Playwright sidecar — visual verification after every code change",
       "version": "1.0.0",
       "category": "testing",
       "tags": [
@@ -165,7 +165,7 @@
     {
       "name": "radar",
       "source": "./plugins/radar",
-      "description": "Radar \u2014 site audit with ELI5 report + technical details",
+      "description": "Radar — site audit with ELI5 report + technical details",
       "version": "1.0.0",
       "category": "testing",
       "tags": [
@@ -178,7 +178,7 @@
     {
       "name": "snapshot",
       "source": "./plugins/snapshot",
-      "description": "Docker Snapshot \u2014 Time Machine for PHP apps",
+      "description": "Docker Snapshot — Time Machine for PHP apps",
       "version": "1.0.0",
       "category": "devops",
       "tags": [
@@ -191,7 +191,7 @@
     {
       "name": "cmd",
       "source": "./plugins/cmd",
-      "description": "Slash command manager \u2014 list, create, edit, delete custom commands",
+      "description": "Slash command manager — list, create, edit, delete custom commands",
       "version": "1.0.0",
       "category": "meta",
       "tags": [
@@ -203,7 +203,7 @@
     {
       "name": "tmux",
       "source": "./plugins/tmux",
-      "description": "Tmux management \u2014 pane/window titles, layout, move panes",
+      "description": "Tmux management — pane/window titles, layout, move panes",
       "version": "1.0.0",
       "category": "devops",
       "tags": [
@@ -215,7 +215,7 @@
     {
       "name": "public",
       "source": "./plugins/public",
-      "description": "CRUD for public mini-sites and reports \u2014 static HTML with templates",
+      "description": "CRUD for public mini-sites and reports — static HTML with templates",
       "version": "1.0.0",
       "category": "web",
       "tags": [
@@ -228,7 +228,7 @@
     {
       "name": "kindle",
       "source": "./plugins/kindle",
-      "description": "Kindle-style reader \u2014 manage long-form articles as a personal reading site",
+      "description": "Kindle-style reader — manage long-form articles as a personal reading site",
       "version": "1.0.0",
       "category": "content",
       "tags": [
@@ -236,6 +236,19 @@
         "articles",
         "kindle",
         "long-form"
+      ]
+    },
+    {
+      "name": "learn",
+      "source": "./plugins/learn",
+      "description": "Learn — genera cheatsheet interattive per imparare comandi e tool tecnici",
+      "version": "1.0.0",
+      "category": "learning",
+      "tags": [
+        "cheatsheet",
+        "learning",
+        "interactive",
+        "tutorial"
       ]
     }
   ]
