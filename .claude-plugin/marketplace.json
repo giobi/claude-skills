@@ -303,6 +303,19 @@
         "inbox",
         "triage"
       ]
+    },
+    {
+      "name": "inbox",
+      "source": "./plugins/inbox",
+      "description": "Inbox manager \u2014 classify and route files from inbox/ to diary, wiki, or log",
+      "version": "1.0.0",
+      "category": "brain",
+      "tags": [
+        "inbox",
+        "triage",
+        "brain",
+        "routing"
+      ]
     }
   ]
 }
