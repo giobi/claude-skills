@@ -316,6 +316,20 @@
         "brain",
         "routing"
       ]
+    },
+    {
+      "name": "project",
+      "source": "./plugins/project",
+      "description": "Project-first session management \u2014 activate, create, search brain projects",
+      "version": "1.0.0",
+      "category": "brain",
+      "tags": [
+        "project",
+        "session",
+        "brain",
+        "rag",
+        "core"
+      ]
     }
   ]
 }
