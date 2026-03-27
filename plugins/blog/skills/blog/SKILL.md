@@ -1,6 +1,6 @@
 ---
 name: blog
-description: Blog management for giobidev e blog.giobi.com (images, posts, publish)
+description: "Blog management — images, posts, publish (Jekyll, WordPress, static)"
 disable-model-invocation: true
 requires:
   capabilities: [web_serving]
