@@ -3,6 +3,8 @@ name: tmux
 description: "Tmux management (pane/window titles, layout, move panes)"
 user-invocable: true
 argument-hint: "[rename|list|4x4|restore|layout|move|borders] [args]"
+requires:
+  services: [tmux]
 ---
 
 **Tmux Manager** - Gestione titoli e layout tmux

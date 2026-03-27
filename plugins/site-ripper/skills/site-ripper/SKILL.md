@@ -2,6 +2,8 @@
 name: site-ripper
 description: "Site Ripper — estrai design system da qualsiasi sito web via Playwright (screenshot + CSS + asset)"
 argument-hint: "[url] [pagine: /,/about,/pricing]"
+requires:
+  capabilities: [playwright]
 ---
 
 # Site Ripper

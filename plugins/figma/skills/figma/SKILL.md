@@ -2,6 +2,8 @@
 name: figma
 description: "Figma Parser — estrai design system da file Figma via API"
 argument-hint: "[figma-url] [parse|export|pressless]"
+requires:
+  env: [FIGMA_ACCESS_TOKEN]
 ---
 
 # Figma Parser

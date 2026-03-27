@@ -3,6 +3,8 @@ name: playralph
 description: "PlayRalph - Playwright diagnostic loop for sites/apps"
 user-invocable: true
 argument-hint: "[project|URL] [context]"
+requires:
+  capabilities: [playwright]
 ---
 
 **PlayRalph** - Diagnostic loop with Playwright

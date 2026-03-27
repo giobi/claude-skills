@@ -2,6 +2,8 @@
 name: blog
 description: Blog management for giobidev e blog.giobi.com (images, posts, publish)
 disable-model-invocation: true
+requires:
+  capabilities: [web_serving]
 ---
 
 **Blog Agent** - Gestione blog (giobidev e blog.giobi.com)

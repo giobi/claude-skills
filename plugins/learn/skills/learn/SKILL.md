@@ -11,6 +11,9 @@ parameters:
   - name: public_dir
     description: "Path a public/ relativo alla root del progetto"
     default: "public"
+requires:
+  capabilities: [web_serving]
+  skills: [public]
 ---
 
 # /learn - Cheatsheet Interattive

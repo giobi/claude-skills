@@ -1,5 +1,7 @@
 ---
 name: public
+requires:
+  capabilities: [web_serving]
 description: "CRUD for public mini-sites and reports — static HTML with templates"
 user-invocable: true
 argument-hint: "[create|update|delete|list|rebuild-index] [slug] [title]"

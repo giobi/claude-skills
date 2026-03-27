@@ -1,135 +1,91 @@
-# Brain Update Protocol v1.0
+# Brain Update Protocol v2.0
 
 You are reading this because a user asked you to update their brain.
 Follow these instructions step by step. Do not skip steps.
 
 Source: https://github.com/giobi/claude-skills
-Protocol version: 1.0
-Brain protocol version: 4.0
+Protocol version: 2.0
+Brain protocol version: 5.0
 
 ---
 
 ## Step 0: Assess current state
 
-Check what exists:
-
 ```bash
 echo "=== Brain root ==="
 ls boot/ 2>/dev/null || echo "NO boot/ directory"
 echo "=== Brain version ==="
-grep -m1 'Versione' boot/brain.md 2>/dev/null || echo "NO brain.md or no version"
+head -5 boot/brain.md 2>/dev/null || echo "NO brain.md"
 echo "=== Skills ==="
 ls .claude/skills/ 2>/dev/null | head -20 || echo "NO skills directory"
 echo "=== Permissions ==="
 touch boot/.write-test 2>/dev/null && rm boot/.write-test && echo "WRITE OK" || echo "READ-ONLY"
 ```
 
-Based on the output, determine:
+Based on the output:
 
-1. **Is boot/ writable?** If NO → you are in a domain brain with shared boot.
-   Tell the user: "I file di boot/ sono in sola lettura — sono gestiti dal tuo admin.
-   Posso aggiornare le skill e la configurazione locale, ma per aggiornare il protocollo
-   brain devi chiedere al tuo admin di eseguire l'update sulla piattaforma."
-   Then skip to Step 2.
+1. **No boot/ at all?** → This is a fresh brain. Tell the user to run the install instead:
+   "Non hai ancora un brain. Per crearlo: `curl -sL https://abchat.it/install | head -200` e segui le istruzioni."
 
-2. **Does brain.md exist?** If NO → this is a fresh brain. Go to Step 1a (fresh install).
-   If YES → check the version and go to Step 1b (upgrade).
+2. **boot/ exists, brain.md < v5.0?** → Upgrade. Go to Step 1.
 
----
-
-## Step 1a: Fresh brain — first install
-
-This brain has no boot/ protocol yet. Set it up.
-
-### Create boot/ structure
-
-```bash
-mkdir -p boot wiki/skills .claude/skills/brain
-```
-
-### Download protocol files
-
-```bash
-# Brain protocol
-curl -sL https://update.abchat.it/boot/brain.md -o boot/brain.md
-
-# Templates — rename to actual files, user will customize
-curl -sL https://update.abchat.it/boot/soul.template.md -o boot/soul.md
-curl -sL https://update.abchat.it/boot/identity.template.md -o boot/identity.md
-curl -sL https://update.abchat.it/boot/user.template.md -o boot/user.md
-curl -sL https://update.abchat.it/boot/tools.md -o boot/tools.md
-```
-
-### Personalize
-
-Ask the user:
-1. "Come ti chiami?" → Update boot/user.md
-2. "Come vuoi che si chiami il tuo assistente?" → Update boot/soul.md
-3. "Sei su un server o sul tuo computer?" → Create boot/local.yaml
-
-For local.yaml, auto-detect:
-
-```bash
-cat > boot/local.yaml << YAMLEOF
-platform: $(test -f /etc/nginx/nginx.conf && echo server || echo local)
-hostname: $(hostname)
-services:
-  python3: $(which python3 >/dev/null 2>&1 && echo true || echo false)
-  node: $(which node >/dev/null 2>&1 && echo true || echo false)
-  docker: $(which docker >/dev/null 2>&1 && echo true || echo false)
-  playwright: $(npx playwright --version >/dev/null 2>&1 && echo true || echo false)
-  tmux: $(which tmux >/dev/null 2>&1 && echo true || echo false)
-  git: true
-capabilities: {}
-YAMLEOF
-```
-
-Then go to Step 2.
+3. **boot/ is READ-ONLY?** → Domain brain with managed boot.
+   Tell the user: "I file boot/ sono gestiti dalla piattaforma. Posso aggiornare le skill."
+   Skip to Step 2.
 
 ---
 
-## Step 1b: Existing brain — upgrade
+## Step 1: Upgrade protocol files
 
-Compare the installed version with the latest.
-
-```bash
-# Current version
-CURRENT=$(grep -oP 'Versione.*?(\d+\.\d+)' boot/brain.md | grep -oP '\d+\.\d+' | head -1)
-echo "Current: $CURRENT"
-echo "Latest: 4.0"
-```
-
-### If current < 4.0: Update protocol files
+### Backup and download
 
 ```bash
-# Backup current
 cp boot/brain.md boot/brain.md.bak
-cp boot/tools.md boot/tools.md.bak 2>/dev/null
 
-# Download latest
-curl -sL https://update.abchat.it/boot/brain.md -o boot/brain.md
-curl -sL https://update.abchat.it/boot/tools.md -o boot/tools.md
+# Download latest brain.md
+curl -sL https://raw.githubusercontent.com/giobi/brain-template/main/boot/brain.md -o boot/brain.md
 ```
 
-**DO NOT overwrite:** soul.md, identity.md, user.md, local.yaml — these are personalized.
+### Remove deprecated files
 
-### If no local.yaml exists: create it
+```bash
+# identity.md is deprecated — absorbed into soul.md
+rm boot/identity.md 2>/dev/null
+# tools.md is deprecated — replaced by skill system
+rm boot/tools.md 2>/dev/null
+```
+
+**DO NOT overwrite:** soul.md, user.md, local.yaml — these are personalized.
+
+### Create local.yaml if missing
 
 ```bash
 if [ ! -f boot/local.yaml ]; then
-  echo "boot/local.yaml non esiste — lo creo con auto-detect"
-  # (same auto-detect block as Step 1a)
+  cat > boot/local.yaml << YAMLEOF
+platform: $([ -f /.dockerenv ] && echo "container" || (test -f /etc/nginx/nginx.conf && echo server || echo local))
+hostname: $(hostname)
+os: $(uname -s | tr '[:upper:]' '[:lower:]')
+arch: $(uname -m)
+services:
+  git: $(which git >/dev/null 2>&1 && echo true || echo false)
+  python3: $(which python3 >/dev/null 2>&1 && echo true || echo false)
+  node: $(which node >/dev/null 2>&1 && echo true || echo false)
+  docker: $(which docker >/dev/null 2>&1 && echo true || echo false)
+  tmux: $(which tmux >/dev/null 2>&1 && echo true || echo false)
+YAMLEOF
 fi
 ```
 
-### If no wiki/skills/ exists: create it
+### Create wiki/skills/ if missing
 
 ```bash
 mkdir -p wiki/skills
-cat > wiki/skills/.index.yaml << 'EOF'
+if [ ! -f wiki/skills/index.yaml ]; then
+  cat > wiki/skills/index.yaml << 'EOF'
 registry: giobi/claude-skills
 installed: {}
 EOF
+fi
 ```
 
 ---
@@ -138,7 +94,7 @@ EOF
 
 ```bash
 mkdir -p .claude/skills/brain
-curl -sL https://update.abchat.it/plugins/brain/skills/brain/SKILL.md \
+curl -sL https://raw.githubusercontent.com/giobi/claude-skills/main/plugins/brain/skills/brain/SKILL.md \
   -o .claude/skills/brain/SKILL.md
 ```
 
@@ -154,32 +110,11 @@ Should show `name: brain`.
 
 ## Step 3: Show available skills
 
-Fetch the skill catalog and present it to the user:
-
-| Skill | Category | Description |
-|-------|----------|-------------|
-| brainstorm | creative | Zero-filter brainstorming |
-| devil | creative | Devil's advocate — tears apart any plan |
-| stalker | osint | Deep research on any subject |
-| linkedin | osint | LinkedIn intelligence + Proxycurl |
-| figma | design | Extract design system from Figma |
-| site-ripper | design | Extract design from any website |
-| playralph | testing | Playwright diagnostic loop |
-| playw | testing | Playwright sidecar verification |
-| radar | testing | Site audit with ELI5 report |
-| scar | devops | Structured incident documentation |
-| snapshot | devops | Docker Time Machine for PHP apps |
-| tmux | devops | Tmux pane/window management |
-| pressless | web | AI static site generator |
-| blog | content | Blog management Jekyll/WordPress |
-| public | web | Static mini-sites (requires nginx) |
-| kindle | content | Personal reading site (requires web server) |
-| cmd | meta | Manage slash commands |
-
 Tell the user:
+
 ```
-✅ Brain aggiornato alla versione 4.0
-📦 Package manager /brain installato
+Brain aggiornato alla versione 5.0
+Package manager /brain installato
 
 Per installare skill: /brain install <nome>
 Per vedere tutto: /brain list --available
@@ -197,9 +132,9 @@ Skill consigliate per iniziare:
 ```bash
 if git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
   git add -A
-  git commit -m "Brain update: protocol v4.0 + package manager
+  git commit -m "Brain update: protocol v5.0 + package manager
 
-  Source: https://update.abchat.it
+  Source: https://github.com/giobi/claude-skills
   Co-Authored-By: Claude <noreply@anthropic.com>"
 fi
 ```
@@ -208,8 +143,7 @@ fi
 
 ## Notes
 
-- boot/ files that are READ-ONLY belong to the platform admin, not to the brain
-- soul.md, identity.md, user.md are PERSONAL — never overwrite during update
+- soul.md, user.md are PERSONAL — never overwrite during update
 - local.yaml is LOCAL CONFIG — never overwrite, only create if missing
 - wiki/skills/*.md contains per-skill config — survives skill updates
 - All skills: https://github.com/giobi/claude-skills

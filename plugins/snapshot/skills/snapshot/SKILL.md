@@ -3,6 +3,8 @@ name: snapshot
 description: "Docker Snapshot System - Time Machine per app PHP"
 user-invocable: true
 argument-hint: "<app-path> [--name slug] [--deploy local|cloudrun|none] [--framework laravel|wordpress|symfony|php]"
+requires:
+  capabilities: [docker]
 ---
 
 # /snapshot - Docker Snapshot System

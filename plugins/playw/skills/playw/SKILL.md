@@ -3,6 +3,8 @@ name: playw
 description: "Playwright sidecar mode — visual verification after every change"
 user-invocable: true
 argument-hint: "[URL]"
+requires:
+  capabilities: [playwright]
 ---
 
 **Playwright Sidecar** — Occhi aperti per tutta la sessione

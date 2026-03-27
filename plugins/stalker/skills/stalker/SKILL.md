@@ -6,6 +6,9 @@ disable-model-invocation: true
 depends:
   - linkedin
   - public
+requires:
+  capabilities: [web_serving]
+  skills: [linkedin, public]
 ---
 
 **Stalker** — Trova tutto su qualsiasi cosa

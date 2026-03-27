@@ -3,6 +3,8 @@ name: radar
 description: Radar - Collaudo siti con report ELI5 + dettagli tecnici
 user-invocable: true
 argument-hint: "[project|URL] [context]"
+requires:
+  capabilities: [web_serving, playwright]
 ---
 
 **Radar** — Collaudo siti con Playwright, report client-facing

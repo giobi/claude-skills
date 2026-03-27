@@ -13,6 +13,8 @@ parameters:
   - name: site_name
     description: "Name shown in the reader UI"
     default: "My Reader"
+requires:
+  capabilities: [web_serving]
 ---
 
 # /kindle — Personal Reader Management

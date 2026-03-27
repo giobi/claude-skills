@@ -3,6 +3,8 @@ name: pressless
 description: "PressLess — AI static site generator. Crea siti statici da design di riferimento. Usa /figma e /site-ripper per estrarre design system."
 argument-hint: "[domain] [url-riferimento...] [mood]"
 disable-model-invocation: true
+requires:
+  capabilities: [playwright]
 ---
 
 # PressLess — Static Site Generator
