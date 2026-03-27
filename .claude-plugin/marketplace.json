@@ -263,6 +263,46 @@
         "registrar",
         "internetbs"
       ]
+    },
+    {
+      "name": "telegram",
+      "source": "./plugins/telegram",
+      "description": "Telegram bot \u2014 send messages, read inbox, manage bot interactions",
+      "version": "1.0.0",
+      "category": "messaging",
+      "tags": [
+        "telegram",
+        "bot",
+        "messaging",
+        "notifications"
+      ]
+    },
+    {
+      "name": "discord",
+      "source": "./plugins/discord",
+      "description": "Discord bot \u2014 send messages to channels, DMs, and project channels",
+      "version": "1.0.0",
+      "category": "messaging",
+      "tags": [
+        "discord",
+        "bot",
+        "messaging",
+        "notifications"
+      ]
+    },
+    {
+      "name": "gmail",
+      "source": "./plugins/gmail",
+      "description": "Gmail orchestrator \u2014 triage inbox, search, draft replies in-thread",
+      "version": "1.0.0",
+      "category": "email",
+      "tags": [
+        "gmail",
+        "email",
+        "oauth",
+        "inbox",
+        "triage"
+      ]
     }
   ]
 }
