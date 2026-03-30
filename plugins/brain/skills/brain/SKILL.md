@@ -2,7 +2,7 @@
 name: brain
 description: "Brain package manager — install, update, list skills from registries"
 user-invocable: true
-argument-hint: "install <skill> | update [skill] | nuove | list [--available] | uninstall <skill> | info <skill> | doctor | diff"
+argument-hint: "setup | install <skill> | update [skill] | nuove | list [--available] | uninstall <skill> | info <skill> | doctor | diff"
 ---
 
 # /brain — Package Manager
@@ -12,6 +12,7 @@ Manages skill installation from remote registries into the brain.
 ## Commands
 
 ```
+/brain setup                    Fresh brain setup — fetch install promptone and run onboarding
 /brain install <skill>          Install a skill from registry
 /brain install <repo>/<skill>   Install from a specific repo
 /brain update [skill]           Update one or all installed skills
@@ -32,6 +33,8 @@ args = "$ARGUMENTS".strip().lower()
 
 if not args:
     intent = "list_installed"
+elif any(w in args for w in ["setup", "start", "init", "inizia", "onboarding", "installa brain", "nuovo brain"]):
+    intent = "setup"
 elif any(w in args for w in ["nuove", "novità", "new", "aggiornam", "updates", "cosa c'è", "cosa ci sono", "cosa è uscito", "mancanti", "missing"]):
     intent = "whats_new"
 elif any(w in args for w in ["install", "installa", "aggiungi", "add"]):
@@ -54,6 +57,22 @@ else:
     intent = "install"  # default: try to install whatever was named
     skill_name = args.split()[0]
 ```
+
+## Flow: setup
+
+When `intent == "setup"`:
+
+1. Fetch the install promptone:
+
+```bash
+curl -sL https://abchat.it/install
+```
+
+2. Read the fetched content completely and follow all steps from the beginning (Step 0 through Step 9).
+
+This is equivalent to the user running `curl -sL https://abchat.it/install` and pasting the result as a prompt — just automated.
+
+---
 
 ## Architecture
 
