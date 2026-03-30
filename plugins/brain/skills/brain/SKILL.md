@@ -162,18 +162,24 @@ import yaml
 with open('boot/local.yaml') as f:
     local = yaml.safe_load(f) or {}
 
-capabilities = local.get('capabilities', {})
+# capabilities is a flat list: ['discord', 'telegram', ...]
+capabilities = local.get('capabilities', [])
 services = local.get('services', {})
 
 # Check each required capability
 for cap in skill_requires.get('capabilities', []):
     if cap not in capabilities and not services.get(cap):
         print(f"BLOCKED: skill requires '{cap}' but boot/local.yaml doesn't have it.")
-        print(f"Add '{cap}' to capabilities in boot/local.yaml, then retry.")
+        print(f"Add '{cap}' to the capabilities list in boot/local.yaml, then retry.")
         sys.exit(1)
 ```
 
 If a required capability is missing → **stop install**, tell the user what to add to `boot/local.yaml`. Do NOT install anyway.
+
+**Config tiers** — after install, when a skill needs non-secret config:
+- `wiki/skills/{name}.yaml` — non-secret config (bot name, channel, address, etc.)
+- `.env` — secrets only (tokens, API keys, passwords)
+- `boot/local.yaml` — machine/infra only (services installed, network, capabilities list)
 
 **Gate: requires.env** — If the skill has `requires.env`, check `.env`:
 
