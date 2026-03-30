@@ -7,6 +7,8 @@ requires:
   env:
     - INTERNETBS_API_KEY
     - INTERNETBS_PASSWORD
+  packages:
+    - requests
 ---
 
 # /internetbs — Domain Manager

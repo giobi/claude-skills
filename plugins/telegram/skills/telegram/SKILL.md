@@ -7,6 +7,9 @@ requires:
   env:
     - TELEGRAM_BOT_TOKEN
     - TELEGRAM_CHAT_ID
+  packages:
+    - requests
+    - python-dotenv
 ---
 
 # /telegram — Telegram Bot

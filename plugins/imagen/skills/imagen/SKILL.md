@@ -6,6 +6,8 @@ argument-hint: "[prompt] [--backend gemini|fal|flux] [--aspect 1:1|16:9|...] [--
 requires:
   env:
     - GEMINI_API_KEY  # or FAL_KEY or REPLICATE_API_TOKEN
+  packages:
+    - requests
 ---
 
 # /imagen — AI Image Generation

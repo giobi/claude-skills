@@ -8,6 +8,9 @@ requires:
     - "{SITE_PREFIX}_USERNAME"
     - "{SITE_PREFIX}_APP_PASSWORD"
     - "{SITE_PREFIX}_URL"
+  packages:
+    - requests
+    - pyyaml
 ---
 
 # /wordpress — WordPress Manager

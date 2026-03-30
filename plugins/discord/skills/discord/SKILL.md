@@ -7,6 +7,10 @@ requires:
   env:
     - DISCORD_BOT_TOKEN
     - DISCORD_DEFAULT_CHANNEL
+  packages:
+    - requests
+    - pyyaml
+    - python-dotenv
 ---
 
 # /discord — Discord Bot
