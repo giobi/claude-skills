@@ -2,7 +2,7 @@
 name: brain
 description: "Brain package manager — install, update, list skills from registries"
 user-invocable: true
-argument-hint: "install <skill> | update [skill] | list [--available] | uninstall <skill> | info <skill>"
+argument-hint: "install <skill> | update [skill] | nuove | list [--available] | uninstall <skill> | info <skill> | doctor | diff"
 ---
 
 # /brain — Package Manager
@@ -19,6 +19,40 @@ Manages skill installation from remote registries into the brain.
 /brain list --available         List skills available in registry
 /brain uninstall <skill>        Remove an installed skill
 /brain info <skill>             Show skill details and parameters
+/brain doctor                   Health check: frontmatter, index.md, requires, .env
+/brain diff [skill]             Show differences between installed and upstream
+```
+
+## NLP Intent Detection
+
+Parse `$ARGUMENTS` with natural language before dispatching to the right flow:
+
+```python
+args = "$ARGUMENTS".strip().lower()
+
+if not args:
+    intent = "list_installed"
+elif any(w in args for w in ["nuove", "novità", "new", "aggiornam", "updates", "cosa c'è", "cosa ci sono", "cosa è uscito", "mancanti", "missing"]):
+    intent = "whats_new"
+elif any(w in args for w in ["install", "installa", "aggiungi", "add"]):
+    intent = "install"
+    skill_name = args.split()[-1]
+elif any(w in args for w in ["update", "aggiorna"]) and "--available" not in args:
+    intent = "update"
+    skill_name = args.replace("update","").replace("aggiorna","").strip() or None
+elif any(w in args for w in ["list", "lista", "elenca", "--available", "disponibili", "tutte"]):
+    intent = "list_available" if "--available" in args or any(w in args for w in ["disponibili","tutte","registry"]) else "list_installed"
+elif any(w in args for w in ["uninstall", "rimuovi", "disinstalla", "remove"]):
+    intent = "uninstall"
+elif any(w in args for w in ["info", "dettaglio", "cos'è", "cose"]):
+    intent = "info"
+elif any(w in args for w in ["doctor", "check", "salute", "stato"]):
+    intent = "doctor"
+elif any(w in args for w in ["diff", "differenze", "cambiamenti"]):
+    intent = "diff"
+else:
+    intent = "install"  # default: try to install whatever was named
+    skill_name = args.split()[0]
 ```
 
 ## Architecture
@@ -29,7 +63,7 @@ Manages skill installation from remote registries into the brain.
   *.py, *.sh                     Supporting scripts
 
 wiki/skills/                    <- Brain-specific configuration (survives updates)
-  .index.yaml                    Registry of installed skills
+  index.yaml                    Registry of installed skills
   {name}.md                      Per-skill parameters and customization
 ```
 
@@ -63,7 +97,7 @@ When user says `/brain install <skill>`:
 
 ### Step 1: Resolve registry
 
-Read `wiki/skills/.index.yaml` for the default registry. Default: `giobi/claude-skills`.
+Read `wiki/skills/index.yaml` for the default registry. Default: `giobi/claude-skills`.
 
 If user specifies `<repo>/<skill>` (e.g. `someone/their-skills/brainstorm`), use that repo instead.
 
@@ -97,9 +131,42 @@ cp -r */plugins/{skill}/skills/{skill}/scripts/* .claude/skills/{skill}/ 2>/dev/
 rm -rf /tmp/repo.tar.gz /tmp/*-claude-skills-*
 ```
 
-### Step 4: Check dependencies
+### Step 4: Check requires and dependencies
 
-Read the skill's SKILL.md frontmatter for `depends:` field. If dependencies are listed, install them first (recursive).
+Read the skill's SKILL.md frontmatter.
+
+**Gate: requires.capabilities** — If the skill has `requires.capabilities`, check `boot/local.yaml`:
+
+```python
+import yaml
+
+with open('boot/local.yaml') as f:
+    local = yaml.safe_load(f) or {}
+
+capabilities = local.get('capabilities', {})
+services = local.get('services', {})
+
+# Check each required capability
+for cap in skill_requires.get('capabilities', []):
+    if cap not in capabilities and not services.get(cap):
+        print(f"BLOCKED: skill requires '{cap}' but boot/local.yaml doesn't have it.")
+        print(f"Add '{cap}' to capabilities in boot/local.yaml, then retry.")
+        sys.exit(1)
+```
+
+If a required capability is missing → **stop install**, tell the user what to add to `boot/local.yaml`. Do NOT install anyway.
+
+**Gate: requires.env** — If the skill has `requires.env`, check `.env`:
+
+```bash
+for key in ${required_env[@]}; do
+  grep -q "^${key}=" .env 2>/dev/null || echo "WARNING: $key not found in .env — skill may not work"
+done
+```
+
+Missing env keys are a **warning**, not a blocker (user may add them later).
+
+**Dependencies** — If `depends:` field lists other skills, install them first (recursive).
 
 ### Step 5: Create parameter file
 
@@ -124,7 +191,7 @@ If the skill directory contains `POSTINSTALL.md`, read it and execute the instru
 
 ### Step 7: Update registry
 
-Update `wiki/skills/.index.yaml`:
+Update `wiki/skills/index.yaml`:
 
 ```yaml
 installed:
@@ -148,27 +215,27 @@ Installed: {skill_name} v{version}
 When user says `/brain update [skill]`:
 
 ### Single skill
-1. Read `wiki/skills/.index.yaml` -> get source and current version
+1. Read `wiki/skills/index.yaml` -> get source and current version
 2. Fetch latest from registry
 3. Compare versions — if same, skip
 4. **Overwrite** `.claude/skills/{skill}/` with new code
 5. **DO NOT touch** `wiki/skills/{skill}.md` (user parameters are sacred)
-6. Update version in `.index.yaml`
+6. Update version in `index.yaml`
 7. If POSTINSTALL.md changed, notify user of new config options
 
 ### All skills
-Loop through all entries in `.index.yaml` `installed:` section.
+Loop through all entries in `index.yaml` `installed:` section.
 
 ## Uninstall Flow
 
 1. Delete `.claude/skills/{skill}/` directory
 2. Ask user: "Keep config in wiki/skills/{skill}.md? (y/n)"
-3. Remove entry from `.index.yaml`
+3. Remove entry from `index.yaml`
 
 ## List Flow
 
 ### `/brain list` (installed)
-Read `.index.yaml`, show table:
+Read `index.yaml`, show table:
 ```
 Skill         Version  Source              Installed
 brainstorm    1.0.0    giobi/claude-skills 2026-03-20
@@ -178,10 +245,75 @@ stalker       1.0.0    giobi/claude-skills 2026-03-20
 ### `/brain list --available`
 Fetch marketplace.json, show all plugins with descriptions. Mark installed ones with checkmark.
 
+## What's New Flow
+
+Triggered by: `/brain nuove`, `/brain aggiornamenti`, `/brain che skill nuove ci sono?` etc.
+
+### Step 1: Fetch marketplace
+
+```bash
+MARKETPLACE_B64=$(fetch_github "repos/giobi/claude-skills/contents/.claude-plugin/marketplace.json" | python3 -c "import sys,json; print(json.load(sys.stdin)['content'])")
+marketplace=$(echo "$MARKETPLACE_B64" | base64 -d)
+```
+
+### Step 2: Read installed skills
+
+```python
+import yaml
+with open('wiki/skills/index.yaml') as f:
+    idx = yaml.safe_load(f) or {}
+installed = idx.get('installed', {})  # {name: {version, installed_at, source}}
+```
+
+### Step 3: Compare
+
+```python
+import json
+
+registry_plugins = {p['name']: p for p in marketplace_data['plugins']}
+
+new_skills = []       # in registry, NOT installed
+updates_available = []  # installed BUT registry version > local version
+
+for name, plugin in registry_plugins.items():
+    if name not in installed:
+        new_skills.append(plugin)
+    else:
+        reg_ver = plugin.get('version', '0.0.0')
+        loc_ver = installed[name].get('version', '0.0.0')
+        if reg_ver != loc_ver:
+            updates_available.append({**plugin, 'installed_version': loc_ver})
+```
+
+### Step 4: Output
+
+```
+/brain nuove
+
+🆕 Skill non ancora installate (5):
+  telegram     Telegram Bot — send messages, read inbox, manage bot interactions
+  discord      Discord Bot — send messages to channels, DMs, and project channels
+  gmail        Gmail orchestrator — read, triage, draft in-thread replies
+  imagen       AI image generation — Gemini Imagen, fal.ai, Replicate Flux
+  schedule     Schedule manager — list, add, edit brain scheduled tasks
+
+🔄 Aggiornamenti disponibili (2):
+  brainstorm   v1.0.0 → v1.1.0
+  save         v1.0.0 → v1.1.0
+
+Per installare: /brain install <nome>
+Per aggiornare tutto: /brain update
+```
+
+Se non c'è niente di nuovo:
+```
+Tutto aggiornato ✓ — 28 skill installate, nessuna novità nel registry.
+```
+
 ## Info Flow
 
 `/brain info stalker`:
-1. Read `.index.yaml` for install info
+1. Read `index.yaml` for install info
 2. Read `.claude/skills/stalker/SKILL.md` for description
 3. Read `wiki/skills/stalker.md` for current parameters
 4. Show combined info
@@ -206,6 +338,67 @@ parameters:
 During install, if `parameters:` exist with `required: true`, the post-install prompts the user. Parameters are stored in `wiki/skills/{name}.md` frontmatter.
 
 At runtime, the SKILL.md instructions say: "Read your parameters from `wiki/skills/{name}.md`".
+
+## Doctor Flow
+
+`/brain doctor` — health check of the entire brain:
+
+### Checks (run all, report at end):
+
+1. **boot/ files exist**: brain.md, soul.md, user.md — MUST exist. local.yaml, domain.md — optional.
+2. **Frontmatter valid**: Scan all `.md` in wiki/ and diary/ — each MUST have valid YAML frontmatter with at least `date` and `type`. **Also flag any file named `README.md` or `LICENSE.md` as a naming violation** — these are anti-patterns in the brain. Files must have semantic names (e.g. `deploy-guide.md`, `concept.md`, `tech-stack.md`). `index.md` is the only reserved generic name (directory index).
+3. **index.md/index.yaml present**: Every directory in wiki/ SHOULD have an index.md or index.yaml.
+4. **Diary has project**: Every diary entry SHOULD have `project:` in frontmatter.
+5. **Skill requires satisfied**: For each installed skill, read its SKILL.md `requires:` and check against `boot/local.yaml`. Report unmet capabilities.
+6. **Env keys present**: For skills with `requires.env`, check `.env` for the keys.
+7. **Orphan skills**: Skills in `.claude/skills/` not listed in `wiki/skills/index.yaml` (neither installed nor native).
+8. **Dotted files**: Check for any remaining `.index.yaml` or `.index.md` (should be `index.yaml`/`index.md`).
+
+### Output format:
+
+```
+/brain doctor
+
+PASS  boot/ files complete
+PASS  Frontmatter valid (342/342 files)
+WARN  Missing index.md in 3 directories
+      - wiki/sessions/
+      - wiki/skills/
+      - storage/awareness/
+WARN  12 diary entries without project in frontmatter
+PASS  All skill requires satisfied
+WARN  FIGMA_ACCESS_TOKEN not in .env (needed by figma)
+PASS  No orphan skills
+PASS  No dotted index files
+
+Score: 8/8 checks, 3 warnings
+```
+
+Severity: FAIL = broken, needs fix. WARN = suboptimal, should fix. PASS = good.
+
+## Diff Flow
+
+`/brain diff [skill]` — show differences between installed skill and upstream:
+
+### Single skill
+
+1. Read installed version from `wiki/skills/index.yaml`
+2. Fetch upstream SKILL.md from registry (same fetch_github helper)
+3. Compare the two SKILL.md files — show a readable diff
+4. If other files exist in the skill dir, note which ones differ
+
+### All skills
+
+Loop through installed skills, show summary:
+
+```
+/brain diff
+
+brainstorm    UP TO DATE  (v1.0.0)
+stalker       CHANGED     3 lines differ in SKILL.md
+public        UP TO DATE  (v1.0.0)
+learn         NOT IN REGISTRY  (native skill)
+```
 
 ## Notes
 
