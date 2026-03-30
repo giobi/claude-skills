@@ -376,6 +376,32 @@
         "multi-site",
         "gdpr"
       ]
+    },
+    {
+      "name": "save",
+      "source": "./plugins/save",
+      "description": "Mid-session checkpoint (log, database, commit, push) without closing",
+      "version": "1.0.0",
+      "category": "workflow",
+      "tags": [
+        "checkpoint",
+        "git",
+        "session",
+        "workflow"
+      ]
+    },
+    {
+      "name": "schedule",
+      "source": "./plugins/schedule",
+      "description": "Schedule manager \u2014 list, add, edit, disable, enable brain scheduled tasks",
+      "version": "1.0.0",
+      "category": "automation",
+      "tags": [
+        "cron",
+        "scheduler",
+        "automation",
+        "tasks"
+      ]
     }
   ]
 }
