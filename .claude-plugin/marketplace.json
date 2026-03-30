@@ -468,6 +468,20 @@
         "infrastructure",
         "r2"
       ]
+    },
+    {
+      "name": "autoresponder",
+      "source": "./plugins/autoresponder",
+      "description": "AI email auto-responder \u2014 monitors Gmail, drafts context-aware replies, never sends without approval",
+      "version": "1.0.0",
+      "category": "automation",
+      "tags": [
+        "email",
+        "gmail",
+        "autoresponder",
+        "ai",
+        "automation"
+      ]
     }
   ]
 }
