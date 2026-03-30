@@ -361,6 +361,21 @@
         "flux",
         "ai-generation"
       ]
+    },
+    {
+      "name": "wordpress",
+      "source": "./plugins/wordpress",
+      "description": "WordPress management \u2014 REST API, WP-CLI, multi-site, Puppeteer, GDPR",
+      "version": "1.0.0",
+      "category": "web",
+      "tags": [
+        "wordpress",
+        "cms",
+        "rest-api",
+        "wpcli",
+        "multi-site",
+        "gdpr"
+      ]
     }
   ]
 }
