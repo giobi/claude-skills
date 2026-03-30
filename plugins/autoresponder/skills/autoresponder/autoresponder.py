@@ -33,9 +33,17 @@ if _env.exists():
             _k, _v = _line.split('=', 1)
             os.environ.setdefault(_k.strip(), _v.strip().strip('"').strip("'"))
 
-AUTORESPONDER_EMAIL = os.getenv('AUTORESPONDER_EMAIL', 'autoresponder@example.com')
-AUTORESPONDER_NAME  = os.getenv('AUTORESPONDER_NAME', 'AI Assistant')
-BRAIN_URL           = os.getenv('BRAIN_URL', 'https://brain.local')
+# Load non-secret config from wiki/skills/autoresponder.yaml (with env fallback)
+_cfg = {}
+_cfg_file = BRAIN / 'wiki' / 'skills' / 'autoresponder.yaml'
+if _cfg_file.exists():
+    import yaml as _yaml
+    _cfg = _yaml.safe_load(_cfg_file.read_text()) or {}
+
+AUTORESPONDER_EMAIL = _cfg.get('email') or os.getenv('AUTORESPONDER_EMAIL', 'autoresponder@example.com')
+AUTORESPONDER_NAME  = _cfg.get('name') or os.getenv('AUTORESPONDER_NAME', 'AI Assistant')
+BRAIN_URL           = _cfg.get('brain_url') or os.getenv('BRAIN_URL', 'https://brain.local')
+AUTORESPONDER_OWNER_EMAIL = _cfg.get('owner_email') or os.getenv('AUTORESPONDER_OWNER_EMAIL', AUTORESPONDER_EMAIL)
 
 def get_access_token():
     """Load Gmail token"""
@@ -216,13 +224,13 @@ def get_unreplied_threads():
                 for msg in reversed(messages):
                     msg_headers = msg.get('payload', {}).get('headers', [])
                     msg_from = next((h['value'] for h in msg_headers if h['name'] == 'From'), '')
-                    if AUTORESPONDER_EMAIL not in msg_from.lower() and os.getenv('AUTORESPONDER_OWNER_EMAIL', AUTORESPONDER_EMAIL) not in msg_from.lower():
+                    if AUTORESPONDER_EMAIL not in msg_from.lower() and AUTORESPONDER_OWNER_EMAIL not in msg_from.lower():
                         from_email = msg_from
                         break
 
                 # Skip automated/system emails (no-reply, notifications, etc)
                 from_lower = from_email.lower()
-                skip_patterns = ['noreply', 'no-reply', 'notifications@', 'mailer-daemon', 'postmaster@']
+                skip_patterns = _cfg.get('skip_patterns') or ['noreply', 'no-reply', 'notifications@', 'mailer-daemon', 'postmaster@']
                 if any(pattern in from_lower for pattern in skip_patterns):
                     continue
 
@@ -414,8 +422,8 @@ Scrivi SOLO il testo della risposta:
         if response.status_code == 200:
             reply_text = response.json()['choices'][0]['message']['content'].strip()
             
-            # Add signature
-            signature = os.getenv("AUTORESPONDER_SIGNATURE", f"\n\n---\n{AUTORESPONDER_NAME}\n{AUTORESPONDER_EMAIL}")
+            # Add signature (yaml config > env > default)
+            signature = _cfg.get('signature') or os.getenv("AUTORESPONDER_SIGNATURE", f"\n\n---\n{AUTORESPONDER_NAME}\n{AUTORESPONDER_EMAIL}")
             
             return reply_text + signature
         else:
