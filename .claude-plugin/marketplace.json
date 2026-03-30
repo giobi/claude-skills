@@ -402,6 +402,72 @@
         "automation",
         "tasks"
       ]
+    },
+    {
+      "name": "ghostwriter",
+      "source": "./plugins/ghostwriter",
+      "description": "Ghostwriter \u2014 write in the user's voice, not as an LLM",
+      "version": "1.0.0",
+      "category": "writing",
+      "tags": [
+        "writing",
+        "style",
+        "email",
+        "voice"
+      ]
+    },
+    {
+      "name": "github",
+      "source": "./plugins/github",
+      "description": "GitHub \u2014 repos, issues, PRs, gists via API",
+      "version": "1.0.0",
+      "category": "developer",
+      "tags": [
+        "github",
+        "git",
+        "issues",
+        "pr",
+        "repos"
+      ]
+    },
+    {
+      "name": "drive",
+      "source": "./plugins/drive",
+      "description": "Google Drive organizer \u2014 audit, triage inbox, split PDF, rename, move",
+      "version": "1.0.0",
+      "category": "productivity",
+      "tags": [
+        "google",
+        "drive",
+        "files",
+        "pdf"
+      ]
+    },
+    {
+      "name": "calendar",
+      "source": "./plugins/calendar",
+      "description": "Google Calendar \u2014 create, list, update, delete events",
+      "version": "1.0.0",
+      "category": "productivity",
+      "tags": [
+        "google",
+        "calendar",
+        "events",
+        "schedule"
+      ]
+    },
+    {
+      "name": "cloudflare",
+      "source": "./plugins/cloudflare",
+      "description": "Cloudflare DNS \u2014 zones, records, cache purge, R2, Pages",
+      "version": "1.0.0",
+      "category": "infrastructure",
+      "tags": [
+        "cloudflare",
+        "dns",
+        "infrastructure",
+        "r2"
+      ]
     }
   ]
 }

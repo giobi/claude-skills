@@ -1,0 +1,5 @@
+{
+  "name": "cloudflare",
+  "description": "Cloudflare DNS \u2014 zones, records, cache purge, R2, Pages",
+  "version": "1.0.0"
+}
