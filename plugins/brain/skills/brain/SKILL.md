@@ -2,7 +2,7 @@
 name: brain
 description: "Brain package manager — install, update, list skills from registries"
 user-invocable: true
-argument-hint: "setup | install <skill> | update [skill] | nuove | list [--available] | uninstall <skill> | info <skill> | doctor | diff"
+argument-hint: "setup | install <skill> | update [skill] | nuove | list [--available] | uninstall <skill> | info <skill> | doctor [semantic] | diff"
 ---
 
 # /brain — Package Manager
@@ -21,6 +21,7 @@ Manages skill installation from remote registries into the brain.
 /brain uninstall <skill>        Remove an installed skill
 /brain info <skill>             Show skill details and parameters
 /brain doctor                   Health check: frontmatter, index.md, requires, .env
+/brain doctor semantic          Deep content analysis: duplicates, misplaced files, stubs, merge candidates
 /brain diff [skill]             Show differences between installed and upstream
 ```
 
@@ -50,7 +51,10 @@ elif any(w in args for w in ["uninstall", "rimuovi", "disinstalla", "remove"]):
 elif any(w in args for w in ["info", "dettaglio", "cos'è", "cose"]):
     intent = "info"
 elif any(w in args for w in ["doctor", "check", "salute", "stato"]):
-    intent = "doctor"
+    if any(w in args for w in ["semantic", "semantico", "deep", "pulisci", "cleanup", "merge", "mergia", "riordina", "contenuto", "contenuti"]):
+        intent = "doctor_semantic"
+    else:
+        intent = "doctor"
 elif any(w in args for w in ["diff", "differenze", "cambiamenti"]):
     intent = "diff"
 else:
@@ -373,11 +377,41 @@ At runtime, the SKILL.md instructions say: "Read your parameters from `wiki/skil
 1. **boot/ files exist**: brain.md, soul.md, user.md — MUST exist. local.yaml, domain.md — optional.
 2. **Frontmatter valid**: Scan all `.md` in wiki/ and diary/ — each MUST have valid YAML frontmatter with at least `date` and `type`. **Also flag any file named `README.md` or `LICENSE.md` as a naming violation** — these are anti-patterns in the brain. Files must have semantic names (e.g. `deploy-guide.md`, `concept.md`, `tech-stack.md`). `index.md` is the only reserved generic name (directory index).
 3. **index.md/index.yaml present**: Every directory in wiki/ SHOULD have an index.md or index.yaml.
-4. **Diary has project**: Every diary entry SHOULD have `project:` in frontmatter.
+4. **Diary has project**: Every diary entry SHOULD have `project:` in frontmatter. Skip `index.md` files (directory indexes, not entries).
 5. **Skill requires satisfied**: For each installed skill, read its SKILL.md `requires:` and check against `boot/local.yaml`. Report unmet capabilities.
 6. **Env keys present**: For skills with `requires.env`, check `.env` for the keys.
-7. **Orphan skills**: Skills in `.claude/skills/` not listed in `wiki/skills/index.yaml` (neither installed nor native).
+7. **Orphan skills**: Skills in `.claude/skills/` not listed in `wiki/skills/index.yaml` (neither `installed:` nor anywhere in the `native:` section). Read the full `native:` subtree from index.yaml and flatten all skill names from all sub-lists (zero_deps, needs_services.*, needs_capabilities.*, depends.*). Also treat bundled brain skills as always-known: brain, brain-writer, save, bye, project, sessions, todo, engine.
 8. **Dotted files**: Check for any remaining `.index.yaml` or `.index.md` (should be `index.yaml`/`index.md`).
+9. **Memory guardian hook**: The brain MUST block Claude's built-in memory system (`~/.claude/projects/*/memory/`). The brain IS the memory — Claude's `memory/` directory is redundant and pollutes the system. Check:
+   - `.claude/hooks/memory-guardian.sh` exists and is executable
+   - `.claude/settings.json` has the hook registered on BOTH `Write` and `Edit` matchers in `PreToolUse`
+   - If either is missing → **FAIL** (not WARN) and **auto-fix**: create the hook script and register it in settings.json.
+
+   **Auto-fix: create hook** (if missing):
+   ```bash
+   cat > .claude/hooks/memory-guardian.sh << 'HOOK'
+   #!/bin/bash
+   # Memory Guardian — blocks writes to Claude's memory/ directory
+   # The brain IS the memory. Claude's built-in memory/ is not used.
+   set -euo pipefail
+   input=$(cat)
+   file_path=$(echo "$input" | jq -r '.tool_input.file_path // empty')
+   if [[ -z "$file_path" ]]; then
+     jq -n '{decision:"approve",reasoning:"No file_path"}'
+     exit 0
+   fi
+   if [[ "$file_path" =~ memory/ ]]; then
+     jq -n '{decision:"block",reasoning:"memory/ blocked by brain",message:"BLOCKED: memory/ non va usata. Il brain (wiki/, diary/, boot/) è la tua memoria."}'
+     exit 2
+   fi
+   jq -n '{decision:"approve",reasoning:"Not a memory path"}'
+   exit 0
+   HOOK
+   chmod +x .claude/hooks/memory-guardian.sh
+   ```
+
+   **Auto-fix: register in settings.json** (if hook exists but not registered):
+   Read `.claude/settings.json`, ensure `hooks.PreToolUse` has the memory-guardian on both Write and Edit matchers. Use `jq` or Python to merge without clobbering existing hooks. The command path must use `$CLAUDE_PROJECT_DIR/.claude/hooks/memory-guardian.sh`.
 
 ### Output format:
 
@@ -400,6 +434,128 @@ Score: 8/8 checks, 3 warnings
 ```
 
 Severity: FAIL = broken, needs fix. WARN = suboptimal, should fix. PASS = good.
+
+## Doctor Semantic Flow
+
+`/brain doctor semantic` — deep content analysis, interactive cleanup.
+
+Unlike the structural doctor (which checks format and structure), the semantic doctor **reads the actual content** of every file, understands what it says, and finds issues that only a human (or a very attentive AI) would notice.
+
+### What it detects
+
+Scan the entire brain and classify findings into these categories:
+
+| Category | Icon | What it means |
+|----------|------|---------------|
+| **ROGUE** | 📁 | Folders/files outside the standard brain structure (not in boot/, wiki/, diary/, todo/, inbox/, public/, storage/, .env) |
+| **STUB** | 📄 | Files with frontmatter but empty or near-empty body (<20 words of actual content) |
+| **MISPLACED** | 📍 | Content in the wrong location (e.g., project docs in storage/, notes in root, README.md instead of index.md) |
+| **DUPLICATE** | 🔄 | Same topic/entity described in multiple files (e.g., same person in wiki/people/ AND referenced inline in a project) |
+| **MERGE** | 🔀 | Files that logically belong together (e.g., a project with only 1 file that could be folded into the project index) |
+| **STALE** | ⏰ | TODOs referencing completed work, projects with outdated status, entries with old dates and no updates |
+| **BLOAT** | 🫧 | Files that are too large and should be split, or contain multiple unrelated topics |
+| **ORPHAN** | 👻 | Files not linked from anywhere, not tagged properly, not findable via normal navigation |
+| **NAMING** | 🏷️ | Files violating naming conventions (uppercase, underscores, spaces, README.md, non-semantic names) |
+
+### How it works
+
+#### Step 1: Full scan
+
+Read every `.md` and `.yaml` file in the brain. For each file, note:
+- Path and name
+- Frontmatter (type, tags, date, project)
+- Body content (first 500 chars minimum, full text for small files)
+- Size (lines, words)
+- Last modified date
+
+Also scan for:
+- Non-standard root folders (anything not in the allowed list)
+- Files without frontmatter in wiki/ and diary/
+- Non-.md files in unexpected places
+
+#### Step 2: Content analysis
+
+For each file, determine:
+- **What entity/topic it's about** (person, project, concept, how-to, log)
+- **Whether it overlaps** with other files (same person, same project, same topic)
+- **Whether it's in the right place** (a person described in projects/ → should be in people/)
+- **Whether it's complete** (stub check: frontmatter-only or near-empty body)
+- **Whether it's current** (stale check: old TODOs, outdated status)
+
+Cross-reference:
+- wiki/people/ entries vs. names mentioned in projects and diary
+- wiki/projects/ entries vs. project tags in diary and todo
+- TODOs vs. diary entries (was the TODO completed but not closed?)
+
+#### Step 3: Interactive presentation
+
+Present findings ONE CATEGORY AT A TIME, starting from the most impactful:
+
+```
+🧠 Brain Doctor Semantic — Analisi completa
+
+Trovati 12 problemi in 5 categorie.
+
+---
+
+📁 ROGUE — Cartelle/file fuori struttura (2 trovati)
+
+  1. `progetti/DHL/` — cartella non standard nella root.
+     Contiene: README.md (boilerplate React+Vite), nessun file .md del brain.
+
+     Cosa vuoi fare?
+     [a] Sposta in storage/dhl/
+     [b] Sposta in wiki/projects/dhl/
+     [c] Elimina (non contiene dati brain)
+     [d] Lascia com'è (skip)
+
+  2. `progetti/EsercizioLoginEcommerce_SpringBoot.zip` — file .zip nella root
+
+     Cosa vuoi fare?
+     [a] Sposta in storage/
+     [b] Elimina
+     [c] Skip
+```
+
+**IMPORTANT interaction rules:**
+- Present ONE category at a time
+- Wait for the user to respond to ALL items in the category before moving to the next
+- For each finding, provide 2-4 concrete action options plus "skip"
+- If the user says "fix all" or "sistema tutto" for a category, apply the recommended action (first option) to all items
+- After the user decides, **execute the action immediately** (move, delete, merge files)
+- Show a summary at the end of what was changed
+
+#### Step 4: Execute actions
+
+For each user decision:
+
+- **Move**: Use filesystem commands to relocate the file. Update frontmatter if needed (e.g., change `type:` if moving between domains). Fix any wiki-links pointing to the old path.
+- **Delete**: Remove the file. If it was in an index, update the index.
+- **Merge**: Read both files, combine content intelligently (keep the richer version, append unique info from the other), write the merged file, delete the duplicate.
+- **Enrich**: For stubs, add a TODO prompt: "This file needs content. Would you like to describe [entity] now?"
+- **Rename**: Fix naming violations (lowercase, hyphens, semantic name).
+
+#### Step 5: Summary
+
+```
+🧠 Doctor Semantic — Riepilogo
+
+Eseguiti: 8 azioni
+  - 2 file spostati (progetti/ → storage/)
+  - 3 stub arricchiti
+  - 1 file rinominato
+  - 2 skippati
+
+Il brain è più pulito. Prossimo passo consigliato: /brain doctor (check strutturale).
+```
+
+### Notes
+
+- The semantic doctor is conversational — it's a dialogue, not a report
+- Always explain WHY something is a finding, not just WHAT
+- Respect user decisions — if they skip something, don't nag
+- After execution, if the brain has git, suggest a commit with the changes
+- Can be triggered with NLP: "pulisci il brain", "riordina", "cosa c'è da sistemare", "mergia i duplicati"
 
 ## Diff Flow
 
