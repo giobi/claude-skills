@@ -70,38 +70,49 @@ ls -t .claude.json.backup.* 2>/dev/null | tail -n +3 | xargs rm -f 2>/dev/null
 
 ### Step 5: Git
 
+Push sul branch corrente — niente assunzioni su `main` o sul nome del remote. Se serve un merge flow, lo decide l'utente del brain.
+
 ```bash
+BRANCH=$(git branch --show-current)
+REMOTE=$(git config "branch.${BRANCH}.remote" || echo origin)
+
 git add -A && git commit -m "Session: {project} - {summary}
 
 Co-Authored-By: Claude <noreply@anthropic.com>"
 
-git checkout main
-git merge {branch-corrente} --no-edit
-git push origin main
+git push "$REMOTE" "$BRANCH"
 ```
 
 ### Step 6: Time Tracking + EWAF Save
 
+Usa `brain.sqlite` nella root del brain corrente. Se non esiste, salta lo step (non e un errore — non tutti i brain hanno il time tracking).
+
 ```python
-import sqlite3
+import os, sqlite3
 from datetime import datetime
 
-db = sqlite3.connect('/home/claude/brain/brain.sqlite')
-db.execute('''
-    INSERT INTO sessions (
-        date, session, project,
-        human_estimate_min, prompting_time_min, time_saved_min,
-        earth, water, fire, air, note
-    )
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-''', (
-    datetime.now().isoformat(),
-    "session-name", "project",
-    human_min, prompting_min, saved_min,
-    earth_rating, water_rating, fire_rating, air_rating,
-    "EWAF reasoning"
-))
-db.commit()
+# brain root = cwd o BRAIN_ROOT env
+brain_root = os.environ.get('BRAIN_ROOT', os.getcwd())
+db_path = os.path.join(brain_root, 'brain.sqlite')
+
+if os.path.exists(db_path):
+    db = sqlite3.connect(db_path)
+    db.execute('''
+        INSERT INTO sessions (
+            date, session, project,
+            human_estimate_min, prompting_time_min, time_saved_min,
+            earth, water, fire, air, note
+        )
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    ''', (
+        datetime.now().isoformat(),
+        "session-name", "project",
+        human_min, prompting_min, saved_min,
+        earth_rating, water_rating, fire_rating, air_rating,
+        "EWAF reasoning"
+    ))
+    db.commit()
+# se brain.sqlite non esiste, lo step e' no-op
 ```
 
 ### Step 7: Pendenze Check
@@ -115,7 +126,7 @@ Verifica se restano cose in sospeso:
 ### Output
 
 ```
-log/2025/2025-01-14-project-summary.md
+diary/{YYYY}/{YYYY-MM-DD}-{project}-summary.md
 Pushed (3 files)
 ~45min saved
 Earth: 8 | Water: 7 | Fire: 3 | Air: 9

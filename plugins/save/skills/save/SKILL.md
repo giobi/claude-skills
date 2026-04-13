@@ -32,15 +32,20 @@ If a log for today + current project already exists, **append** to it. Otherwise
 
 ```python
 import os, glob
+from datetime import date
 
-existing = glob.glob(f'diary/2026/2026-MM-DD-{project}-*.md')
+today = date.today()
+year = today.year
+today_str = today.isoformat()  # YYYY-MM-DD
+
+existing = glob.glob(f'diary/{year}/{today_str}-{project}-*.md')
 
 if existing:
     # Append: ## Checkpoint HH:MM
     pass
 else:
     from brain_writer import create_log
-    create_log('YYYY-MM-DD', '{project}-checkpoint', """
+    create_log(today_str, f'{project}-checkpoint', """
 ## Work Done (checkpoint)
 - [bullet points of work so far]
 
@@ -78,12 +83,17 @@ ls -t .claude.json.backup.* 2>/dev/null | tail -n +3 | xargs rm -f 2>/dev/null
 
 ### Step 4: Git Commit + Push
 
+Push sul branch corrente, sul remote tracked. Niente assunzioni su `main` o su uno specifico repo.
+
 ```bash
+BRANCH=$(git branch --show-current)
+REMOTE=$(git config "branch.${BRANCH}.remote" || echo origin)
+
 git add -A && git commit -m "Checkpoint: {project} - {brief summary}
 
 Co-Authored-By: Claude <noreply@anthropic.com>"
 
-git push origin $(git branch --show-current)
+git push "$REMOTE" "$BRANCH"
 ```
 
 ### Step 5: Update Tmux Pane Title
@@ -105,7 +115,7 @@ Ancora in sospeso:
 
 ```
 Checkpoint saved
-diary/2026/2026-MM-DD-project-desc.md (updated)
+diary/{YYYY}/{YYYY-MM-DD}-{project}-desc.md (updated)
 Project: wiki/projects/{project}/index.md (updated)
 Pushed to {branch}
 ```
