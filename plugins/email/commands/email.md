@@ -45,26 +45,28 @@ Se `wiki/skills/email.md` non esiste, continua con i default — la skill funzio
 
 ## Adapter Loading
 
-### Gmail
+**Usa sempre l'adapter unificato** — detecta automaticamente Gmail o O365 dal `.env`:
 
 ```python
 import sys
-sys.path.insert(0, '.claude/skills/email/')
-from gmail_read import search_messages, get_thread, list_drafts
-from gmail_write import create_draft, update_draft_in_thread
+sys.path.insert(0, '.claude/skills/email')
+from adapter import EmailAdapter
+
+mail = EmailAdapter()  # auto-detect driver
+print(mail)            # mostra driver + lock status
+
+# Read
+messages = mail.search("from:someone@example.com")
+inbox = mail.get_messages(max_results=20)
+
+# Draft (no gate — sempre permesso)
+mail.draft(to="x@y.com", subject="Re: ...", body="testo", thread_id="abc123")
+
+# Send (gated — richiede /send command)
+mail.send(to="x@y.com", subject="Test", body="testo", confirm="SEND")
 ```
 
-### O365
-
-```python
-import sys
-sys.path.insert(0, 'tools/lib')
-from o365_send import draft, confirm_send, get_messages, search_messages, get_sent_messages
-```
-
-### Autodetect
-
-Se `adapter` non è in config: controlla `.env` — se `GMAIL_REFRESH_TOKEN` esiste usa Gmail, se `O365_REFRESH_TOKEN` esiste usa O365.
+Il lock file `storage/lock/email` blocca tutti i send su qualsiasi driver.
 
 ---
 

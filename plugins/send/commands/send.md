@@ -185,42 +185,43 @@ Lo score va inserito direttamente nella bozza. Se l'utente non e d'accordo, lo c
 
 ## Wrapper Functions
 
-### Import Pattern
+### Import Pattern (adapter-agnostic)
 ```python
 import sys
-sys.path.insert(0, 'tools/lib')
+sys.path.insert(0, '.claude/skills/email')
+from adapter import EmailAdapter
 
-from gmail_write import send_message, create_draft, reply_to_thread
-from gmail_read import search_messages, get_message  # opzionale
+mail = EmailAdapter()  # auto-detect Gmail o O365
 ```
 
 ### Key Functions
 
-#### **send_message()**
+#### **send()**
 ```python
-result = send_message(
+result = mail.send(
     to="destinatario@example.com",
     subject="Oggetto",
     body="Corpo email...",
-    sender="Anacleto <anacleto@giobi.com>"  # opzionale
+    confirm="SEND"
 )
 ```
 
-#### **create_draft() - Standalone**
+#### **draft() - Standalone**
 ```python
-draft = create_draft(
+draft = mail.draft(
     to="nuovo@cliente.com",
     subject="Preventivo",
     body="Testo...",
 )
 ```
 
-#### **reply_to_thread() - Quick Reply**
+#### **reply() - Quick Reply**
 ```python
-result = reply_to_thread(
+result = mail.reply(
     thread_id="abc123",
     body="Perfetto, grazie!",
-    send_immediately=True  # o False per draft
+    send_immediately=True,  # o False per draft
+    confirm="SEND"          # richiesto se send_immediately=True
 )
 ```
 
