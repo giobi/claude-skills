@@ -1,1 +1,1 @@
-{"name":"gmail","description":"Gmail orchestrator — triage inbox, search, draft replies in-thread","version":"1.0.0"}
+{"name":"email-drivers","description":"Email adapter with Gmail and O365 drivers, workspace lock, unified interface","version":"2.0.0"}
