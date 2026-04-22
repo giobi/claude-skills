@@ -10,6 +10,7 @@ import os
 import mimetypes
 import requests
 import base64
+from pathlib import Path
 from typing import Optional, Dict, List, Tuple
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
@@ -144,15 +145,34 @@ def wrap_body_with_signature(
 SEND_CONFIRM_TOKEN = "SEND"
 SEND_TOKEN_FILE = "/tmp/claude-send-authorized"
 
+# Workspace-level lock: if this file exists, ALL sending is blocked (draft-only mode).
+# Path: .claude/skills/email/gmail_write.py → 4 parents up = workspace root.
+_WORKSPACE_ROOT = Path(__file__).parent.parent.parent.parent
+SEND_LOCK_FILE = _WORKSPACE_ROOT / "storage" / "lock" / "email"
+
+
+def _check_workspace_lock(action: str = "send email"):
+    """Check if workspace-level email lock is active (draft-only mode)."""
+    if SEND_LOCK_FILE.exists():
+        raise ValueError(
+            f"🔒 BLOCKED: {action} — workspace in draft-only mode. "
+            f"File lock attivo: {SEND_LOCK_FILE}. "
+            f"Rimuovi storage/lock/email per abilitare l'invio."
+        )
+
 
 def _require_send_confirmation(confirm: Optional[str], action: str = "send email"):
-    """Gate check: requires confirm='SEND' AND a valid /send token file."""
+    """Gate check: workspace lock + confirm='SEND' + valid /send token file."""
+    # Gate 0: workspace-level lock (draft-only mode)
+    _check_workspace_lock(action)
+
+    # Gate 1: confirm parameter
     if confirm != SEND_CONFIRM_TOKEN:
         raise ValueError(
             f"❌ BLOCKED: {action} requires confirm=\"SEND\" parameter. "
             f"Got: {confirm!r}. Usa /send per inviare email."
         )
-    # Token file created by /send command — expires after 5 min
+    # Gate 2: token file created by /send command — expires after 5 min
     if not os.path.exists(SEND_TOKEN_FILE):
         raise ValueError(
             f"❌ BLOCKED: {action} — nessun token /send attivo. "
