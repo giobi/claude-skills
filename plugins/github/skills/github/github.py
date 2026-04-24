@@ -16,7 +16,7 @@ from pathlib import Path
 from dotenv import load_dotenv
 
 # Load .env from brain root
-load_dotenv(Path(__file__).parent.parent.parent / '.env')
+load_dotenv(Path(__file__).resolve().parent.parent.parent.parent / '.env')
 
 
 def _get_token(token_env: str = 'GITHUB_TOKEN') -> str:
