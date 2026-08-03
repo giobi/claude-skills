@@ -4,17 +4,27 @@ This skill needs to know **how** `public/` is exposed, before it can hand out an
 
 ## 1. Detect the driver — don't ask if you can check
 
-**`share-cli`** (ABChat installs: the app mints per-folder token URLs). Signs:
+Run the probe. It answers both "which driver" and "does it actually work here":
 
 ```bash
-grep -q WORKSPACE_SLUG .env && ls .claude/skills/public/share.py   # both present → share-cli
-python3 .claude/skills/public/share.py list                        # works → confirmed
+python3 .claude/skills/public/share.py doctor
 ```
 
-**`static`** (a web root serves the folder). Then ask the user:
+- `token_driver: ok` → **`share-cli`**. Nothing else to configure in the normal case.
+- `token_driver: KO …` → read the error. Usually the endpoint isn't derivable
+  (missing `INSTANCE_HOST`/`INSTANCE_ID`) → set `share_api` in the config.
+- `legacy_static: … (VIVO)` → that install *also* serves a static always-public
+  path. Record it as `base_url`, but prefer the token driver for anything new:
+  the static ones are being dismissed.
+
+**`static`** (a web root serves the folder, no token API). Ask the user:
 *"What's the URL where your `public/` folder is served? (e.g. `https://public.example.com`)"*
 
 Ask about templates either way: *"Do you have HTML templates? Where? (default: `public/template/`)"*
+
+If `doctor` prints a link on an internal host (`{instance}-nginx`), set
+`public_base_url` to the host users actually type — that's the install's env being
+stale, and the config is how you override it.
 
 ## 2. Write the config
 
