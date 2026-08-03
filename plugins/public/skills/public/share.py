@@ -39,6 +39,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[3]      # .claude/skills/public/share.py → brain root
 ENV_PATH = ROOT / ".env"
+LOCAL_YAML = ROOT / "boot" / "local.yaml"       # ← l'infrastruttura si dichiara QUI
 CONFIG_PATH = ROOT / "wiki" / "skills" / "public.md"
 REQUEST_FILE = ROOT / "storage" / ".share-request.json"
 UA = "abchat-brain-share/1.0"                   # Cloudflare dà 1010 al default di urllib
@@ -76,8 +77,34 @@ def config() -> dict:
         return out
 
 
+def infra() -> dict:
+    """
+    Sezione `public:` di `boot/local.yaml` — la **dichiarazione** di come una
+    pagina diventa pubblica su questa installazione.
+
+    Perché qui e non altrove: nel brain protocol l'infrastruttura la decidono
+    `boot/local.yaml` (macchina/ambiente) e `boot/domain.md` (contratto), non il
+    config di una skill e non l'ambiente del container. `wiki/skills/public.md`
+    tiene solo opzioni di skill (template, giorni di default). Dedurre l'host
+    dall'env era la stessa classe di errore che questa skill esiste per chiudere:
+    un dato infrastrutturale ricavato per indizi invece che letto dove è scritto.
+    """
+    if not LOCAL_YAML.exists():
+        return {}
+    try:
+        import yaml
+        data = yaml.safe_load(LOCAL_YAML.read_text(encoding="utf-8", errors="replace")) or {}
+    except Exception:
+        return {}
+    pub = data.get("public")
+    return pub if isinstance(pub, dict) else {}
+
+
 def instance_host() -> str:
-    """Host dell'installazione, dall'ambiente del container. È l'infrastruttura."""
+    """Host dell'installazione: dichiarato in local.yaml, env solo come ripiego."""
+    declared = str(infra().get("base_url") or "").strip()
+    if declared:
+        return urllib.parse.urlsplit(declared if "//" in declared else f"https://{declared}").netloc
     return os.getenv("INSTANCE_HOST", "").strip()
 
 
@@ -104,20 +131,31 @@ def share_api_candidates() -> list:
     `canonical_host()` e `check_url()`).
     """
     out = []
-    explicit = str(config().get("share_api") or "").strip() or os.getenv("SHARE_API_URL", "").strip()
-    if explicit:
-        out.append((explicit, True))
-    host = instance_host()
-    if host:
-        out.append((f"https://{host}/api/share/cli", True))
-    iid = os.getenv("INSTANCE_ID", "").strip()
-    if iid:
-        out.append((f"https://{iid}-nginx/api/share/cli", False))
+    inf = infra()
+    # 1. dichiarati in boot/local.yaml — la fonte di verità
+    for key, verify in (("share_api", True), ("share_api_internal", False)):
+        v = str(inf.get(key) or "").strip()
+        if v and v.lower() not in ("null", "none", "~"):
+            out.append((v, verify))
+    # 2. ripieghi per i brain il cui local.yaml non dichiara ancora la sezione
+    if not out:
+        explicit = str(config().get("share_api") or "").strip() or os.getenv("SHARE_API_URL", "").strip()
+        if explicit:
+            out.append((explicit, True))
+        host = instance_host()
+        if host:
+            out.append((f"https://{host}/api/share/cli", True))
+        iid = os.getenv("INSTANCE_ID", "").strip()
+        if iid:
+            out.append((f"https://{iid}-nginx/api/share/cli", False))
     if not out:
         sys.exit(
             "Non riesco a ricavare l'endpoint delle pubblicazioni.\n"
-            "Metti `share_api: https://<install>/api/share/cli` in wiki/skills/public.md, "
-            "oppure verifica che il container esponga INSTANCE_HOST / INSTANCE_ID."
+            "Dichiaralo in boot/local.yaml:\n\n"
+            "public:\n"
+            "  mode: share-token\n"
+            "  base_url: https://<host pubblico dell'install>\n"
+            "  share_api: https://<host pubblico dell'install>/api/share/cli\n"
         )
     seen, uniq = set(), []
     for url, verify in out:
@@ -141,7 +179,8 @@ def slug_candidates() -> list:
         except Exception:
             pass
 
-    for v in (str(config().get("brain_slug") or "").strip(),   # override esplicito, vince
+    for v in (str(infra().get("brain_slug") or "").strip(),     # dichiarato in local.yaml, vince
+              str(config().get("brain_slug") or "").strip(),    # legacy: config di skill
               read_env("WORKSPACE_SLUG"),
               read_env("BRAIN_SLUG"),
               manifest_slug,
@@ -160,13 +199,11 @@ def slug_candidates() -> list:
 def canonical_host() -> str:
     """
     L'host con cui gli UTENTI raggiungono questo install — quello che deve
-    comparire nei link. `public_base_url` nel config vince su INSTANCE_HOST,
-    perché su alcuni install l'env dei container è rimasto indietro (su emibrain
-    19 container su 25 dicono ancora `v2.emibrain.it`, vhost morto).
+    comparire nei link. Dichiarato come `public.base_url` in boot/local.yaml.
+    L'env dei container non è affidabile: su emibrain 19 su 25 dicono ancora
+    `v2.emibrain.it`, un vhost morto. Per questo `instance_host()` legge prima
+    local.yaml e solo dopo ripiega sull'env.
     """
-    cfg = str(config().get("public_base_url") or "").strip()
-    if cfg:
-        return urllib.parse.urlsplit(cfg if "//" in cfg else f"https://{cfg}").netloc
     return instance_host()
 
 
@@ -294,6 +331,7 @@ def doctor() -> dict:
             return None
 
     rep = {
+        "infra_declared": "boot/local.yaml public:" if infra() else "NO — nessuna sezione public: in boot/local.yaml",
         "install_host": instance_host() or "(ignoto)",
         "share_api": ", ".join(u for u, _ in share_api_candidates()),
         "slug": slug_candidates()[0],
@@ -306,7 +344,8 @@ def doctor() -> dict:
     if isinstance(res.get("published"), list):
         rep["published"] = res["published"]
 
-    legacy = str(config().get("legacy_base_url") or config().get("base_url") or "").strip()
+    legacy = str(infra().get("static_url")
+                 or config().get("legacy_base_url") or config().get("base_url") or "").strip()
     if legacy:
         code = probe(legacy.rstrip("/") + "/")
         rep["legacy_static"] = f"{legacy} → HTTP {code}" + ("  (VIVO)" if code == 200 else "  (non serve)")

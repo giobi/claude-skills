@@ -6,25 +6,22 @@ description: "CRUD for public mini-sites and reports — static HTML with templa
 user-invocable: true
 argument-hint: "[create|update|delete|list|publish|revoke|rebuild-index] [slug] [title]"
 parameters:
-  - name: driver
-    description: "How public/ is exposed: `static` (a base URL serves the folder) or `share-cli` (the app mints per-folder tokens; ABChat installs)"
-    default: "static"
-  - name: base_url
-    description: "Base URL where public/ is served — driver `static` only (e.g. https://public.example.com)"
-    required: false
   - name: public_dir
     description: "Path to public/ directory relative to project root"
     default: "public"
   - name: template_dir
     description: "Path to templates inside public dir"
     default: "public/template"
+  - name: default_days
+    description: "Default publication lifetime in days (share-token installs)"
+    default: 30
 ---
 
 # /public — Public Sites Manager
 
 CRUD for static mini-sites and reports served from a `public/` directory.
 
-**Before using:** read your config from `wiki/skills/public.md`.
+**Before using:** read `boot/local.yaml` (sezione `public:`) per l'infrastruttura di questo install, e `wiki/skills/public.md` per le opzioni di skill.
 
 ## Rule zero — the URL is a fact you read, never a fact you compose
 
@@ -48,25 +45,38 @@ platform knows the resulting address. So:
 
 ## Configuration
 
-`wiki/skills/public.md`:
+**L'infrastruttura non si configura qui.** Host pubblico, endpoint, eventuale
+percorso sempre-pubblico sono fatti della macchina: si dichiarano in
+**`boot/local.yaml`**, sezione `public:`, ed è da lì che `share.py` legge. Le
+regole stanno in `boot/domain.md`. È la separazione del brain protocol —
+macchina in `local.yaml`, config di skill in `wiki/skills/`, segreti in `.env` —
+e vale perché un dato infrastrutturale dedotto dall'ambiente è la stessa classe
+di errore che questa skill esiste per chiudere.
 
 ```yaml
+# boot/local.yaml — dichiarazione dell'installazione
+public:
+  path: public/
+  mode: share-token                                   # share-token | static
+  base_url: https://install.example.com               # host che compare nei link
+  share_api: https://install.example.com/api/share/cli
+  share_api_internal: https://abc-nginx/api/share/cli  # ripiego, TLS non verificato
+  static_url: null                                    # solo dove esiste davvero
+  brain_slug: nomebrain                               # come l'app conosce il brain
+```
+
+```yaml
+# wiki/skills/public.md — solo opzioni di skill
 ---
-driver: share-cli          # share-cli | static
 public_dir: public
 template_dir: public/template
-# driver share-cli — entrambi opzionali, servono solo dove l'auto-detect sbaglia
-share_api: https://install.example.com/api/share/cli   # override dell'endpoint
-public_base_url: https://install.example.com           # host che deve comparire nei link
-# solo driver: static
-base_url: https://public.example.com
+default_days: 30
 ---
 ```
 
-Con `driver: share-cli` la skill funziona **senza config**: ricava endpoint e slug
-dall'ambiente del container. Le due chiavi sopra servono quando l'ambiente è
-rimasto indietro — `public_base_url` in particolare è l'unico modo di correggere
-un `INSTANCE_HOST` stantio senza ricreare il container.
+Se `local.yaml` non dichiara la sezione, `share.py` ripiega sull'ambiente del
+container per non lasciare a piedi i brain vecchi, e `doctor` lo segnala con
+`infra_declared: NO`. È un ripiego, non il modo giusto: dichiarala.
 
 ## Driver `share-cli` — ABChat installs
 
@@ -102,8 +112,8 @@ Due trappole che `share.py` gestisce, da conoscere se qualcosa non torna:
 - **L'app compone l'URL con l'host della richiesta, non con `APP_URL`.** Bussare
   all'nginx interno farebbe tornare `https://emi-nginx/share/…`, un nome di
   container che nessuno può aprire. Per questo sul salto interno si forza un
-  header `Host:` canonico, preso da `public_base_url` nel config (che vince) o da
-  `INSTANCE_HOST`. Se malgrado tutto torna un link su host interno, `share.py`
+  header `Host:` canonico, preso da `public.base_url` in `boot/local.yaml`.
+  Se malgrado tutto torna un link su host interno, `share.py`
   **rifiuta di stamparlo** e dice cosa configurare.
 - **Lo slug non sta nello stesso posto ovunque**: su avocado `manifest.json` porta
   l'UID e non lo slug, su grbrain lo slug giusto. Si provano i candidati in ordine.
