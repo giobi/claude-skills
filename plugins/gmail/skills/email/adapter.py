@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Email Adapter — Unified interface for Gmail and O365.
+Email Adapter — Unified interface for Gmail, O365 and plain IMAP/SMTP.
 
 Auto-detects driver from .env, exposes common operations,
 handles workspace lock centrally.
@@ -46,7 +46,7 @@ SEND_CONFIRM_TOKEN = "SEND"
 
 
 def _detect_driver() -> str:
-    """Detect email driver from .env file. Returns 'gmail' or 'o365'."""
+    """Detect email driver from .env file. Returns 'gmail', 'o365' or 'imap'."""
     env_file = WORKSPACE_ROOT / '.env'
     if not env_file.exists():
         raise RuntimeError(f"No .env found at {env_file}")
@@ -58,10 +58,14 @@ def _detect_driver() -> str:
         return 'o365'
     if 'GMAIL_CLIENT_ID' in content or 'GMAIL_REFRESH_TOKEN' in content:
         return 'gmail'
+    # IMAP is checked last: it is the fallback for mailboxes with no OAuth broker,
+    # and must never win over a mailbox that has real tokens.
+    if 'IMAP_HOST' in content or 'EMAIL_IMAP_HOST' in content:
+        return 'imap'
 
     raise RuntimeError(
         f"No email credentials found in {env_file}. "
-        "Need GMAIL_* or O365_* variables."
+        "Need GMAIL_*, O365_* or IMAP_* variables."
     )
 
 
@@ -97,7 +101,7 @@ def _check_send_gate(confirm: Optional[str], action: str = "send email"):
 
 
 class EmailAdapter:
-    """Unified email interface. Auto-detects Gmail or O365."""
+    """Unified email interface. Auto-detects Gmail, O365 or IMAP."""
 
     def __init__(self, driver: Optional[str] = None):
         self.driver_name = driver or _detect_driver()
@@ -110,6 +114,9 @@ class EmailAdapter:
             raise RuntimeError(f"Driver not found: {drivers_dir}")
 
         sys.path.insert(0, str(drivers_dir))
+        # Drivers resolve their own config from .env; tell them which workspace
+        # this adapter is serving so the two can never disagree.
+        os.environ['EMAIL_WORKSPACE_ROOT'] = str(WORKSPACE_ROOT)
 
         if self.driver_name == 'gmail':
             import gmail_read as _read
@@ -119,6 +126,9 @@ class EmailAdapter:
         elif self.driver_name == 'o365':
             import o365 as _o365
             self._o365 = _o365
+        elif self.driver_name == 'imap':
+            import imap_driver as _imap
+            self._imap = _imap
         else:
             raise RuntimeError(f"Unknown driver: {self.driver_name}")
 
@@ -131,18 +141,24 @@ class EmailAdapter:
     def search(self, query: str, max_results: int = 10) -> List[Dict]:
         if self.driver_name == 'gmail':
             return self._read.search_messages(query, max_results=max_results)
+        elif self.driver_name == 'imap':
+            return self._imap.search_messages(query, max_results=max_results)
         else:
             return self._o365.search_messages(query, max_results=max_results)
 
     def get_messages(self, max_results: int = 20, **kwargs) -> List[Dict]:
         if self.driver_name == 'gmail':
             return self._read.search_messages("in:inbox", max_results=max_results)
+        elif self.driver_name == 'imap':
+            return self._imap.search_messages("in:inbox", max_results=max_results)
         else:
             return self._o365.get_messages(max_results=max_results, **kwargs)
 
     def get_message(self, message_id: str) -> Optional[Dict]:
         if self.driver_name == 'gmail':
             return self._read.get_message(message_id)
+        elif self.driver_name == 'imap':
+            return self._imap.get_message(message_id)
         else:
             # O365 doesn't have single message fetch in shared wrapper
             results = self._o365.search_messages(f"id:{message_id}", max_results=1)
@@ -151,6 +167,8 @@ class EmailAdapter:
     def get_thread(self, thread_id: str) -> Optional[Dict]:
         if self.driver_name == 'gmail':
             return self._read.get_thread(thread_id)
+        elif self.driver_name == 'imap':
+            return self._imap.get_thread(thread_id)
         else:
             # O365: threads = conversation chains, not natively supported the same way
             return None
@@ -172,6 +190,11 @@ class EmailAdapter:
         """Create draft. No lock check — drafts are always allowed."""
         if self.driver_name == 'gmail':
             return self._write.create_draft(
+                to=to, subject=subject, body=body, body_html=body_html,
+                cc=cc, bcc=bcc, thread_id=thread_id, sender=sender, **kwargs
+            )
+        elif self.driver_name == 'imap':
+            return self._imap.create_draft(
                 to=to, subject=subject, body=body, body_html=body_html,
                 cc=cc, bcc=bcc, thread_id=thread_id, sender=sender, **kwargs
             )
@@ -212,6 +235,11 @@ class EmailAdapter:
                 to=to, subject=subject, body=body, body_html=body_html,
                 cc=cc, bcc=bcc, sender=sender, confirm=confirm, **kwargs
             )
+        elif self.driver_name == 'imap':
+            return self._imap.send_message(
+                to=to, subject=subject, body=body, body_html=body_html,
+                cc=cc, bcc=bcc, sender=sender, **kwargs
+            )
         else:
             result = self._o365.send_message(
                 to=to, subject=subject, body=body_html or body,
@@ -225,6 +253,8 @@ class EmailAdapter:
 
         if self.driver_name == 'gmail':
             return self._write.send_draft(draft_id, confirm=confirm)
+        elif self.driver_name == 'imap':
+            return self._imap.send_draft(draft_id, confirm=confirm)
         else:
             # O365: read staged draft and send
             import json
@@ -266,6 +296,17 @@ class EmailAdapter:
                 )
             elif message_id:
                 return self._write.reply_to_message(
+                    message_id=message_id, body=body, body_html=body_html,
+                    send_immediately=send_immediately, sender=sender, confirm=confirm
+                )
+        elif self.driver_name == 'imap':
+            if thread_id:
+                return self._imap.reply_to_thread(
+                    thread_id=thread_id, body=body, body_html=body_html,
+                    send_immediately=send_immediately, sender=sender, confirm=confirm
+                )
+            elif message_id:
+                return self._imap.reply_to_message(
                     message_id=message_id, body=body, body_html=body_html,
                     send_immediately=send_immediately, sender=sender, confirm=confirm
                 )

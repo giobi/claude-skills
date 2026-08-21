@@ -1,1 +1,1 @@
-{"name":"email-drivers","description":"Email adapter with Gmail and O365 drivers, workspace lock, unified interface","version":"2.0.0"}
+{"name":"email-drivers","description":"Email adapter with Gmail, O365 and IMAP/SMTP drivers, workspace lock, unified interface","version":"2.1.0"}
