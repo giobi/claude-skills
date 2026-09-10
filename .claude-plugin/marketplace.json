@@ -332,20 +332,6 @@
       ]
     },
     {
-      "name": "sessions",
-      "source": "./plugins/sessions",
-      "description": "Session browser \u2014 last N sessions and recently active projects from brain diary",
-      "version": "1.0.0",
-      "category": "brain",
-      "tags": [
-        "sessions",
-        "projects",
-        "diary",
-        "brain",
-        "recap"
-      ]
-    },
-    {
       "name": "imagen",
       "source": "./plugins/imagen",
       "description": "AI image generation \u2014 Gemini Imagen, fal.ai (image/video/audio/TTS), Replicate Flux",
