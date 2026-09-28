@@ -14,7 +14,7 @@ Browse the catalogue at **[brainprotocol.it/skills](https://brainprotocol.it/ski
 ### As a Claude Code plugin marketplace
 
 ```
-/plugin marketplace add giobi/brainprotocol-skills
+/plugin marketplace add giobi/claude-skills
 /plugin install design
 /plugin install build
 ```
@@ -25,7 +25,7 @@ Bootstrap the package manager once:
 
 ```bash
 mkdir -p .claude/skills/brain
-curl -sL https://raw.githubusercontent.com/giobi/brainprotocol-skills/main/plugins/brain/skills/brain/SKILL.md \
+curl -sL https://raw.githubusercontent.com/giobi/claude-skills/main/plugins/brain/skills/brain/SKILL.md \
   -o .claude/skills/brain/SKILL.md
 ```
 
@@ -42,7 +42,7 @@ Then, inside Claude Code:
 Every skill is a single folder. Copy it into `.claude/skills/` and it works:
 
 ```bash
-curl -sL https://raw.githubusercontent.com/giobi/brainprotocol-skills/main/plugins/design/skills/design/SKILL.md \
+curl -sL https://raw.githubusercontent.com/giobi/claude-skills/main/plugins/design/skills/design/SKILL.md \
   -o .claude/skills/design/SKILL.md
 ```
 
