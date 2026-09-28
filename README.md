@@ -42,9 +42,25 @@ Then, inside Claude Code:
 Every skill is a single folder. Copy it into `.claude/skills/` and it works:
 
 ```bash
-curl -sL https://raw.githubusercontent.com/giobi/claude-skills/main/plugins/design/skills/design/SKILL.md \
-  -o .claude/skills/design/SKILL.md
+curl -sL https://brainprotocol.it/skills/design/design.zip -o /tmp/design.zip
+unzip -o /tmp/design.zip -d .claude/skills/
 ```
+
+### From any other agent
+
+Skills are plain markdown with no runtime, so anything that can read a file can use one.
+Every skill has an install page written for an agent rather than a human:
+
+```
+https://brainprotocol.it/skills/<name>/install
+```
+
+Point your agent at it — `Install the design skill: read
+https://brainprotocol.it/skills/design/install and follow the instructions there.` The page
+says how to fetch the skill, where to put it, and what changes when there is no brain and no
+Claude Code around it. The catalogue at
+[brainprotocol.it/skills](https://brainprotocol.it/skills/) has a copy-prompt button on every
+skill that gives you that line.
 
 ## The design → build pair
 
