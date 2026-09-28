@@ -2,7 +2,7 @@
 name: public
 requires:
   capabilities: [web_serving]
-description: "CRUD for public mini-sites and reports — static HTML with templates"
+description: "DEPRECATED, use the artifact skill — CRUD for public mini-sites and reports"
 user-invocable: true
 argument-hint: "[create|update|delete|list|publish|revoke|rebuild-index] [slug] [title]"
 parameters:
@@ -16,6 +16,12 @@ parameters:
     description: "Default publication lifetime in days (share-token installs)"
     default: 30
 ---
+
+> **Deprecated.** This skill was renamed and rewritten as **`artifact`**
+> (`plugins/artifact`). The artifact skill adds the auth-gated internal link
+> (`share.py link`), slideshows, brand fill, and the forgiving `folder`
+> argument. `public` is kept installable only so brains already pointing at it
+> keep working — it receives no further changes.
 
 # /public — Public Sites Manager
 

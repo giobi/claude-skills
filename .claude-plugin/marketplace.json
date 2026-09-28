@@ -406,6 +406,20 @@
       ]
     },
     {
+      "name": "artifact",
+      "source": "./plugins/artifact",
+      "description": "CRUD for private/public mini-sites and reports — auth-gated internal links, share tokens, slideshows, brand fill",
+      "version": "1.4.0",
+      "category": "web",
+      "tags": [
+        "artifact",
+        "static-site",
+        "reports",
+        "share-link",
+        "html"
+      ]
+    },
+    {
       "name": "pressless",
       "source": "./plugins/pressless",
       "description": "PressLess — AI static site generator. WordPress without the weight.",
@@ -421,7 +435,7 @@
     {
       "name": "public",
       "source": "./plugins/public",
-      "description": "CRUD for public mini-sites and reports — static HTML, driver-aware URLs (static | share-cli)",
+      "description": "DEPRECATED — superseded by the `artifact` plugin, which is where development continues. Kept installable for brains still pointing here.",
       "version": "1.3.0",
       "category": "web",
       "tags": [
@@ -429,6 +443,20 @@
         "public",
         "templates",
         "html"
+      ]
+    },
+    {
+      "name": "sharepoint",
+      "source": "./plugins/sharepoint",
+      "description": "SharePoint access via Microsoft Graph — tenant-wide search, browse sites, read and upload files. Reuses the email skill's O365 token.",
+      "version": "1.3.0",
+      "category": "web",
+      "tags": [
+        "sharepoint",
+        "microsoft-graph",
+        "o365",
+        "files",
+        "search"
       ]
     },
     {

@@ -1,1 +1,1 @@
-{"name": "public", "description": "CRUD for public mini-sites and reports — static HTML, driver-aware URLs (static | share-cli)", "version": "1.3.0"}
+{"name": "public", "description": "DEPRECATED \u2014 superseded by the `artifact` plugin. This copy is frozen; new work happens in plugins/artifact.", "version": "1.3.0"}
