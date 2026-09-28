@@ -70,7 +70,8 @@ is John Ousterhout's.
 
 ## Catalogue
 
-37 skills.
+<!-- CATALOGUE:START -->
+39 skills.
 
 ### Thinking & Building
 
@@ -128,8 +129,10 @@ is John Ousterhout's.
 
 | Skill | What it does |
 |-------|--------------|
+| **artifact** | CRUD for private/public mini-sites and reports — auth-gated internal links, share tokens, slideshows, brand fill |
 | **pressless** | PressLess — AI static site generator. WordPress without the weight. |
-| **public** | CRUD for public mini-sites and reports — static HTML, driver-aware URLs (static | share-cli) |
+| **public** | DEPRECATED — superseded by the `artifact` plugin, which is where development continues. Kept installable for brains still pointing here. |
+| **sharepoint** | SharePoint access via Microsoft Graph — tenant-wide search, browse sites, read and upload files. Reuses the email skill's O365 token. |
 | **wordpress** | WordPress management — REST API, WP-CLI, multi-site, Puppeteer, GDPR |
 
 ### Content & Publishing
@@ -208,6 +211,7 @@ is John Ousterhout's.
 |-------|--------------|
 | **brain** | Brain package manager — install, update, list skills from registries |
 | **cmd** | Slash command manager — list, create, edit, delete custom commands |
+<!-- CATALOGUE:END -->
 ## Writing your own
 
 A skill is a folder with a `SKILL.md`. The frontmatter is the whole contract:
@@ -230,7 +234,8 @@ translated. Keep the "when NOT to use this" section honest; it is what stops an 
 for the wrong tool.
 
 To publish it here, add `plugins/<name>/.claude-plugin/plugin.json` and an entry in
-`.claude-plugin/marketplace.json`, then open a pull request.
+`.claude-plugin/marketplace.json`, then open a pull request and run `python3 bin/render-readme.py` to refresh the
+catalogue above.
 
 ## Related
 
