@@ -23,6 +23,11 @@ The token in `.env` is the owner's own FormPilot account. Two roles exist:
 A viewer asking for a write gets a clear `PermissionError`; relay it, don't retry. Nobody can
 delete a form through the API, by design.
 
+**Perimeter.** An account may be restricted to some forms (one client's recruiter sees that
+client's forms only). `forms` lists exactly what this account may see; anything else answers
+`403 This form is not yours to see` — that is the system working, not a bug. Never work around
+it, never guess ids from other brains: the list this account gets is the whole of its world.
+
 ## NLP-first
 
 - "how many people applied to Fairtrade?" → `submissions fairtrade`, answer with the count
@@ -87,4 +92,5 @@ reissue, never ask for the old one.
 Built 2026-09-22 for David Caggiari-Pallett's brain (Giant), on top of the admin API
 (`App\Http\Controllers\Api\FormApiController`, FormPilot repo `github.com/giobi/formpilot`,
 branch `generations` = this deployment). Promoted to a shared skill on 2026-10-01 with a
-read-only CLI, so every brain on the installation uses one copy.
+read-only CLI, so every brain on the installation uses one copy. 1.1 (same day): per-account
+form perimeter documented.

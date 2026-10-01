@@ -196,7 +196,7 @@
       "name": "formpilot",
       "source": "./plugins/formpilot",
       "description": "Application forms on FormPilot — list forms, read submissions, design new forms from existing blocks; also answers to /form and /forms. Own token, own role.",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "category": "web",
       "tags": [
         "formpilot",
