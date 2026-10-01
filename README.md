@@ -87,7 +87,7 @@ is John Ousterhout's.
 ## Catalogue
 
 <!-- CATALOGUE:START -->
-39 skills.
+40 skills.
 
 ### Thinking & Building
 
@@ -146,6 +146,7 @@ is John Ousterhout's.
 | Skill | What it does |
 |-------|--------------|
 | **artifact** | CRUD for private/public mini-sites and reports — auth-gated internal links, share tokens, slideshows, brand fill |
+| **formpilot** | Application forms on FormPilot — list forms, read submissions, design new forms from existing blocks; also answers to /form and /forms. Own token, own role. |
 | **pressless** | PressLess — AI static site generator. WordPress without the weight. |
 | **public** | DEPRECATED — superseded by the `artifact` plugin, which is where development continues. Kept installable for brains still pointing here. |
 | **sharepoint** | SharePoint access via Microsoft Graph — tenant-wide search, browse sites, read and upload files. Reuses the email skill's O365 token. |

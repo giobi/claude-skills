@@ -11,20 +11,17 @@
   },
   "plugins": [
     {
-      "name": "imagen",
-      "source": "./plugins/imagen",
-      "description": "AI image generation — Gemini Imagen, fal.ai (image/video/audio/TTS), Replicate Flux",
-      "version": "1.0.0",
-      "category": "ai",
+      "name": "artifact",
+      "source": "./plugins/artifact",
+      "description": "CRUD for private/public mini-sites and reports — auth-gated internal links, share tokens, slideshows, brand fill",
+      "version": "1.4.0",
+      "category": "web",
       "tags": [
-        "image",
-        "video",
-        "audio",
-        "tts",
-        "gemini",
-        "fal",
-        "flux",
-        "ai-generation"
+        "artifact",
+        "static-site",
+        "reports",
+        "share-link",
+        "html"
       ]
     },
     {
@@ -42,46 +39,6 @@
       ]
     },
     {
-      "name": "schedule",
-      "source": "./plugins/schedule",
-      "description": "Schedule manager — list, add, edit, disable, enable brain scheduled tasks",
-      "version": "1.0.0",
-      "category": "automation",
-      "tags": [
-        "cron",
-        "scheduler",
-        "automation",
-        "tasks"
-      ]
-    },
-    {
-      "name": "inbox",
-      "source": "./plugins/inbox",
-      "description": "Inbox manager — classify and route files from inbox/ to diary, wiki, or log",
-      "version": "1.0.0",
-      "category": "brain",
-      "tags": [
-        "inbox",
-        "triage",
-        "brain",
-        "routing"
-      ]
-    },
-    {
-      "name": "project",
-      "source": "./plugins/project",
-      "description": "Project-first session management — activate, create, search brain projects",
-      "version": "1.0.0",
-      "category": "brain",
-      "tags": [
-        "project",
-        "session",
-        "brain",
-        "rag",
-        "core"
-      ]
-    },
-    {
       "name": "blog",
       "source": "./plugins/blog",
       "description": "Blog management — draft, publish, images for Jekyll and WordPress",
@@ -95,16 +52,16 @@
       ]
     },
     {
-      "name": "kindle",
-      "source": "./plugins/kindle",
-      "description": "Kindle-style reader — manage long-form articles as a personal reading site",
+      "name": "brain",
+      "source": "./plugins/brain",
+      "description": "Brain package manager — install, update, list skills from registries",
       "version": "1.0.0",
-      "category": "content",
+      "category": "meta",
       "tags": [
-        "reading",
-        "articles",
-        "kindle",
-        "long-form"
+        "package-manager",
+        "install",
+        "brain",
+        "meta"
       ]
     },
     {
@@ -120,6 +77,72 @@
       ]
     },
     {
+      "name": "build",
+      "source": "./plugins/build",
+      "description": "Build mode — TDD + deep modules + a return loop that keeps the design alive",
+      "version": "1.0.0",
+      "category": "workflow",
+      "tags": [
+        "build",
+        "tdd",
+        "deep-modules",
+        "grey-box",
+        "testing"
+      ]
+    },
+    {
+      "name": "calendar",
+      "source": "./plugins/calendar",
+      "description": "Google Calendar — create, list, update, delete events",
+      "version": "1.0.0",
+      "category": "productivity",
+      "tags": [
+        "google",
+        "calendar",
+        "events",
+        "schedule"
+      ]
+    },
+    {
+      "name": "cloudflare",
+      "source": "./plugins/cloudflare",
+      "description": "Cloudflare DNS — zones, records, cache purge, R2, Pages",
+      "version": "1.0.0",
+      "category": "infrastructure",
+      "tags": [
+        "cloudflare",
+        "dns",
+        "infrastructure",
+        "r2"
+      ]
+    },
+    {
+      "name": "cmd",
+      "source": "./plugins/cmd",
+      "description": "Slash command manager — list, create, edit, delete custom commands",
+      "version": "1.0.0",
+      "category": "meta",
+      "tags": [
+        "commands",
+        "meta",
+        "management"
+      ]
+    },
+    {
+      "name": "design",
+      "source": "./plugins/design",
+      "description": "Collaborative design — builds shared understanding of any project before acting",
+      "version": "1.0.0",
+      "category": "workflow",
+      "tags": [
+        "design",
+        "deep-modules",
+        "vocabulary",
+        "grill",
+        "planning"
+      ]
+    },
+    {
       "name": "devil",
       "source": "./plugins/devil",
       "description": "Devil's advocate — ruthlessly challenges any idea, plan, or decision",
@@ -129,6 +152,32 @@
         "devil",
         "advocate",
         "critical-thinking"
+      ]
+    },
+    {
+      "name": "discord",
+      "source": "./plugins/discord",
+      "description": "Discord bot — send messages to channels, DMs, and project channels",
+      "version": "1.0.0",
+      "category": "messaging",
+      "tags": [
+        "discord",
+        "bot",
+        "messaging",
+        "notifications"
+      ]
+    },
+    {
+      "name": "drive",
+      "source": "./plugins/drive",
+      "description": "Google Drive organizer — audit, triage inbox, split PDF, rename, move",
+      "version": "1.0.0",
+      "category": "productivity",
+      "tags": [
+        "google",
+        "drive",
+        "files",
+        "pdf"
       ]
     },
     {
@@ -144,16 +193,29 @@
       ]
     },
     {
-      "name": "site-ripper",
-      "source": "./plugins/site-ripper",
-      "description": "Site Ripper — extract design system from any website via Playwright",
+      "name": "formpilot",
+      "source": "./plugins/formpilot",
+      "description": "Application forms on FormPilot — list forms, read submissions, design new forms from existing blocks; also answers to /form and /forms. Own token, own role.",
       "version": "1.0.0",
-      "category": "design",
+      "category": "web",
       "tags": [
-        "design",
-        "playwright",
-        "scraping",
-        "css"
+        "formpilot",
+        "forms",
+        "recruitment",
+        "applications"
+      ]
+    },
+    {
+      "name": "ghostwriter",
+      "source": "./plugins/ghostwriter",
+      "description": "Ghostwriter — write in the user's voice, not as an LLM",
+      "version": "1.0.0",
+      "category": "writing",
+      "tags": [
+        "writing",
+        "style",
+        "email",
+        "voice"
       ]
     },
     {
@@ -174,41 +236,47 @@
       ]
     },
     {
-      "name": "scar",
-      "source": "./plugins/scar",
-      "description": "S.C.A.R. — Signal, Cause, Action, Reinforcement. Structured incident documentation.",
+      "name": "gmail",
+      "source": "./plugins/gmail",
+      "description": "Gmail orchestrator — triage inbox, search, draft replies in-thread",
       "version": "1.0.0",
-      "category": "devops",
+      "category": "email",
       "tags": [
-        "incident",
-        "postmortem",
-        "scar",
-        "documentation"
+        "gmail",
+        "email",
+        "oauth",
+        "inbox",
+        "triage"
       ]
     },
     {
-      "name": "snapshot",
-      "source": "./plugins/snapshot",
-      "description": "Docker Snapshot — Time Machine for PHP apps",
+      "name": "imagen",
+      "source": "./plugins/imagen",
+      "description": "AI image generation — Gemini Imagen, fal.ai (image/video/audio/TTS), Replicate Flux",
       "version": "1.0.0",
-      "category": "devops",
+      "category": "ai",
       "tags": [
-        "docker",
-        "snapshot",
-        "backup",
-        "devops"
+        "image",
+        "video",
+        "audio",
+        "tts",
+        "gemini",
+        "fal",
+        "flux",
+        "ai-generation"
       ]
     },
     {
-      "name": "tmux",
-      "source": "./plugins/tmux",
-      "description": "Tmux management — pane/window titles, layout, move panes",
+      "name": "inbox",
+      "source": "./plugins/inbox",
+      "description": "Inbox manager — classify and route files from inbox/ to diary, wiki, or log",
       "version": "1.0.0",
-      "category": "devops",
+      "category": "brain",
       "tags": [
-        "tmux",
-        "terminal",
-        "layout"
+        "inbox",
+        "triage",
+        "brain",
+        "routing"
       ]
     },
     {
@@ -225,30 +293,16 @@
       ]
     },
     {
-      "name": "gmail",
-      "source": "./plugins/gmail",
-      "description": "Gmail orchestrator — triage inbox, search, draft replies in-thread",
+      "name": "kindle",
+      "source": "./plugins/kindle",
+      "description": "Kindle-style reader — manage long-form articles as a personal reading site",
       "version": "1.0.0",
-      "category": "email",
+      "category": "content",
       "tags": [
-        "gmail",
-        "email",
-        "oauth",
-        "inbox",
-        "triage"
-      ]
-    },
-    {
-      "name": "cloudflare",
-      "source": "./plugins/cloudflare",
-      "description": "Cloudflare DNS — zones, records, cache purge, R2, Pages",
-      "version": "1.0.0",
-      "category": "infrastructure",
-      "tags": [
-        "cloudflare",
-        "dns",
-        "infrastructure",
-        "r2"
+        "reading",
+        "articles",
+        "kindle",
+        "long-form"
       ]
     },
     {
@@ -265,57 +319,6 @@
       ]
     },
     {
-      "name": "discord",
-      "source": "./plugins/discord",
-      "description": "Discord bot — send messages to channels, DMs, and project channels",
-      "version": "1.0.0",
-      "category": "messaging",
-      "tags": [
-        "discord",
-        "bot",
-        "messaging",
-        "notifications"
-      ]
-    },
-    {
-      "name": "telegram",
-      "source": "./plugins/telegram",
-      "description": "Telegram bot — send messages, read inbox, manage bot interactions",
-      "version": "1.0.0",
-      "category": "messaging",
-      "tags": [
-        "telegram",
-        "bot",
-        "messaging",
-        "notifications"
-      ]
-    },
-    {
-      "name": "brain",
-      "source": "./plugins/brain",
-      "description": "Brain package manager — install, update, list skills from registries",
-      "version": "1.0.0",
-      "category": "meta",
-      "tags": [
-        "package-manager",
-        "install",
-        "brain",
-        "meta"
-      ]
-    },
-    {
-      "name": "cmd",
-      "source": "./plugins/cmd",
-      "description": "Slash command manager — list, create, edit, delete custom commands",
-      "version": "1.0.0",
-      "category": "meta",
-      "tags": [
-        "commands",
-        "meta",
-        "management"
-      ]
-    },
-    {
       "name": "linkedin",
       "source": "./plugins/linkedin",
       "description": "LinkedIn intelligence — query builder, result parser, Proxycurl integration",
@@ -325,45 +328,6 @@
         "linkedin",
         "osint",
         "search"
-      ]
-    },
-    {
-      "name": "stalker",
-      "source": "./plugins/stalker",
-      "description": "Deep OSINT research on any subject — people, companies, domains, concepts",
-      "version": "1.0.0",
-      "category": "osint",
-      "tags": [
-        "osint",
-        "research",
-        "stalker",
-        "intelligence"
-      ]
-    },
-    {
-      "name": "calendar",
-      "source": "./plugins/calendar",
-      "description": "Google Calendar — create, list, update, delete events",
-      "version": "1.0.0",
-      "category": "productivity",
-      "tags": [
-        "google",
-        "calendar",
-        "events",
-        "schedule"
-      ]
-    },
-    {
-      "name": "drive",
-      "source": "./plugins/drive",
-      "description": "Google Drive organizer — audit, triage inbox, split PDF, rename, move",
-      "version": "1.0.0",
-      "category": "productivity",
-      "tags": [
-        "google",
-        "drive",
-        "files",
-        "pdf"
       ]
     },
     {
@@ -393,33 +357,6 @@
       ]
     },
     {
-      "name": "radar",
-      "source": "./plugins/radar",
-      "description": "Radar — site audit with ELI5 report + technical details",
-      "version": "1.0.0",
-      "category": "testing",
-      "tags": [
-        "audit",
-        "testing",
-        "report",
-        "qa"
-      ]
-    },
-    {
-      "name": "artifact",
-      "source": "./plugins/artifact",
-      "description": "CRUD for private/public mini-sites and reports — auth-gated internal links, share tokens, slideshows, brand fill",
-      "version": "1.4.0",
-      "category": "web",
-      "tags": [
-        "artifact",
-        "static-site",
-        "reports",
-        "share-link",
-        "html"
-      ]
-    },
-    {
       "name": "pressless",
       "source": "./plugins/pressless",
       "description": "PressLess — AI static site generator. WordPress without the weight.",
@@ -433,6 +370,20 @@
       ]
     },
     {
+      "name": "project",
+      "source": "./plugins/project",
+      "description": "Project-first session management — activate, create, search brain projects",
+      "version": "1.0.0",
+      "category": "brain",
+      "tags": [
+        "project",
+        "session",
+        "brain",
+        "rag",
+        "core"
+      ]
+    },
+    {
       "name": "public",
       "source": "./plugins/public",
       "description": "DEPRECATED — superseded by the `artifact` plugin, which is where development continues. Kept installable for brains still pointing here.",
@@ -443,6 +394,58 @@
         "public",
         "templates",
         "html"
+      ]
+    },
+    {
+      "name": "radar",
+      "source": "./plugins/radar",
+      "description": "Radar — site audit with ELI5 report + technical details",
+      "version": "1.0.0",
+      "category": "testing",
+      "tags": [
+        "audit",
+        "testing",
+        "report",
+        "qa"
+      ]
+    },
+    {
+      "name": "save",
+      "source": "./plugins/save",
+      "description": "Mid-session checkpoint (log, database, commit, push) without closing",
+      "version": "1.0.0",
+      "category": "workflow",
+      "tags": [
+        "checkpoint",
+        "git",
+        "session",
+        "workflow"
+      ]
+    },
+    {
+      "name": "scar",
+      "source": "./plugins/scar",
+      "description": "S.C.A.R. — Signal, Cause, Action, Reinforcement. Structured incident documentation.",
+      "version": "1.0.0",
+      "category": "devops",
+      "tags": [
+        "incident",
+        "postmortem",
+        "scar",
+        "documentation"
+      ]
+    },
+    {
+      "name": "schedule",
+      "source": "./plugins/schedule",
+      "description": "Schedule manager — list, add, edit, disable, enable brain scheduled tasks",
+      "version": "1.0.0",
+      "category": "automation",
+      "tags": [
+        "cron",
+        "scheduler",
+        "automation",
+        "tasks"
       ]
     },
     {
@@ -460,6 +463,70 @@
       ]
     },
     {
+      "name": "site-ripper",
+      "source": "./plugins/site-ripper",
+      "description": "Site Ripper — extract design system from any website via Playwright",
+      "version": "1.0.0",
+      "category": "design",
+      "tags": [
+        "design",
+        "playwright",
+        "scraping",
+        "css"
+      ]
+    },
+    {
+      "name": "snapshot",
+      "source": "./plugins/snapshot",
+      "description": "Docker Snapshot — Time Machine for PHP apps",
+      "version": "1.0.0",
+      "category": "devops",
+      "tags": [
+        "docker",
+        "snapshot",
+        "backup",
+        "devops"
+      ]
+    },
+    {
+      "name": "stalker",
+      "source": "./plugins/stalker",
+      "description": "Deep OSINT research on any subject — people, companies, domains, concepts",
+      "version": "1.0.0",
+      "category": "osint",
+      "tags": [
+        "osint",
+        "research",
+        "stalker",
+        "intelligence"
+      ]
+    },
+    {
+      "name": "telegram",
+      "source": "./plugins/telegram",
+      "description": "Telegram bot — send messages, read inbox, manage bot interactions",
+      "version": "1.0.0",
+      "category": "messaging",
+      "tags": [
+        "telegram",
+        "bot",
+        "messaging",
+        "notifications"
+      ]
+    },
+    {
+      "name": "tmux",
+      "source": "./plugins/tmux",
+      "description": "Tmux management — pane/window titles, layout, move panes",
+      "version": "1.0.0",
+      "category": "devops",
+      "tags": [
+        "tmux",
+        "terminal",
+        "layout"
+      ]
+    },
+    {
       "name": "wordpress",
       "source": "./plugins/wordpress",
       "description": "WordPress management — REST API, WP-CLI, multi-site, Puppeteer, GDPR",
@@ -472,60 +539,6 @@
         "wpcli",
         "multi-site",
         "gdpr"
-      ]
-    },
-    {
-      "name": "build",
-      "source": "./plugins/build",
-      "description": "Build mode — TDD + deep modules + a return loop that keeps the design alive",
-      "version": "1.0.0",
-      "category": "workflow",
-      "tags": [
-        "build",
-        "tdd",
-        "deep-modules",
-        "grey-box",
-        "testing"
-      ]
-    },
-    {
-      "name": "design",
-      "source": "./plugins/design",
-      "description": "Collaborative design — builds shared understanding of any project before acting",
-      "version": "1.0.0",
-      "category": "workflow",
-      "tags": [
-        "design",
-        "deep-modules",
-        "vocabulary",
-        "grill",
-        "planning"
-      ]
-    },
-    {
-      "name": "save",
-      "source": "./plugins/save",
-      "description": "Mid-session checkpoint (log, database, commit, push) without closing",
-      "version": "1.0.0",
-      "category": "workflow",
-      "tags": [
-        "checkpoint",
-        "git",
-        "session",
-        "workflow"
-      ]
-    },
-    {
-      "name": "ghostwriter",
-      "source": "./plugins/ghostwriter",
-      "description": "Ghostwriter — write in the user's voice, not as an LLM",
-      "version": "1.0.0",
-      "category": "writing",
-      "tags": [
-        "writing",
-        "style",
-        "email",
-        "voice"
       ]
     }
   ]
