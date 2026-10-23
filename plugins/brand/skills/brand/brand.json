@@ -1,0 +1,184 @@
+{
+  "version": "1.0",
+  "source": "SharePoint /5. Marketing/BrandBook26 - Generations/Generations - Brand Guidelines - V02.pdf",
+  "extracted_from": "Palette de couleurs SVGs (authoritative)",
+  "family_slogan": "Because we care",
+  "typography": {
+    "headings": "Inter",
+    "body": "Inter",
+    "mono": "JetBrains Mono",
+    "cdn": "https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"
+  },
+  "sub_brands": {
+    "generations": {
+      "slug": "generations",
+      "label": "Generations (marque mère)",
+      "use_when": "Multi-service pages, corporate umbrella, mother-brand hero",
+      "role": "Umbrella. Uses hero-mesh with all sub-brand gradients together.",
+      "primary": "#10a5eb",
+      "swatches": ["#10a5eb", "#38bef4", "#51cef9", "#5bd5fc"],
+      "gradient": {
+        "stops": ["#5bd5fc", "#51cef9", "#38bef4", "#10a5eb"],
+        "css": "linear-gradient(135deg, #5bd5fc 7%, #51cef9 26%, #38bef4 59%, #10a5eb 100%)"
+      }
+    },
+    "recruitment": {
+      "slug": "recruitment",
+      "label": "Recruitment",
+      "use_when": "Standard permanent recruitment offers, sourcing services, job pages",
+      "role": "Blue = trust, expertise. Same family as Committer GRAM.",
+      "primary": "#10a5eb",
+      "primary_deep": "#2f7fc4",
+      "shadow": "#12254f",
+      "swatches": ["#10a5eb", "#35bdf3", "#5bd5fc", "#2f7fc4", "#12254f"],
+      "gradient": {
+        "stops": ["#5bd5fc", "#35bdf3", "#10a5eb"],
+        "css": "linear-gradient(135deg, #5bd5fc 7%, #35bdf3 54%, #10a5eb 100%)"
+      }
+    },
+    "rpo": {
+      "slug": "rpo",
+      "label": "RPO Solutions",
+      "use_when": "RPO proposals, client hubs (Hedgren, CEFTA, Aqvita, Abbove), delivery portals, RPO tenders",
+      "role": "Magenta/pink = the flagship service line. High visual signature.",
+      "primary": "#fc58e1",
+      "primary_deep": "#dc04b8",
+      "shadow": "#630353",
+      "swatches": ["#fc58e1", "#fc7fe6", "#fca9ec", "#dc04b8", "#630353"],
+      "gradient": {
+        "stops": ["#fca9ec", "#fc7fe6", "#fc58e1"],
+        "css": "linear-gradient(135deg, #fca9ec 0%, #fc7fe6 51%, #fc58e1 99%)"
+      }
+    },
+    "executive": {
+      "slug": "executive",
+      "label": "Executive Search",
+      "use_when": "C-suite / senior placements, exec confidential mandates, board-level searches",
+      "role": "Gold = premium, sophistication. Same family as Harmonizer GRAM.",
+      "primary": "#db9c30",
+      "primary_deep": "#a06817",
+      "shadow": "#35150d",
+      "swatches": ["#db9c30", "#e8b252", "#f5c976", "#a06817", "#35150d"],
+      "gradient": {
+        "stops": ["#f5c976", "#db9c30"],
+        "css": "linear-gradient(135deg, #f5c976 0%, #db9c30 100%)"
+      }
+    },
+    "interim": {
+      "slug": "interim",
+      "label": "Interim Management",
+      "use_when": "Interim / fractional / transformation mandates",
+      "role": "Orange = energy, momentum, action. Same family as Emancipator GRAM.",
+      "primary": "#ff7b1c",
+      "primary_deep": "#e05e00",
+      "shadow": "#5d2700",
+      "swatches": ["#ff7b1c", "#ff932e", "#ffad40", "#e05e00", "#5d2700"],
+      "gradient": {
+        "stops": ["#ffad40", "#ff932e", "#ff7b1c"],
+        "css": "linear-gradient(135deg, #ffad40 0%, #ff932e 51%, #ff7b1c 100%)"
+      }
+    },
+    "worktech": {
+      "slug": "worktech",
+      "label": "WorkTech Solutions",
+      "use_when": "Product minisites, client portals, agents, Sales Companion, background checker, dashboards, tech demos",
+      "role": "Green-teal-to-lime = growth, tech, freshness. Same family as Trendsetter GRAM.",
+      "primary": "#85c021",
+      "primary_light": "#a8e046",
+      "primary_mint": "#57ddc6",
+      "primary_soft": "#80df85",
+      "shadow": "#192600",
+      "swatches": ["#85c021", "#a8e046", "#57ddc6", "#80df85", "#192600"],
+      "gradient": {
+        "stops": ["#57ddc6", "#a8e046"],
+        "css": "linear-gradient(135deg, #57ddc6 0%, #a8e046 100%)"
+      }
+    },
+    "gram": {
+      "slug": "gram",
+      "label": "GRAM by Generations",
+      "use_when": "Psychometric reports, candidate assessments, profile pages, GRAM product",
+      "role": "Meta-brand: each profile has its own gradient (see gram_profiles). Violet is the default GRAM cover.",
+      "primary": "#7540b8",
+      "primary_light": "#b77ae8",
+      "swatches": ["#7540b8", "#b77ae8"],
+      "gradient": {
+        "stops": ["#b77ae8", "#7540b8"],
+        "css": "linear-gradient(135deg, #b77ae8 0%, #7540b8 100%)"
+      }
+    }
+  },
+  "gram_profiles": {
+    "achiever": {
+      "label": "Achiever / Accompli (SA)",
+      "gradient_css": "linear-gradient(135deg, #b77ae8 0%, #7540b8 100%)",
+      "stops": ["#b77ae8", "#7540b8"]
+    },
+    "challenger": {
+      "label": "Challenger (C)",
+      "gradient_css": "linear-gradient(135deg, #fca9ec 0%, #fc58e1 100%)",
+      "stops": ["#fca9ec", "#fc58e1"],
+      "shares_with": "rpo"
+    },
+    "sustainer": {
+      "label": "Sustainer / Engagé (SS)",
+      "gradient_css": "linear-gradient(135deg, #ff7770 0%, #e73542 100%)",
+      "stops": ["#ff7770", "#e73542"]
+    },
+    "emancipator": {
+      "label": "Emancipator / Émancipateur (FS)",
+      "gradient_css": "linear-gradient(135deg, #ffad40 0%, #ff7b1c 100%)",
+      "stops": ["#ffad40", "#ff7b1c"],
+      "shares_with": "interim"
+    },
+    "harmonizer": {
+      "label": "Harmonizer / Harmoniseur (H)",
+      "gradient_css": "linear-gradient(135deg, #f5c976 0%, #db9c30 100%)",
+      "stops": ["#f5c976", "#db9c30"],
+      "shares_with": "executive"
+    },
+    "trendsetter": {
+      "label": "Trendsetter (CNC)",
+      "gradient_css": "linear-gradient(135deg, #57ddc6 0%, #a8e046 100%)",
+      "stops": ["#57ddc6", "#a8e046"],
+      "shares_with": "worktech"
+    },
+    "committer": {
+      "label": "Committer / Pérennisateur (SR)",
+      "gradient_css": "linear-gradient(135deg, #5bd5fc 0%, #10a5eb 100%)",
+      "stops": ["#5bd5fc", "#10a5eb"],
+      "shares_with": "recruitment"
+    }
+  },
+  "dark_shell": {
+    "notes": "Dark canvas remains the Generations minisite standard. The sub-brand accent replaces the previous coral placeholder.",
+    "bg": "#06060a",
+    "surface_1": "rgba(255,255,255,.03)",
+    "surface_2": "rgba(255,255,255,.07)",
+    "surface_3": "rgba(255,255,255,.12)",
+    "border_1": "rgba(255,255,255,.06)",
+    "border_2": "rgba(255,255,255,.10)",
+    "text_primary": "#f4f4f6",
+    "text_muted": "rgba(244,244,246,.62)"
+  },
+  "light_shell": {
+    "notes": "Use only when brand mandates a printable/executive look (Executive Search reports, GRAM PDFs). Default = dark.",
+    "bg": "#ffffff",
+    "surface_1": "#f6f6f9",
+    "border_1": "rgba(0,0,0,.08)",
+    "text_primary": "#0a0a12",
+    "text_muted": "rgba(10,10,18,.62)"
+  },
+  "logo_assets": {
+    "root": ".claude/skills/brand/assets/logos",
+    "structure": "{sub_brand}/{variant}.{ext} — variants: color, color-h (horizontal), color-it (icon+text), white, white-text, white-it, bw, icon"
+  },
+  "usage_rules": {
+    "hero_choice": "The hero gradient signals what the page is about. RPO hub = rpo. WorkTech product = worktech. Multi-service corporate = generations mother mesh.",
+    "no_mixing": "Never mix two sub-brand primaries as equal accents on the same page. Sub-brand is the accent; other brands appear only as secondary chips or logos.",
+    "gram_special": "GRAM pages may use all 7 profile gradients simultaneously (that's the point). Elsewhere: one gradient rules.",
+    "dark_canvas": "Default dark shell (#06060a). Cards use glass surfaces. The sub-brand gradient appears in hero mesh, primary CTA, section top-borders, and hover glows.",
+    "type_hierarchy": "Inter for everything except numbers, KPIs, tickers, and small badges — those use JetBrains Mono.",
+    "never": ["Coral #e8634a as default accent (retired 2026-07)", "Bootstrap/Material generic templates", "Light theme without a brand reason", "Mixed sub-brand accents"]
+  }
+}

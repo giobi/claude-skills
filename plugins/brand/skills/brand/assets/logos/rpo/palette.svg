@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Logos" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 500 425">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #dc04b8;
+      }
+
+      .cls-2 {
+        fill: #fc58e1;
+      }
+
+      .cls-3 {
+        font-family: MyriadPro-Regular, 'Myriad Pro';
+        font-size: 12px;
+      }
+
+      .cls-4 {
+        fill: url(#linear-gradient);
+      }
+
+      .cls-5 {
+        letter-spacing: 0em;
+      }
+
+      .cls-6 {
+        fill: #fc7fe6;
+      }
+
+      .cls-7 {
+        letter-spacing: 0em;
+      }
+
+      .cls-8 {
+        letter-spacing: -.01em;
+      }
+
+      .cls-9 {
+        letter-spacing: 0em;
+      }
+
+      .cls-10 {
+        letter-spacing: 0em;
+      }
+
+      .cls-11 {
+        fill: #630353;
+      }
+
+      .cls-12 {
+        fill: #fca9ec;
+      }
+    </style>
+    <linearGradient id="linear-gradient" x1="324.09" y1="102.01" x2="508.84" y2="286.76" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#fca9ec"/>
+      <stop offset=".51" stop-color="#fc7fe6"/>
+      <stop offset=".99" stop-color="#fc58e1"/>
+    </linearGradient>
+  </defs>
+  <g>
+    <rect class="cls-6" x="122.64" y="37.13" width="54.99" height="314.51"/>
+    <text class="cls-3" transform="translate(128.03 389)"><tspan x="0" y="0">#</tspan><tspan class="cls-8" x="5.96" y="0">f</tspan><tspan x="9.31" y="0">c7</tspan><tspan class="cls-8" x="20.84" y="0">f</tspan><tspan x="24.19" y="0">e6</tspan></text>
+  </g>
+  <g>
+    <rect class="cls-12" x="56.05" y="37.13" width="54.99" height="314.51"/>
+    <text class="cls-3" transform="translate(61.62 389)"><tspan x="0" y="0">#</tspan><tspan class="cls-8" x="5.96" y="0">f</tspan><tspan x="9.31" y="0">ca9ec</tspan></text>
+  </g>
+  <g>
+    <rect class="cls-2" x="189.22" y="37.13" width="54.99" height="314.51"/>
+    <text class="cls-3" transform="translate(196.92 389)"><tspan x="0" y="0">#</tspan><tspan class="cls-8" x="5.96" y="0">f</tspan><tspan x="9.31" y="0">c58e1</tspan></text>
+  </g>
+  <g>
+    <rect class="cls-11" x="322.38" y="37.13" width="54.99" height="314.51"/>
+    <text class="cls-3" transform="translate(328 389)"><tspan x="0" y="0">#630353</tspan></text>
+  </g>
+  <g>
+    <rect class="cls-1" x="255.8" y="37.13" width="54.99" height="314.51"/>
+    <text class="cls-3" transform="translate(261.42 389)"><tspan x="0" y="0">#dc04b8</tspan></text>
+  </g>
+  <g>
+    <rect class="cls-4" x="388.97" y="37.13" width="54.99" height="314.51"/>
+    <text class="cls-3" transform="translate(395.59 389)"><tspan x="0" y="0">G</tspan><tspan class="cls-9" x="7.75" y="0">r</tspan><tspan class="cls-5" x="11.62" y="0">adie</tspan><tspan class="cls-10" x="32.99" y="0">n</tspan><tspan class="cls-7" x="39.6" y="0">t</tspan></text>
+  </g>
+</svg>
