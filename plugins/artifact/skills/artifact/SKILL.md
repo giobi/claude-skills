@@ -398,7 +398,10 @@ share link. The kit is declared in the install's `brand.json` (`page_kit`,
 `sub_brands`, `default_sub`), the same file `brand.py` reads. An install without a
 kit gets a clear refusal: use the artifact-1.css layouts there. `--brand` picks the
 sub-brand (logo, gradient, motif); leave it out for the install's default. The script
-refuses to write into a folder that already has an `index.html`.
+refuses to write into a folder that already has an `index.html`. When it refuses,
+the folder belongs to an earlier page: unless the user asked you to update that page,
+pick a new name (`<folder>-2`, or a more specific one) and run the script again —
+never edit another conversation's page because its name matched.
 
 Then **edit `public/<folder>/index.html`**: every block in it is an example
 component with a comment saying what it is for. Keep the ones the content needs,
@@ -427,6 +430,10 @@ Content rules that come with it:
 - **Never fill a role, a title, an order of interviews, a figure or a sector fact you
   have no source for** — leave it out, or mark it `.missing`. General knowledge about
   the company ("founded in…", its brands) is not a source the user gave you either.
+  Nor is a description of what someone will ask or assess: "interview focused on
+  strategy and leadership" under a name is an invention when the source only says
+  who the interviews are with. A person card with a name and a role and nothing else
+  is correct.
 - **Only real articles** in a News block, with their real link, and **only people
   the sources name** in the People block.
 - Icons are Lucide (already loaded by the layout), never emoji.
