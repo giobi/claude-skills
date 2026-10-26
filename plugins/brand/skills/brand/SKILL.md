@@ -90,9 +90,11 @@ Change only `data-brand="…"`. The custom properties `--accent`, `--accent-grad
 ├── brand.json          # palette + machine-readable rules
 ├── tokens.css          # drop-in design tokens (custom properties + base components)
 ├── SKILL.md            # this guide
-├── new_page.py         # start a page from a template (see "Templates")
-├── templates/
-│   └── briefing/       # long-read layout: index.html, style.css, fonts/, logos/, motifs/
+├── web/                # page kit for /artifact layouts (see "Page kit")
+│   ├── tokens.css      # → ../tokens.css
+│   ├── fonts/          # Inter + JetBrains Mono, self-hosted woff2
+│   ├── logos/<sub>.svg # white-text logo per sub-brand, viewBox cropped to the artwork
+│   └── motifs/<sub>.svg# hero motif in the sub-brand gradient
 └── assets/
     ├── logos/
     │   ├── generations/{color,color-h,color-it,white,white-text,white-it,bw,icon,palette}.{svg,png}
@@ -120,59 +122,25 @@ Variant naming:
 
 ---
 
-## Templates
+## Page kit
 
-Ready layouts already dressed in the brand. Start a page from one of these before writing
-a layout by hand: the brand rules are already applied, and the page comes out
-self-contained (tokens, logo, motif and fonts sit in its own folder, so it renders the
-same at the internal `/artifact/` address and behind a `/share/<token>/` link).
+Ready page layouts live in **`/artifact`**, not here: deciding to make a page and
+picking its layout happen there, so that is where a layout has to be found. This
+skill supplies the look those layouts wear, in `web/`:
 
-```bash
-python3 .claude/skills/brand/new_page.py public/<folder> --brand recruitment \
-  --title "Head of Partnership Management" --accent "Partnership Management" \
-  --kicker "Candidate briefing"
-python3 .claude/skills/brand/new_page.py --list
-```
+- `tokens.css` — the design tokens (same file as above)
+- `fonts/` — Inter (latin + latin-ext, variable) and JetBrains Mono 400/600, self-hosted
+- `logos/<sub>.svg` — the white-text logo of each sub-brand, viewBox cropped to the
+  artwork so it renders at its real size
+- `motifs/<sub>.svg` — the hero motif: the mother brand uses `generations--motif-01`
+  (multi-hue, as the brand book allows only for it); every sub-brand uses `motif-03`
+  recoloured with its own gradient from `brand.json`, so a page never carries a second
+  accent
 
-`--brand` sets `data-brand`, the logo and the hero motif; `--accent` is the trailing part
-of the title drawn with the gradient (default: the last word). The script refuses to
-write into a folder that already has an `index.html`.
-
-Then replace the example content. Each block in the template is a component with a
-comment saying what it is for: keep the ones the content needs, delete the rest,
-renumber the sections, and keep the side index (`.toc`) in sync with the section ids.
-
-### `briefing` — a long read handed to one person before a step
-
-Candidate briefing before an interview, onboarding pack, client brief: someone else's
-document (often a Word file) made readable, without rewriting it. First built for the
-Fairtrade Belgium candidate briefing (Lorraine, October 2026).
-
-Structure: top bar with logo and badge → hero (title, lead, two buttons, motif) → side
-index + main column grouped in **parts** (`.part`) of **numbered sections**
-(`section` + `.num`) → footer.
-
-| Component | Markup | For |
-|-----------|--------|-----|
-| Part label | `.part` | groups sections: "Part one · The organisation" |
-| Section | `section#id` + `.num` + `h2` | one numbered topic; the id feeds the side index |
-| Side index | `nav.toc` with `.t-label` per part | hidden below 980px |
-| Chain | `.chain` of 4 `.card` with `.ico` + `.k` | a sequence of steps, left to right |
-| Card grid | `.grid2` / `.grid3` + `.card` (`.card.slim` for labels only) | a bullet list whose items have a name and an explanation |
-| Dims | `.dims`, one card `.card--accent-top` + `badge--brand` | three facets, one flagged as the priority |
-| Callout | `.callout` (with optional `.c-title`), `.callout.soft` | the sentence not to miss; soft = note or caveat |
-| Lists | `ul.clean`, `ol.steps` (filled), `ol.steps.outline` | bullets; questions to answer; a suggested structure |
-| Prep box | `.card.card--accent-top.prep` | what the reader has to bring |
-| News | `article.card.news` with `.src`, `.stats`, `.read` | an external article with its figures and link |
-| People | `.people` of `.card.person` (`.avatar`, `.role`, `a.li`) | who the reader will meet |
-
-Motifs: the mother brand uses `generations--motif-01` (multi-hue, as the brand book
-allows only for it); every sub-brand uses `motif-03` recoloured with its own gradient from
-`brand.json`, so a page never carries a second accent.
-
-Rules that come with it: keep the source text as written (fix typos and duplicates, say
-what you changed); never fill a role, a title or a figure you have no source for — leave
-it out; icons are Lucide, never emoji.
+The install declares the kit in its artifact brand file
+(`shared/core/templates/minisite/brand/<install>/brand.json`, keys `page_kit`,
+`sub_brands`, `default_sub`), and `/artifact`'s `new_page.py` copies it into each page.
+To start a Generations candidate briefing, use `/artifact` (layout `briefing`).
 
 ---
 
@@ -186,7 +154,6 @@ it out; icons are Lucide, never emoji.
 /brand logos              → logo paths for each sub-brand
 /brand css                → path to tokens.css + how to include it
 /brand demo               → link to the published demo minisite
-/brand template [name]    → start a page from a ready layout (new_page.py, see "Templates")
 /brand reload             → re-download the brand book from SharePoint
 ```
 

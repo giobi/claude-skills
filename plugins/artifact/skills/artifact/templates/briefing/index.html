@@ -1,16 +1,17 @@
 <!DOCTYPE html>
 <!--
-  Generations "briefing" layout.
+  "briefing" layout.
   For: a long read handed to one person before a step — a candidate briefing before
   an interview, an onboarding pack, a client brief. Parts, numbered sections, a side
   index, a panel of people at the end.
 
-  Start it with:  python3 new_page.py public/<folder> --brand <sub-brand> --title "..."
-  (copies this folder, tokens.css, the cropped logo of the sub-brand, motif and fonts).
+  Start it with:  python3 .claude/skills/artifact/new_page.py public/<folder> --title "..."
+  (copies this folder plus the install's page kit: tokens.css, the logo of the
+  sub-brand, the hero motif and the fonts).
 
   Every block below is an example of a component: keep the ones the content needs,
   delete the rest, renumber the sections and keep the side index (.toc) in sync with
-  the section ids. Components are listed in SKILL.md, "Templates".
+  the section ids. Components are listed in SKILL.md, "Layout briefing".
 -->
 <html lang="en" data-brand="{{BRAND}}">
 <head>

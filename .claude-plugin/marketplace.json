@@ -408,8 +408,8 @@
     {
       "name": "artifact",
       "source": "./plugins/artifact",
-      "description": "CRUD for private/public mini-sites and reports — auth-gated internal links, share tokens, slideshows, brand fill",
-      "version": "1.5.0",
+      "description": "CRUD for private/public mini-sites and reports — auth-gated internal links, share tokens, slideshows, brand fill, briefing layout",
+      "version": "1.6.0",
       "category": "web",
       "tags": [
         "artifact",
@@ -531,8 +531,8 @@
     {
       "name": "brand",
       "source": "./plugins/brand",
-      "description": "Generations Brand Book V02 — palette, gradients, logos, design tokens, and ready page templates (briefing) for minisites",
-      "version": "1.1.0",
+      "description": "Generations Brand Book V02 — palette, gradients, logos, design tokens and the page kit (logos, motifs, fonts) used by the artifact layouts",
+      "version": "1.2.0",
       "category": "web",
       "tags": [
         "brand",
