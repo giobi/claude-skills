@@ -57,6 +57,35 @@ platform knows the resulting address. So:
    the check and read the error. Do not tell the user *why* it failed (or what to
    click) unless you verified it.
 
+## Rule zero, other half — your own artifact is a file, not a web page
+
+The URL is what you hand to a person. To read the content **yourself**, open the
+file: `public/{folder}/index.html` in this brain (`share.py list` tells you which
+folders exist).
+
+1. **Read the file, never visit the link.** `Read public/{folder}/index.html`, or
+   `grep` it when you only need one value out of it. It answers in one step, and
+   it is the version on disk — the one you wrote.
+2. **A password gate on the page is not a lock on the file.** The gate guards the
+   browser view for whoever holds the link; it says nothing about your access to
+   the source, which you have. *"The page is protected, I can't read it"* is a
+   wrong answer, not a careful one — and asking the user for the password is
+   asking them to solve a problem you do not have.
+3. **Never install a browser to look at your own output.** No playwright, no
+   chromium, no headless anything to read a page this brain produced. If you
+   catch yourself installing a browser, you took the wrong door three steps back.
+
+Origin — 2026-09-25, session 739 on this install ("Assigned Client List"). Asked
+which clients were assigned to her, the brain listed the five companies it found
+in the wiki. The user corrected it — *they are in the dashboard you built* — and
+gave the URL of `generations-dashboard`. The brain replied that the page was
+password protected, was handed the password anyway, installed playwright inside
+the container to look at its own page with a browser, and Chromium failed to
+start. The user got no answer at all. The five names were sitting in
+`public/generations-dashboard/index.html` the whole time: one `grep` away. Ten
+pages in that same `public/` carry the same gate, so this was never one page's
+accident.
+
 ## The two addresses — which one to hand out, and when
 
 An artifact has **two** addresses, and they are not interchangeable. Handing out
