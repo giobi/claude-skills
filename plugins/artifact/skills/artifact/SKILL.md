@@ -84,11 +84,11 @@ folders exist).
 1. **Read the file, never visit the link.** `Read public/{folder}/index.html`, or
    `grep` it when you only need one value out of it. It answers in one step, and
    it is the version on disk — the one you wrote.
-2. **A password gate on the page is not a lock on the file.** The gate guards the
-   browser view for whoever holds the link; it says nothing about your access to
-   the source, which you have. *"The page is protected, I can't read it"* is a
-   wrong answer, not a careful one — and asking the user for the password is
-   asking them to solve a problem you do not have.
+2. **Artifacts have no password.** The page sits behind the village login; outside
+   it, you hand out the time-limited link (`share.py publish`). Neither is a lock on
+   the file for you: you have the source. *"The page is protected, I can't read it"*
+   is a wrong answer, not a careful one. Never put a password on a page, never ask
+   the user for one, and never write one into a page.
 3. **Never install a browser to look at your own output.** No playwright, no
    chromium, no headless anything to read a page this brain produced. If you
    catch yourself installing a browser, you took the wrong door three steps back.
@@ -228,7 +228,7 @@ python3 .claude/skills/artifact/share.py doctor                    # what is ali
 python3 .claude/skills/artifact/share.py link  client-report       # internal address — the default
 python3 .claude/skills/artifact/share.py list                      # published + unpublished, with addresses
 python3 .claude/skills/artifact/share.py publish client-report     # publish, print the token URL
-python3 .claude/skills/artifact/share.py publish client-report --days 7 --password secret
+python3 .claude/skills/artifact/share.py publish client-report --days 7   # shorter lifetime
 python3 .claude/skills/artifact/share.py revoke  client-report     # kill the link
 ```
 

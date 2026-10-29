@@ -87,7 +87,7 @@ is John Ousterhout's.
 ## Catalogue
 
 <!-- CATALOGUE:START -->
-39 skills.
+40 skills.
 
 ### Thinking & Building
 
@@ -145,10 +145,11 @@ is John Ousterhout's.
 
 | Skill | What it does |
 |-------|--------------|
-| **artifact** | CRUD for private/public mini-sites and reports — auth-gated internal links, share tokens, slideshows, brand fill |
+| **artifact** | CRUD for private/public mini-sites and reports — auth-gated internal links, share tokens, slideshows, brand fill, briefing layout |
+| **brand** | Generations Brand Book V02 — palette, gradients, logos, design tokens and the page kit (logos, motifs, fonts) used by the artifact layouts |
 | **pressless** | PressLess — AI static site generator. WordPress without the weight. |
 | **public** | DEPRECATED — superseded by the `artifact` plugin, which is where development continues. Kept installable for brains still pointing here. |
-| **sharepoint** | SharePoint access via Microsoft Graph — tenant-wide search, browse sites, read and upload files. Reuses the email skill's O365 token. |
+| **sharepoint** | SharePoint access via Microsoft Graph — `find` locates anything tenant-wide in one call, then read, download or upload. Reuses the email skill's O365 token. |
 | **wordpress** | WordPress management — REST API, WP-CLI, multi-site, Puppeteer, GDPR |
 
 ### Content & Publishing
