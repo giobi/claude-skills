@@ -288,7 +288,7 @@ brain's own context).
 
 ```bash
 python3 .claude/skills/artifact/slideshow.py <slug> --title "T" [--subtitle "S"] \
-        [--from <existing-artifact-slug>] [--one-page]
+        [--from <existing-artifact-slug>] [--one-page] [--theme light|dark]
 ```
 
 - `<slug>` — destination folder under `public/`, same rules as everywhere else
@@ -305,9 +305,28 @@ python3 .claude/skills/artifact/slideshow.py <slug> --title "T" [--subtitle "S"]
   scaffold (title slide + one placeholder slide) and says so — fill the
   content by **editing `public/<slug>/index.html` directly**, same iterative
   flow as every other artifact. It never invents slide content.
-- Template lives in `shared/core/templates/minisite/slideshow.html`
-  (placeholders `{title}` `{slides_html}`, filled by the script) — edit it to
-  change the look of every deck generated afterward, not per-artifact.
+- `--theme light|dark` — **light** (default): white background, the brand's
+  dark colour for text, primary colour for titles and bullets. **dark**: the
+  brand's dark colour as background, white text, accent colour, and the logo
+  made for dark backgrounds. If the user says dark, dark mode, black
+  background, "sur fond sombre", use `dark`; for a deck to print or to send to
+  a client who did not ask, use `light`.
+- **The brand is automatic.** Logo, colours and font come from this install's
+  brand (`brand.py resolve`): the logo big on the title slide and small in the
+  corner of every other slide, Inter for all text. Do **not** restyle a deck by
+  hand (fonts, colours, a `<style>` block of your own): that is how a deck
+  ends up with unreadable text on the wrong background. If the brand looks
+  wrong, say so; the fix goes in the brand, not in one deck. Edit only the
+  content inside `<section>` (slides you add: `<section><h2>…</h2><ul>…</ul></section>`;
+  a highlighted box: `<div class="card">…</div>`; a small label: `<div class="kicker">…</div>`).
+- To switch an existing deck between light and dark, change
+  `data-theme="light"` to `data-theme="dark"` on its `<html>` tag (and the
+  logo, by running the script again with the same slug and content).
+- Template lives in `templates/slideshow/index.html` inside this skill
+  (markers `{{TITLE}}` `{{SLIDES}}` `{{THEME}}` and the brand ones, filled by
+  the script) — edit it to change the look of every deck generated afterward,
+  not per-artifact. The old `shared/core/templates/minisite/slideshow.html` is
+  only a fallback for installs that do not ship the new one.
 
 The script does not print a URL — rule zero applies here too: get the address
 with `share.py link <slug>` afterward, same as any other artifact.

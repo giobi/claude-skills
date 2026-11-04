@@ -1,0 +1,69 @@
+<!doctype html><html lang="en" data-theme="{{THEME}}"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>{{TITLE}}</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+<style>
+ /* Brand colours come from brand.py (this install's brand.json); the two
+    themes only decide which of them is background and which is text. */
+ :root{
+   --primary:{{PRIMARY}};
+   --secondary:{{SECONDARY}};
+   --accent:{{ACCENT}};
+ }
+ html[data-theme="light"]{
+   --bg:#ffffff; --surface:#f3f6f9; --text:var(--secondary); --muted:#5b6b78;
+   --heading:var(--secondary); --hl:var(--primary); --rule:#dde4ea;
+ }
+ html[data-theme="dark"]{
+   --bg:var(--secondary); --surface:rgba(255,255,255,.06); --text:#f4f6f8; --muted:rgba(244,246,248,.66);
+   --heading:#ffffff; --hl:var(--accent); --rule:rgba(255,255,255,.14);
+ }
+ html,body{background:var(--bg)}
+ .reveal-viewport{background:var(--bg)}
+ .reveal{font-family:Inter,-apple-system,"Segoe UI",sans-serif;font-size:34px;color:var(--text)}
+ .reveal .slides section{text-align:left}
+ .reveal h1,.reveal h2,.reveal h3{font-family:Inter,sans-serif;color:var(--heading);text-transform:none;font-weight:700;letter-spacing:-.01em;line-height:1.15;margin:0 0 .5em}
+ .reveal h1{font-size:2.2em;font-weight:800}
+ .reveal h2{font-size:1.5em;padding-bottom:.25em;border-bottom:3px solid var(--hl);display:inline-block}
+ .reveal h3{font-size:1em;font-weight:500;color:var(--muted)}
+ .reveal p,.reveal li{line-height:1.45;color:var(--text)}
+ .reveal ul{margin-left:1em}
+ .reveal li{margin-bottom:.45em}
+ .reveal li::marker{color:var(--hl)}
+ .reveal strong{color:var(--heading)}
+ .reveal a{color:var(--hl)}
+ .reveal .accent{color:var(--hl)}
+ .reveal .slides section.center{text-align:center}
+ .reveal .kicker{font-weight:600;letter-spacing:.08em;text-transform:uppercase;font-size:.5em;color:var(--hl);margin-bottom:.6em}
+ .reveal .card{background:var(--surface);border:1px solid var(--rule);border-radius:12px;padding:.8em 1em}
+ .reveal .dense h2{font-size:1.3em;margin-bottom:.5em}
+ .reveal .dense ul{columns:2;column-gap:2em}
+ .reveal .dense li{font-size:.62em;line-height:1.3;break-inside:avoid;margin-bottom:.4em}
+ .reveal .source-note{position:fixed;top:.6em;right:1em;font-size:.35em;color:var(--muted)}
+ .reveal .progress{color:var(--hl)}
+ .reveal .controls{color:var(--hl)}
+ /* Logo: big on the title slide, small in the corner of every other slide. */
+ .brand-corner{position:fixed;left:28px;bottom:22px;height:34px;z-index:30;pointer-events:none}
+ .brand-corner svg,.brand-corner img{height:34px;width:auto}
+ .brand-title{margin:0 auto 1.2em;height:90px;display:flex;justify-content:center}
+ .brand-title svg,.brand-title img{height:90px;width:auto}
+ .title-slide .brand-corner{display:none}
+</style></head>
+<body>
+<div class="brand-corner" aria-hidden="{{LOGO_ARIA_HIDDEN}}">{{LOGO}}</div>
+<div class="reveal"><div class="slides">
+
+{{SLIDES}}
+
+</div></div>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/notes/notes.js"></script>
+<script>
+ Reveal.initialize({hash:true,width:1280,height:720,margin:.06,plugins:[RevealNotes]});
+ // hide the corner logo on the title slide, where the big one already shows
+ function corner(){document.body.classList.toggle('title-slide',Reveal.getIndices().h===0)}
+ Reveal.on('ready',corner);Reveal.on('slidechanged',corner);
+</script>
+</body></html>

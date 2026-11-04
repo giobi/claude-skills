@@ -138,6 +138,8 @@ def resolve() -> dict:
 
     name = str(override.get("name") or brand_json.get("name") or "")
     primary = str(override.get("primary") or brand_json.get("primary") or "")
+    secondary = str(override.get("secondary") or brand_json.get("secondary") or "")
+    accent = str(override.get("accent") or brand_json.get("accent") or "")
     font = str(override.get("font") or brand_json.get("font") or "")
 
     logo_html = ""
@@ -149,10 +151,20 @@ def resolve() -> dict:
     elif brand_dir and brand_json.get("logo"):
         logo_html = read_logo(brand_dir, brand_json["logo"])
 
+    # The logo for dark backgrounds (slideshow dark theme). Optional: a brand
+    # without one falls back to the normal logo, which the theme then has to
+    # live with.
+    logo_dark_html = ""
+    if brand_dir and brand_json.get("logo_dark"):
+        logo_dark_html = read_logo(brand_dir, brand_json["logo_dark"])
+
     return {
         "install": install or "(none detected — no public.base_url match)",
         "name": name,
         "primary": primary,
+        "secondary": secondary,
+        "accent": accent,
+        "logo_dark_html": logo_dark_html,
         "font": font,
         "logo_html": logo_html,
         "has_brand": bool(logo_html),
@@ -184,6 +196,7 @@ def main() -> None:
         if "--json" in sys.argv:
             out = dict(b)
             out["logo_html"] = bool(out["logo_html"]) and f"({len(b['logo_html'])} chars)"
+            out["logo_dark_html"] = bool(out["logo_dark_html"]) and f"({len(b['logo_dark_html'])} chars)"
             print(json.dumps(out, indent=2, ensure_ascii=False))
         else:
             print(f"install: {b['install']}")
