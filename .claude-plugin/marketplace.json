@@ -77,6 +77,19 @@
       ]
     },
     {
+      "name": "brand",
+      "source": "./plugins/brand",
+      "description": "Generations Brand Book V02 — palette, gradients, logos, design tokens and the page kit (logos, motifs, fonts) used by the artifact layouts",
+      "version": "1.2.0",
+      "category": "web",
+      "tags": [
+        "brand",
+        "generations",
+        "design-tokens",
+        "templates"
+      ]
+    },
+    {
       "name": "build",
       "source": "./plugins/build",
       "description": "Build mode — TDD + deep modules + a return loop that keeps the design alive",
@@ -331,6 +344,20 @@
       ]
     },
     {
+      "name": "orchestrator",
+      "source": "./plugins/orchestrator",
+      "description": "Run one session as the conductor of the other live Claude sessions in tmux: register them, delegate with the right provider, relay decisions, check RAM before every open, and know when to send the user to the dedicated session instead",
+      "version": "1.0.0",
+      "category": "workflow",
+      "tags": [
+        "orchestration",
+        "tmux",
+        "sessions",
+        "delegation",
+        "multi-agent"
+      ]
+    },
+    {
       "name": "playralph",
       "source": "./plugins/playralph",
       "description": "PlayRalph — Playwright diagnostic loop for sites and apps",
@@ -354,19 +381,6 @@
         "visual",
         "verification",
         "tdd"
-      ]
-    },
-    {
-      "name": "radar",
-      "source": "./plugins/radar",
-      "description": "Radar — site audit with ELI5 report + technical details",
-      "version": "1.0.0",
-      "category": "testing",
-      "tags": [
-        "audit",
-        "testing",
-        "report",
-        "qa"
       ]
     },
     {
@@ -407,6 +421,19 @@
         "public",
         "templates",
         "html"
+      ]
+    },
+    {
+      "name": "radar",
+      "source": "./plugins/radar",
+      "description": "Radar — site audit with ELI5 report + technical details",
+      "version": "1.0.0",
+      "category": "testing",
+      "tags": [
+        "audit",
+        "testing",
+        "report",
+        "qa"
       ]
     },
     {
@@ -539,19 +566,6 @@
         "wpcli",
         "multi-site",
         "gdpr"
-      ]
-    },
-    {
-      "name": "brand",
-      "source": "./plugins/brand",
-      "description": "Generations Brand Book V02 — palette, gradients, logos, design tokens and the page kit (logos, motifs, fonts) used by the artifact layouts",
-      "version": "1.2.0",
-      "category": "web",
-      "tags": [
-        "brand",
-        "generations",
-        "design-tokens",
-        "templates"
       ]
     }
   ]

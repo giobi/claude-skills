@@ -87,7 +87,7 @@ is John Ousterhout's.
 ## Catalogue
 
 <!-- CATALOGUE:START -->
-41 skills.
+42 skills.
 
 ### Thinking & Building
 
@@ -95,6 +95,7 @@ is John Ousterhout's.
 |-------|--------------|
 | **build** | Build mode — TDD + deep modules + a return loop that keeps the design alive |
 | **design** | Collaborative design — builds shared understanding of any project before acting |
+| **orchestrator** | Run one session as the conductor of the other live Claude sessions in tmux: register them, delegate with the right provider, relay decisions, check RAM before every open, and know when to send the user to the dedicated session instead |
 | **save** | Mid-session checkpoint (log, database, commit, push) without closing |
 
 ### Creative

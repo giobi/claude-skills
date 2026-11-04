@@ -1,0 +1,1 @@
+{"name":"orchestrator","description":"Run one session as the conductor of the other live Claude sessions in tmux: delegate, relay decisions, keep the fleet lean","version":"1.0.0"}
