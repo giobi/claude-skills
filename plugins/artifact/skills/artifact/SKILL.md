@@ -376,6 +376,23 @@ with `share.py link <slug>` afterward, same as any other artifact.
    from a plausible reconstruction. If a value is missing, leave a visible gap
    ("to be confirmed") instead of filling it in. An invented figure on a page the
    user forwards to a contractor or a client is worse than an empty cell.
+7. **Build a big page in pieces, never in one Write.** One tool call is one
+   stream from the provider, and a long stream gets cut: the whole call is lost,
+   and the turn with it. Keep **every Write or Edit payload under ~8 KB
+   (~2-3k tokens)**. For any page longer than that:
+   1. **Skeleton first** — one small Write with `<head>`, the stylesheet link,
+      your `<style>` block, the nav/side index, and one empty placeholder per
+      section: `<section id="pricing"><!-- FILL:pricing --></section>`.
+   2. **Then one Edit per section**, replacing its `<!-- FILL:id -->` marker with
+      the content. A section bigger than the limit gets split: fill it with its
+      first half plus a new `<!-- FILL:id-2 -->` marker, then fill that.
+   3. **Check nothing is left**: `grep -c 'FILL:' public/<folder>/index.html`
+      must print `0` before you hand out the link.
+   The same applies to a page made with `new_page.py`: edit it section by
+   section, not by rewriting the whole file. Origin — 2026-11-04, grbrain #293: a
+   full HTML proposal written in a single Write streamed for over 8 minutes
+   (10,527 deltas), the provider connection dropped mid-stream, and the user got
+   nothing.
 
 ## Layout briefing — a long read handed to one person before a step
 
@@ -406,7 +423,8 @@ never edit another conversation's page because its name matched.
 Then **edit `public/<folder>/index.html`**: every block in it is an example
 component with a comment saying what it is for. Keep the ones the content needs,
 delete the rest, renumber the sections, keep the side index (`.toc`) in sync with the
-section ids. Do not touch `style.css` or `tokens.css` for content.
+section ids. Do not touch `style.css` or `tokens.css` for content. One Edit per
+section, each under ~8 KB — never rewrite the file in one Write (rule 7).
 
 | Component | Markup | For |
 |-----------|--------|-----|
