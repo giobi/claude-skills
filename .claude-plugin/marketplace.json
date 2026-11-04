@@ -357,6 +357,33 @@
       ]
     },
     {
+      "name": "radar",
+      "source": "./plugins/radar",
+      "description": "Radar — site audit with ELI5 report + technical details",
+      "version": "1.0.0",
+      "category": "testing",
+      "tags": [
+        "audit",
+        "testing",
+        "report",
+        "qa"
+      ]
+    },
+    {
+      "name": "artifact",
+      "source": "./plugins/artifact",
+      "description": "CRUD for private/public mini-sites and reports — auth-gated internal links, share tokens, slideshows, brand fill, briefing layout",
+      "version": "1.6.1",
+      "category": "web",
+      "tags": [
+        "artifact",
+        "static-site",
+        "reports",
+        "share-link",
+        "html"
+      ]
+    },
+    {
       "name": "pressless",
       "source": "./plugins/pressless",
       "description": "PressLess — AI static site generator. WordPress without the weight.",
@@ -451,8 +478,8 @@
     {
       "name": "sharepoint",
       "source": "./plugins/sharepoint",
-      "description": "SharePoint access via Microsoft Graph — tenant-wide search, browse sites, read and upload files. Reuses the email skill's O365 token.",
-      "version": "1.3.0",
+      "description": "SharePoint access via Microsoft Graph — `find` locates anything tenant-wide in one call, then read, download or upload. Reuses the email skill's O365 token.",
+      "version": "1.4.0",
       "category": "web",
       "tags": [
         "sharepoint",
@@ -539,6 +566,73 @@
         "wpcli",
         "multi-site",
         "gdpr"
+      ]
+    },
+    {
+      "name": "build",
+      "source": "./plugins/build",
+      "description": "Build mode — TDD + deep modules + a return loop that keeps the design alive",
+      "version": "1.0.0",
+      "category": "workflow",
+      "tags": [
+        "build",
+        "tdd",
+        "deep-modules",
+        "grey-box",
+        "testing"
+      ]
+    },
+    {
+      "name": "design",
+      "source": "./plugins/design",
+      "description": "Collaborative design — builds shared understanding of any project before acting",
+      "version": "1.0.0",
+      "category": "workflow",
+      "tags": [
+        "design",
+        "deep-modules",
+        "vocabulary",
+        "grill",
+        "planning"
+      ]
+    },
+    {
+      "name": "save",
+      "source": "./plugins/save",
+      "description": "Mid-session checkpoint (log, database, commit, push) without closing",
+      "version": "1.0.0",
+      "category": "workflow",
+      "tags": [
+        "checkpoint",
+        "git",
+        "session",
+        "workflow"
+      ]
+    },
+    {
+      "name": "ghostwriter",
+      "source": "./plugins/ghostwriter",
+      "description": "Ghostwriter — write in the user's voice, not as an LLM",
+      "version": "1.0.0",
+      "category": "writing",
+      "tags": [
+        "writing",
+        "style",
+        "email",
+        "voice"
+      ]
+    },
+    {
+      "name": "brand",
+      "source": "./plugins/brand",
+      "description": "Generations Brand Book V02 — palette, gradients, logos, design tokens and the page kit (logos, motifs, fonts) used by the artifact layouts",
+      "version": "1.2.0",
+      "category": "web",
+      "tags": [
+        "brand",
+        "generations",
+        "design-tokens",
+        "templates"
       ]
     }
   ]

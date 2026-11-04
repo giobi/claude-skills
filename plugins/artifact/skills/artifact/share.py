@@ -27,7 +27,7 @@ able to write inside this brain could have created it. The file is one-shot.
 Usage:
     python3 share.py link    [folder]          # internal address — use this by default
     python3 share.py list                      # published + unpublished, with addresses
-    python3 share.py publish [folder] [--days N] [--password PW]
+    python3 share.py publish [folder] [--days N]
     python3 share.py revoke  <folder>
     python3 share.py doctor                    # what is actually alive on THIS install
     ... [--json]                               # raw output for scripts
@@ -553,7 +553,6 @@ def show(rows: list) -> None:
         bad = check_url(r.get("url", ""))
         print(f"{r.get('folder') or '(all of public/)'}\n  {r.get('url')}\n"
               f"  expires {r.get('expires_human')}"
-              f"{'  [password]' if r.get('password_set') else ''}"
               f"{chr(10) + '  WARNING: ' + bad if bad else ''}")
     # Folders without a token still exist and still have an address: showing them
     # stops "not published" from being read as "does not exist".
@@ -614,7 +613,10 @@ def main() -> None:
     p.add_argument("action", choices=["link", "list", "publish", "revoke", "doctor"])
     p.add_argument("folder", nargs="?", default="", help="folder relative to public/ (empty = all of public/)")
     p.add_argument("--days", type=int, default=30, help="lifetime in days (1-90, default 30)")
-    p.add_argument("--password", default="", help="protect the page with a password")
+    # Artifacts have no password any more (27/10/2026): the page sits behind the
+    # village login, and outside it travels as a time-limited link. The flag is
+    # still accepted so old commands do not break, and it is ignored.
+    p.add_argument("--password", default="", help=argparse.SUPPRESS)
     p.add_argument("--json", action="store_true", help="raw output")
     a = p.parse_args()
 
@@ -659,15 +661,18 @@ def main() -> None:
               f"Revoked: {a.folder} — the link no longer answers.")
         return
 
-    res = call("publish", folder=a.folder, days=a.days, password=a.password)
+    if a.password:
+        print("Note: --password is ignored. Artifacts have no password: the page is "
+              "behind the login, and outside it you hand out the time-limited link.",
+              file=sys.stderr)
+    res = call("publish", folder=a.folder, days=a.days)
     if res.get("error") or not res.get("url"):
         err = res.get("error", "no URL returned")
         sys.exit(f"Publish failed: {err}{missing_folder_note(err, a.folder)}")
     if bad := check_url(res["url"]):
         sys.exit(f"Published, but the link is unusable: {bad}\n(raw url: {res['url']})")
     print(json.dumps(res, indent=2, ensure_ascii=False) if a.json else
-          f"{res['url']}\nexpires {res['expires_human']} ({res['days']} days)"
-          f"{'  [password set]' if res.get('password_set') else ''}")
+          f"{res['url']}\nexpires {res['expires_human']} ({res['days']} days)")
 
 
 if __name__ == "__main__":

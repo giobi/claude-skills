@@ -1,0 +1,232 @@
+/* Generations Brand Book V02 — CSS design tokens
+ * Source: SharePoint /5. Marketing/BrandBook26 - Generations/
+ * Extracted from official "Palette de couleurs" SVGs.
+ * Drop this file into any minisite: <link rel="stylesheet" href="tokens.css">
+ * Then set the shell theme by adding data-brand="rpo|worktech|executive|interim|recruitment|gram|generations" to <html> or <body>.
+ */
+
+/* ============================================================
+   TYPOGRAPHY (import via Google Fonts CDN in the page <head>)
+   ============================================================ */
+:root {
+  --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "JetBrains Mono", "SF Mono", Menlo, Consolas, monospace;
+
+  /* ---------- DARK SHELL (default) ---------- */
+  --bg: #06060a;
+  --bg-elev-1: rgba(255,255,255,.03);
+  --bg-elev-2: rgba(255,255,255,.07);
+  --bg-elev-3: rgba(255,255,255,.12);
+  --border-1: rgba(255,255,255,.06);
+  --border-2: rgba(255,255,255,.10);
+  --border-3: rgba(255,255,255,.16);
+  --text: #f4f4f6;
+  --text-muted: rgba(244,244,246,.62);
+  --text-dim: rgba(244,244,246,.38);
+
+  /* ---------- BRAND FAMILIES ---------- */
+
+  /* Generations (mother) — cyan-blue lead */
+  --gen-primary: #10a5eb;
+  --gen-light: #5bd5fc;
+  --gen-mid: #38bef4;
+  --gen-gradient: linear-gradient(135deg, #5bd5fc 7%, #51cef9 26%, #38bef4 59%, #10a5eb 100%);
+
+  /* Recruitment — same blue family, own gradient */
+  --rec-primary: #10a5eb;
+  --rec-light: #5bd5fc;
+  --rec-mid: #35bdf3;
+  --rec-deep: #2f7fc4;
+  --rec-shadow: #12254f;
+  --rec-gradient: linear-gradient(135deg, #5bd5fc 7%, #35bdf3 54%, #10a5eb 100%);
+
+  /* RPO Solutions — magenta / pink (flagship service) */
+  --rpo-primary: #fc58e1;
+  --rpo-light: #fca9ec;
+  --rpo-mid: #fc7fe6;
+  --rpo-deep: #dc04b8;
+  --rpo-shadow: #630353;
+  --rpo-gradient: linear-gradient(135deg, #fca9ec 0%, #fc7fe6 51%, #fc58e1 99%);
+
+  /* Executive Search — gold */
+  --exec-primary: #db9c30;
+  --exec-light: #f5c976;
+  --exec-mid: #e8b252;
+  --exec-deep: #a06817;
+  --exec-shadow: #35150d;
+  --exec-gradient: linear-gradient(135deg, #f5c976 0%, #db9c30 100%);
+
+  /* Interim Management — orange */
+  --interim-primary: #ff7b1c;
+  --interim-light: #ffad40;
+  --interim-mid: #ff932e;
+  --interim-deep: #e05e00;
+  --interim-shadow: #5d2700;
+  --interim-gradient: linear-gradient(135deg, #ffad40 0%, #ff932e 51%, #ff7b1c 100%);
+
+  /* WorkTech Solutions — teal → lime */
+  --wt-primary: #85c021;
+  --wt-light: #a8e046;
+  --wt-mint: #57ddc6;
+  --wt-soft: #80df85;
+  --wt-shadow: #192600;
+  --wt-gradient: linear-gradient(135deg, #57ddc6 0%, #a8e046 100%);
+
+  /* GRAM — violet default + 7 profile gradients */
+  --gram-primary: #7540b8;
+  --gram-light: #b77ae8;
+  --gram-gradient: linear-gradient(135deg, #b77ae8 0%, #7540b8 100%);
+  --gram-achiever:    linear-gradient(135deg, #b77ae8 0%, #7540b8 100%);
+  --gram-challenger:  linear-gradient(135deg, #fca9ec 0%, #fc58e1 100%);
+  --gram-sustainer:   linear-gradient(135deg, #ff7770 0%, #e73542 100%);
+  --gram-emancipator: linear-gradient(135deg, #ffad40 0%, #ff7b1c 100%);
+  --gram-harmonizer:  linear-gradient(135deg, #f5c976 0%, #db9c30 100%);
+  --gram-trendsetter: linear-gradient(135deg, #57ddc6 0%, #a8e046 100%);
+  --gram-committer:   linear-gradient(135deg, #5bd5fc 0%, #10a5eb 100%);
+
+  /* Utility semantic (RAG, statuses) — brand-agnostic */
+  --status-green:  #34d399;
+  --status-amber:  #fbbf24;
+  --status-red:    #f43f5e;
+  --status-blue:   #3b82f6;
+  --status-purple: #a78bfa;
+  --status-cyan:   #22d3ee;
+
+  /* ---------- ACTIVE ACCENT (default: RPO — David's flagship service) ---------- */
+  --accent:        var(--rpo-primary);
+  --accent-light:  var(--rpo-light);
+  --accent-mid:    var(--rpo-mid);
+  --accent-deep:   var(--rpo-deep);
+  --accent-shadow: var(--rpo-shadow);
+  --accent-gradient: var(--rpo-gradient);
+}
+
+/* ---------- SUB-BRAND THEME SWITCH ----------
+   Add data-brand="worktech" (etc.) to <html> or <body> to swap the active accent.
+   The rest of the page (hero mesh, CTAs, glows, section borders) will follow.
+*/
+[data-brand="generations"] { --accent: var(--gen-primary); --accent-light: var(--gen-light); --accent-mid: var(--gen-mid); --accent-deep: var(--gen-primary); --accent-shadow: var(--rec-shadow); --accent-gradient: var(--gen-gradient); }
+[data-brand="recruitment"] { --accent: var(--rec-primary); --accent-light: var(--rec-light); --accent-mid: var(--rec-mid); --accent-deep: var(--rec-deep); --accent-shadow: var(--rec-shadow); --accent-gradient: var(--rec-gradient); }
+[data-brand="rpo"]         { --accent: var(--rpo-primary); --accent-light: var(--rpo-light); --accent-mid: var(--rpo-mid); --accent-deep: var(--rpo-deep); --accent-shadow: var(--rpo-shadow); --accent-gradient: var(--rpo-gradient); }
+[data-brand="executive"]   { --accent: var(--exec-primary); --accent-light: var(--exec-light); --accent-mid: var(--exec-mid); --accent-deep: var(--exec-deep); --accent-shadow: var(--exec-shadow); --accent-gradient: var(--exec-gradient); }
+[data-brand="interim"]     { --accent: var(--interim-primary); --accent-light: var(--interim-light); --accent-mid: var(--interim-mid); --accent-deep: var(--interim-deep); --accent-shadow: var(--interim-shadow); --accent-gradient: var(--interim-gradient); }
+[data-brand="worktech"]    { --accent: var(--wt-primary); --accent-light: var(--wt-light); --accent-mid: var(--wt-mint); --accent-deep: var(--wt-primary); --accent-shadow: var(--wt-shadow); --accent-gradient: var(--wt-gradient); }
+[data-brand="gram"]        { --accent: var(--gram-primary); --accent-light: var(--gram-light); --accent-mid: var(--gram-light); --accent-deep: var(--gram-primary); --accent-shadow: #2a1052; --accent-gradient: var(--gram-gradient); }
+
+/* ---------- BASE ---------- */
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: var(--bg); color: var(--text); font-family: var(--font-sans); font-feature-settings: "ss01","cv11"; -webkit-font-smoothing: antialiased; }
+code, .mono, .kpi-value { font-family: var(--font-mono); }
+a { color: var(--accent-light); text-decoration: none; }
+a:hover { color: var(--accent); }
+::selection { background: var(--accent); color: #0a0a12; }
+
+/* ---------- HERO MESH (animated multi-radial gradient) ----------
+   Uses the ACTIVE accent + one adjacent hue for depth.
+   For the mother brand, override with .hero-mesh--generations to get the multi-brand mesh.
+*/
+.hero-mesh {
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background:
+    radial-gradient(ellipse at 20% 20%, color-mix(in oklab, var(--accent) 22%, transparent), transparent 45%),
+    radial-gradient(ellipse at 80% 30%, color-mix(in oklab, var(--accent-light) 18%, transparent), transparent 50%),
+    radial-gradient(ellipse at 30% 80%, color-mix(in oklab, var(--accent-deep) 22%, transparent), transparent 50%),
+    radial-gradient(ellipse at 70% 70%, color-mix(in oklab, var(--accent-shadow) 40%, transparent), transparent 55%);
+  animation: meshFloat 24s ease-in-out infinite alternate;
+  filter: saturate(1.15);
+}
+.hero-mesh--generations {
+  background:
+    radial-gradient(ellipse at 18% 22%, rgba(252,88,225,.20), transparent 45%),
+    radial-gradient(ellipse at 82% 28%, rgba(16,165,235,.18), transparent 50%),
+    radial-gradient(ellipse at 28% 78%, rgba(168,224,70,.18), transparent 50%),
+    radial-gradient(ellipse at 72% 74%, rgba(255,123,28,.16), transparent 55%),
+    radial-gradient(ellipse at 50% 50%, rgba(117,64,184,.12), transparent 60%);
+}
+@keyframes meshFloat {
+  0%   { transform: translate(0,0) scale(1); }
+  50%  { transform: translate(-2%, 1%) scale(1.04); }
+  100% { transform: translate(1%, -1%) scale(1.02); }
+}
+
+/* Grid overlay */
+.grid-overlay {
+  position: fixed; inset: 0; z-index: 1; pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255,255,255,.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(ellipse at center, black 40%, transparent 80%);
+}
+
+/* ---------- CARDS (glass-morphism) ---------- */
+.card {
+  position: relative;
+  background: var(--bg-elev-1);
+  border: 1px solid var(--border-1);
+  border-radius: 16px;
+  padding: 24px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+}
+.card:hover {
+  transform: translateY(-3px);
+  border-color: var(--border-2);
+  box-shadow: 0 20px 60px -20px color-mix(in oklab, var(--accent) 35%, transparent);
+}
+.card--accent-top { border-top: 2px solid transparent; background-clip: padding-box; }
+.card--accent-top::before {
+  content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 2px 0 0 0;
+  background: var(--accent-gradient);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor; mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* ---------- BUTTONS ---------- */
+.btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 20px; border-radius: 10px; font-weight: 600; font-size: 14px; letter-spacing: .01em; cursor: pointer; border: 0; transition: transform .15s ease, box-shadow .2s ease; }
+.btn--primary { background: var(--accent-gradient); color: #0a0a12; }
+.btn--primary:hover { transform: translateY(-1px); box-shadow: 0 10px 30px -8px color-mix(in oklab, var(--accent) 50%, transparent); }
+.btn--ghost { background: var(--bg-elev-1); color: var(--text); border: 1px solid var(--border-2); }
+.btn--ghost:hover { background: var(--bg-elev-2); border-color: var(--accent); }
+
+/* ---------- BADGES ---------- */
+.badge { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 999px; font-family: var(--font-mono); font-size: 11px; letter-spacing: .04em; text-transform: uppercase; background: var(--bg-elev-1); border: 1px solid var(--border-2); color: var(--text-muted); }
+.badge--green  { color: var(--status-green);  border-color: color-mix(in oklab, var(--status-green) 35%, transparent); }
+.badge--amber  { color: var(--status-amber);  border-color: color-mix(in oklab, var(--status-amber) 35%, transparent); }
+.badge--red    { color: var(--status-red);    border-color: color-mix(in oklab, var(--status-red) 35%, transparent); }
+.badge--brand  { color: var(--accent);        border-color: color-mix(in oklab, var(--accent) 40%, transparent); background: color-mix(in oklab, var(--accent) 10%, var(--bg-elev-1)); }
+.badge .dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; box-shadow: 0 0 8px currentColor; }
+
+/* ---------- STATS / KPI ---------- */
+.stat { padding: 20px; background: var(--bg-elev-1); border: 1px solid var(--border-1); border-radius: 14px; }
+.stat__value { font-family: var(--font-mono); font-size: 32px; font-weight: 600; background: var(--accent-gradient); -webkit-background-clip: text; background-clip: text; color: transparent; letter-spacing: -.02em; }
+.stat__label { font-size: 12px; color: var(--text-muted); letter-spacing: .04em; text-transform: uppercase; margin-top: 4px; }
+
+/* ---------- HEADINGS ---------- */
+h1 { font-size: clamp(36px, 5vw, 64px); font-weight: 800; letter-spacing: -.03em; line-height: 1.05; margin: 0 0 16px; }
+h1 .grad, .grad-text { background: var(--accent-gradient); background-size: 200% 100%; -webkit-background-clip: text; background-clip: text; color: transparent; animation: gradShift 8s ease-in-out infinite alternate; }
+@keyframes gradShift { 0% { background-position: 0% 50%; } 100% { background-position: 100% 50%; } }
+h2 { font-size: clamp(24px, 3vw, 36px); font-weight: 700; letter-spacing: -.02em; margin: 0 0 12px; }
+h3 { font-size: 18px; font-weight: 600; letter-spacing: -.01em; margin: 0 0 8px; }
+p  { color: var(--text-muted); line-height: 1.6; margin: 0 0 12px; }
+
+/* ---------- TABS ---------- */
+.tabs { position: sticky; top: 0; z-index: 10; background: rgba(6,6,10,.72); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border-1); padding: 12px 24px; display: flex; gap: 4px; overflow-x: auto; }
+.tabs .tab { padding: 8px 14px; border-radius: 8px; font-size: 13px; color: var(--text-muted); cursor: pointer; white-space: nowrap; transition: color .15s, background .15s; }
+.tabs .tab:hover { color: var(--text); background: var(--bg-elev-1); }
+.tabs .tab.active { color: var(--accent); background: var(--bg-elev-1); border-bottom: 2px solid var(--accent); border-radius: 8px 8px 0 0; }
+
+/* ---------- SCROLL REVEAL ---------- */
+.reveal { opacity: 0; transform: translateY(16px); transition: opacity .6s ease, transform .6s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* ---------- CONTENT WRAPPER ---------- */
+.content { position: relative; z-index: 2; max-width: 1200px; margin: 0 auto; padding: 48px 24px; }
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 720px) {
+  .content { padding: 24px 16px; }
+  h1 { font-size: 36px; }
+}

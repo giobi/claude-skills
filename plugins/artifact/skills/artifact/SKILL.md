@@ -2,7 +2,7 @@
 name: artifact
 requires:
   capabilities: [web_serving]
-description: "Artifacts — build static mini-sites, reports and reveal.js slideshows, hand out the internal address, publish only on demand. Triggers: slideshow, presentation, slides, deck, one-pager, one-page."
+description: "Artifacts — build static mini-sites, reports and reveal.js slideshows, hand out the internal address, publish only on demand. Triggers: slideshow, presentation, slides, deck, one-pager, one-page. Also any guide or pack written for one person to read — candidate briefing, candidate guide, interview preparation, onboarding pack, client brief: those are a page (layout briefing), not a chat message."
 user-invocable: true
 argument-hint: "[link|list|create|update|delete|publish|revoke|rebuild-index|slideshow] [slug] [title]"
 parameters:
@@ -36,6 +36,24 @@ close: on 2026-09-15, asked twice in the same call for "a slideshow, one page",
 the brain answered with text both times (village TODO #1534). If in doubt
 between a slideshow and a static page, ask; do not default to text.
 
+## Trigger — a guide for someone else is a page, not a chat message
+
+If the user asks for a **guide, a briefing or a pack that a third person will read**
+— candidate briefing, candidate guide, interview preparation, onboarding pack, client
+brief, "fammi una guida per il candidato", "trasforma questo documento" — the
+deliverable is a page in `public/` built on the **`briefing`** layout (see "Layout
+briefing" below), handed over with its internal link. Writing the guide as a long
+answer in the chat is the bug this trigger closes: the user cannot forward a chat
+message to a candidate, and has to ask a second time for what they asked the first.
+On 2026-10-23 (demo brain, session 1156) a request to turn a recruiter's notes into a
+candidate guide was answered with a page of markdown in the chat, and the guide added
+facts — an interview order, a competency table, collaborations — that the notes did
+not contain.
+
+The content of such a page comes **only from the sources the user gave** (the
+document, the notes, the profiles). Fix typos and duplicates and say what you changed;
+anything the sources do not say stays out. See rule 6.
+
 ## Rule zero — the URL is a fact you read, never a fact you compose
 
 Writing the files and making them reachable are two different steps, and only the
@@ -56,6 +74,35 @@ platform knows the resulting address. So:
 5. **Never explain the platform's behaviour from intuition.** If a link fails, run
    the check and read the error. Do not tell the user *why* it failed (or what to
    click) unless you verified it.
+
+## Rule zero, other half — your own artifact is a file, not a web page
+
+The URL is what you hand to a person. To read the content **yourself**, open the
+file: `public/{folder}/index.html` in this brain (`share.py list` tells you which
+folders exist).
+
+1. **Read the file, never visit the link.** `Read public/{folder}/index.html`, or
+   `grep` it when you only need one value out of it. It answers in one step, and
+   it is the version on disk — the one you wrote.
+2. **Artifacts have no password.** The page sits behind the village login; outside
+   it, you hand out the time-limited link (`share.py publish`). Neither is a lock on
+   the file for you: you have the source. *"The page is protected, I can't read it"*
+   is a wrong answer, not a careful one. Never put a password on a page, never ask
+   the user for one, and never write one into a page.
+3. **Never install a browser to look at your own output.** No playwright, no
+   chromium, no headless anything to read a page this brain produced. If you
+   catch yourself installing a browser, you took the wrong door three steps back.
+
+Origin — 2026-09-25, session 739 on this install ("Assigned Client List"). Asked
+which clients were assigned to her, the brain listed the five companies it found
+in the wiki. The user corrected it — *they are in the dashboard you built* — and
+gave the URL of `generations-dashboard`. The brain replied that the page was
+password protected, was handed the password anyway, installed playwright inside
+the container to look at its own page with a browser, and Chromium failed to
+start. The user got no answer at all. The five names were sitting in
+`public/generations-dashboard/index.html` the whole time: one `grep` away. Ten
+pages in that same `public/` carry the same gate, so this was never one page's
+accident.
 
 ## The two addresses — which one to hand out, and when
 
@@ -181,7 +228,7 @@ python3 .claude/skills/artifact/share.py doctor                    # what is ali
 python3 .claude/skills/artifact/share.py link  client-report       # internal address — the default
 python3 .claude/skills/artifact/share.py list                      # published + unpublished, with addresses
 python3 .claude/skills/artifact/share.py publish client-report     # publish, print the token URL
-python3 .claude/skills/artifact/share.py publish client-report --days 7 --password secret
+python3 .claude/skills/artifact/share.py publish client-report --days 7   # shorter lifetime
 python3 .claude/skills/artifact/share.py revoke  client-report     # kill the link
 ```
 
@@ -284,7 +331,9 @@ with `share.py link <slug>` afterward, same as any other artifact.
 1. **Reason about the page before writing anything, out loud, in three steps.**
    Open `/assets/artifact/templates/index.html` — five layouts (timeline, faq,
    gallery, event, directory), each a different structure (grid, nav, block
-   sequence) for a different job. Then:
+   sequence) for a different job. A sixth, **`briefing`**, ships inside this skill
+   (`templates/briefing/`, started with `new_page.py`): a long read in parts and
+   numbered sections for one person before a step — see "Layout briefing". Then:
    - **Layout**: which of the five solves the problem this page solves? Pick by
      job, not by taste — a sequence of dated things is `timeline` even on a page
      you'd rather looked like `directory`. A page of questions and answers is
@@ -327,6 +376,67 @@ with `share.py link <slug>` afterward, same as any other artifact.
    from a plausible reconstruction. If a value is missing, leave a visible gap
    ("to be confirmed") instead of filling it in. An invented figure on a page the
    user forwards to a contractor or a client is worse than an empty cell.
+
+## Layout briefing — a long read handed to one person before a step
+
+Candidate briefing before an interview, onboarding pack, client brief: someone
+else's document (often a Word file) made readable, without rewriting it. It is the
+one layout that does not sit on `artifact-1.css`: it carries the install's own brand
+kit, because a page that goes to a candidate or a client goes out under that
+company's identity, not the village's.
+
+```bash
+python3 .claude/skills/artifact/new_page.py --list     # layouts + sub-brands of this install
+python3 .claude/skills/artifact/new_page.py public/<folder> --title "Head of Partnership Management" \
+  --accent "Partnership Management" --kicker "Candidate briefing" [--brand <sub-brand>]
+```
+
+The script copies `templates/briefing/` and the install's **page kit** (design
+tokens, the logo of the sub-brand, the hero motif, the fonts) into the folder, so the
+page is self-contained and renders the same at the internal address and behind a
+share link. The kit is declared in the install's `brand.json` (`page_kit`,
+`sub_brands`, `default_sub`), the same file `brand.py` reads. An install without a
+kit gets a clear refusal: use the artifact-1.css layouts there. `--brand` picks the
+sub-brand (logo, gradient, motif); leave it out for the install's default. The script
+refuses to write into a folder that already has an `index.html`. When it refuses,
+the folder belongs to an earlier page: unless the user asked you to update that page,
+pick a new name (`<folder>-2`, or a more specific one) and run the script again —
+never edit another conversation's page because its name matched.
+
+Then **edit `public/<folder>/index.html`**: every block in it is an example
+component with a comment saying what it is for. Keep the ones the content needs,
+delete the rest, renumber the sections, keep the side index (`.toc`) in sync with the
+section ids. Do not touch `style.css` or `tokens.css` for content.
+
+| Component | Markup | For |
+|-----------|--------|-----|
+| Part label | `.part` | groups sections: "Part one · The organisation" |
+| Section | `section#id` + `.num` + `h2` | one numbered topic; the id feeds the side index |
+| Side index | `nav.toc` with `.t-label` per part | hidden below 980px |
+| Chain | `.chain` of 4 `.card` with `.ico` + `.k` | a sequence of steps, left to right |
+| Card grid | `.grid2` / `.grid3` + `.card` (`.card.slim` for labels only) | a bullet list whose items have a name and an explanation |
+| Dims | `.dims`, one card `.card--accent-top` + `badge--brand` | three facets, one flagged as the priority |
+| Callout | `.callout` (optional `.c-title`), `.callout.soft` | the sentence not to miss; soft = note or caveat |
+| Lists | `ul.clean`, `ol.steps`, `ol.steps.outline` | bullets; questions to answer; a suggested structure |
+| Prep box | `.card.card--accent-top.prep` | what the reader has to bring |
+| News | `article.card.news` with `.src`, `.stats`, `.read` | an external article with its figures and link |
+| People | `.people` of `.card.person` (`.avatar`, `.role`, `a.li`) | who the reader will meet |
+
+Content rules that come with it:
+
+- **Keep the source text as written.** This layout carries someone else's document;
+  it does not rewrite it, summarise it or add to it. Fix typos and duplicated
+  passages, and tell the user what you changed.
+- **Never fill a role, a title, an order of interviews, a figure or a sector fact you
+  have no source for** — leave it out, or mark it `.missing`. General knowledge about
+  the company ("founded in…", its brands) is not a source the user gave you either.
+  Nor is a description of what someone will ask or assess: "interview focused on
+  strategy and leadership" under a name is an invention when the source only says
+  who the interviews are with. A person card with a name and a role and nothing else
+  is correct.
+- **Only real articles** in a News block, with their real link, and **only people
+  the sources name** in the People block.
+- Icons are Lucide (already loaded by the layout), never emoji.
 
 ## Design — five layouts on three independent axes, then the shared base
 

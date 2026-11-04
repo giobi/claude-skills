@@ -87,14 +87,17 @@ is John Ousterhout's.
 ## Catalogue
 
 <!-- CATALOGUE:START -->
-40 skills.
+47 skills.
 
 ### Thinking & Building
 
 | Skill | What it does |
 |-------|--------------|
 | **build** | Build mode — TDD + deep modules + a return loop that keeps the design alive |
+| **build** | Build mode — TDD + deep modules + a return loop that keeps the design alive |
 | **design** | Collaborative design — builds shared understanding of any project before acting |
+| **design** | Collaborative design — builds shared understanding of any project before acting |
+| **save** | Mid-session checkpoint (log, database, commit, push) without closing |
 | **save** | Mid-session checkpoint (log, database, commit, push) without closing |
 
 ### Creative
@@ -132,6 +135,7 @@ is John Ousterhout's.
 | **playralph** | PlayRalph — Playwright diagnostic loop for sites and apps |
 | **playw** | Playwright sidecar — visual verification after every code change |
 | **radar** | Radar — site audit with ELI5 report + technical details |
+| **radar** | Radar — site audit with ELI5 report + technical details |
 
 ### DevOps
 
@@ -146,10 +150,12 @@ is John Ousterhout's.
 | Skill | What it does |
 |-------|--------------|
 | **artifact** | CRUD for private/public mini-sites and reports — auth-gated internal links, share tokens, slideshows, brand fill |
+| **artifact** | CRUD for private/public mini-sites and reports — auth-gated internal links, share tokens, slideshows, brand fill, briefing layout |
+| **brand** | Generations Brand Book V02 — palette, gradients, logos, design tokens and the page kit (logos, motifs, fonts) used by the artifact layouts |
 | **formpilot** | Application forms on FormPilot — list forms, read submissions, design new forms from existing blocks; also answers to /form and /forms. Own token, own role. |
 | **pressless** | PressLess — AI static site generator. WordPress without the weight. |
 | **public** | DEPRECATED — superseded by the `artifact` plugin, which is where development continues. Kept installable for brains still pointing here. |
-| **sharepoint** | SharePoint access via Microsoft Graph — tenant-wide search, browse sites, read and upload files. Reuses the email skill's O365 token. |
+| **sharepoint** | SharePoint access via Microsoft Graph — `find` locates anything tenant-wide in one call, then read, download or upload. Reuses the email skill's O365 token. |
 | **wordpress** | WordPress management — REST API, WP-CLI, multi-site, Puppeteer, GDPR |
 
 ### Content & Publishing
@@ -163,6 +169,7 @@ is John Ousterhout's.
 
 | Skill | What it does |
 |-------|--------------|
+| **ghostwriter** | Ghostwriter — write in the user's voice, not as an LLM |
 | **ghostwriter** | Ghostwriter — write in the user's voice, not as an LLM |
 
 ### Email

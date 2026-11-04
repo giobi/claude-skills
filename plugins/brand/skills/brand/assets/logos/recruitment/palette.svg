@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Logos" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 500 425">
+  <defs>
+    <style>
+      .cls-1 {
+        font-family: MyriadPro-Regular, 'Myriad Pro';
+        font-size: 12px;
+      }
+
+      .cls-2 {
+        fill: url(#linear-gradient);
+      }
+
+      .cls-3 {
+        letter-spacing: 0em;
+      }
+
+      .cls-4 {
+        fill: #35bdf3;
+      }
+
+      .cls-5 {
+        letter-spacing: 0em;
+      }
+
+      .cls-6 {
+        fill: #5bd5fc;
+      }
+
+      .cls-7 {
+        letter-spacing: -.01em;
+      }
+
+      .cls-8 {
+        fill: #2f7fc4;
+      }
+
+      .cls-9 {
+        letter-spacing: 0em;
+      }
+
+      .cls-10 {
+        letter-spacing: 0em;
+      }
+
+      .cls-11 {
+        fill: #12254f;
+      }
+
+      .cls-12 {
+        fill: #10a5eb;
+      }
+    </style>
+    <linearGradient id="linear-gradient" x1="324.1" y1="101.54" x2="508.85" y2="286.29" gradientUnits="userSpaceOnUse">
+      <stop offset=".07" stop-color="#5bd5fc"/>
+      <stop offset=".54" stop-color="#35bdf3"/>
+      <stop offset="1" stop-color="#10a5eb"/>
+    </linearGradient>
+  </defs>
+  <rect class="cls-4" x="122.64" y="36.66" width="54.99" height="314.51"/>
+  <text class="cls-1" transform="translate(128.04 388.52)"><tspan x="0" y="0">#35bdf3</tspan></text>
+  <rect class="cls-8" x="255.81" y="36.66" width="54.99" height="314.51"/>
+  <text class="cls-1" transform="translate(261.2 388.52)"><tspan x="0" y="0">#2F7FC4</tspan></text>
+  <rect class="cls-11" x="322.39" y="36.66" width="54.99" height="314.51"/>
+  <text class="cls-1" transform="translate(327.79 388.52)"><tspan x="0" y="0">#12254f</tspan></text>
+  <rect class="cls-6" x="56.06" y="36.66" width="54.99" height="314.51"/>
+  <text class="cls-1" transform="translate(61.63 388.52)"><tspan x="0" y="0">#5bd5</tspan><tspan class="cls-7" x="31.87" y="0">f</tspan><tspan x="35.22" y="0">c</tspan></text>
+  <rect class="cls-12" x="189.23" y="36.66" width="54.99" height="314.51"/>
+  <text class="cls-1" transform="translate(194.85 388.52)"><tspan x="0" y="0">#10a5eb</tspan></text>
+  <g>
+    <rect class="cls-2" x="388.97" y="36.66" width="54.99" height="314.51"/>
+    <text class="cls-1" transform="translate(395.6 388.52)"><tspan x="0" y="0">G</tspan><tspan class="cls-9" x="7.75" y="0">r</tspan><tspan class="cls-3" x="11.62" y="0">adie</tspan><tspan class="cls-10" x="32.99" y="0">n</tspan><tspan class="cls-5" x="39.6" y="0">t</tspan></text>
+  </g>
+</svg>

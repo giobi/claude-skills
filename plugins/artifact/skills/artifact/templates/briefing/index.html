@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<!--
+  "briefing" layout.
+  For: a long read handed to one person before a step — a candidate briefing before
+  an interview, an onboarding pack, a client brief. Parts, numbered sections, a side
+  index, a panel of people at the end.
+
+  Start it with:  python3 .claude/skills/artifact/new_page.py public/<folder> --title "..."
+  (copies this folder plus the install's page kit: tokens.css, the logo of the
+  sub-brand, the hero motif and the fonts).
+
+  Every block below is an example of a component: keep the ones the content needs,
+  delete the rest, renumber the sections and keep the side index (.toc) in sync with
+  the section ids. Components are listed in SKILL.md, "Layout briefing".
+-->
+<html lang="en" data-brand="{{BRAND}}">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{TITLE}}</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="hero-mesh"></div>
+<div class="grid-overlay"></div>
+
+<div class="topbar">
+  <img src="logo.svg" alt="{{BRAND_NAME}}">
+  <span class="badge badge--brand"><span class="dot"></span>{{KICKER}}</span>
+</div>
+
+<header class="hero">
+  <div>
+    <span class="badge">Client name · City</span>
+    <h1 style="margin-top:18px">{{TITLE_PLAIN}} <span class="grad">{{TITLE_ACCENT}}</span></h1>
+    <p class="lead">One sentence on what this page is for and what the reader will be able to do after reading it.</p>
+    <div class="meta">
+      <a class="btn btn--primary" href="#prepare"><i data-lucide="target" style="width:16px;height:16px"></i> Start preparing</a>
+      <a class="btn btn--ghost" href="#panel"><i data-lucide="users" style="width:16px;height:16px"></i> Who you will meet</a>
+    </div>
+  </div>
+  <img class="motif" src="motif.svg" alt="">
+</header>
+
+<div class="wrap">
+  <nav class="toc" aria-label="Contents">
+    <div class="t-label">The organisation</div>
+    <a href="#intro">Plain section</a>
+    <a href="#chain">Four-step chain</a>
+    <a href="#cards">Card grid</a>
+    <a href="#news">In the news</a>
+    <div class="t-label">The role</div>
+    <a href="#dims">Three dimensions</a>
+    <div class="t-label">Your interview</div>
+    <a href="#prepare">What to prepare</a>
+    <div class="t-label">The panel</div>
+    <a href="#panel">Who you will meet</a>
+  </nav>
+
+  <main>
+
+    <div class="part">Part one · The organisation</div>
+
+    <!-- Plain section: number, title, paragraphs, an optional closing callout -->
+    <section id="intro">
+      <span class="num">01</span>
+      <h2>Plain section with text</h2>
+      <p>Paragraphs are capped at a readable line length. Keep the source text as it is: this layout carries someone else's document, it does not rewrite it.</p>
+      <p>A second paragraph, to show the rhythm between blocks.</p>
+      <div class="callout">
+        <p>A callout closes a section with the sentence the reader must not miss.</p>
+      </div>
+    </section>
+
+    <!-- Chain: four steps in sequence, left to right (two columns on tablet, one on phone) -->
+    <section id="chain">
+      <span class="num">02</span>
+      <h2>A sequence in four steps</h2>
+      <div class="chain">
+        <div class="card"><div class="ico"><i data-lucide="sprout"></i></div><span class="k">Step 1</span><h3>First step</h3><p>What happens here, in two lines.</p></div>
+        <div class="card"><div class="ico"><i data-lucide="factory"></i></div><span class="k">Step 2</span><h3>Second step</h3><p>What happens here, in two lines.</p></div>
+        <div class="card"><div class="ico"><i data-lucide="tag"></i></div><span class="k">Step 3</span><h3>Third step</h3><p>What happens here, in two lines.</p></div>
+        <div class="card"><div class="ico"><i data-lucide="shopping-basket"></i></div><span class="k">Step 4</span><h3>Fourth step</h3><p>What happens here, in two lines.</p></div>
+      </div>
+    </section>
+
+    <!-- Card grids: .grid2 for items with a description, .grid3 + .card.slim for short labels -->
+    <section id="cards">
+      <span class="num">03</span>
+      <h2>A list turned into cards</h2>
+      <p>Use cards when the source is a bullet list where each item has a name and an explanation.</p>
+      <div class="grid2">
+        <div class="card"><h3><i data-lucide="link"></i> Item with a description</h3><p>One or two lines that explain it.</p></div>
+        <div class="card"><h3><i data-lucide="shield"></i> Another item</h3><p>One or two lines that explain it.</p></div>
+      </div>
+      <h3>Short labels</h3>
+      <div class="grid3">
+        <div class="card slim"><h3><i data-lucide="coffee"></i> Label one</h3></div>
+        <div class="card slim"><h3><i data-lucide="truck"></i> Label two</h3></div>
+        <div class="card slim"><h3><i data-lucide="store"></i> Label three</h3></div>
+      </div>
+    </section>
+
+    <!-- News: an external source worth reading. Only real articles, with their real link -->
+    <section id="news">
+      <span class="num">04</span>
+      <h2>In the news</h2>
+      <article class="card news">
+        <div class="src"><i data-lucide="newspaper"></i> Publication · Month Year · language</div>
+        <h3><a href="#" target="_blank" rel="noopener">Article title, as published</a></h3>
+        <p>One sentence on why it matters for the reader.</p>
+        <div class="stats">
+          <div class="stat"><div class="stat__value">00%</div><div class="stat__label">figure quoted in the article</div></div>
+          <div class="stat"><div class="stat__value">00</div><div class="stat__label">figure quoted in the article</div></div>
+        </div>
+        <ul class="clean">
+          <li>A takeaway from the article.</li>
+          <li>Another takeaway.</li>
+        </ul>
+        <a class="read" href="#" target="_blank" rel="noopener">Read the article <i data-lucide="arrow-up-right"></i></a>
+      </article>
+    </section>
+
+    <div class="part">Part two · The role</div>
+
+    <!-- Dims: three facets of the same thing; .card--accent-top + badge marks the priority -->
+    <section id="dims">
+      <span class="num">05</span>
+      <h2>Three dimensions, one of them first</h2>
+      <div class="dims">
+        <div class="card"><h3><i data-lucide="handshake"></i> First facet</h3><p>What it means.</p></div>
+        <div class="card"><h3><i data-lucide="compass"></i> Second facet</h3><p>What it means.</p></div>
+        <div class="card card--accent-top"><span class="badge badge--brand tag"><span class="dot"></span>Top priority</span><h3><i data-lucide="users"></i> Third facet</h3><p>What it means, and why it comes first.</p></div>
+      </div>
+      <div class="callout">
+        <div class="c-title"><i data-lucide="info"></i> Key message</div>
+        <p>A callout with a title, for something reported from a meeting or a source.</p>
+      </div>
+    </section>
+
+    <div class="part">Part three · Your interview</div>
+
+    <!-- Prepare: what the reader has to bring. ol.steps = questions to answer, ol.steps.outline = a suggested structure -->
+    <section id="prepare">
+      <span class="num">06</span>
+      <h2>What to prepare</h2>
+      <ul class="clean">
+        <li>Something the reader should be able to show.</li>
+        <li>Something else.</li>
+      </ul>
+      <div class="card card--accent-top prep">
+        <h3>Prepare one strong example</h3>
+        <p>Be ready to explain:</p>
+        <ol class="steps">
+          <li>First question.</li>
+          <li>Second question.</li>
+          <li>Third question.</li>
+        </ol>
+      </div>
+      <h3>A suggested structure</h3>
+      <ol class="steps outline">
+        <li>First move.</li>
+        <li>Second move.</li>
+      </ol>
+      <div class="callout soft">
+        <div class="c-title"><i data-lucide="flag"></i> Be ready to explain</div>
+        <p>The soft callout is for a note or a caveat, not for the main message.</p>
+      </div>
+    </section>
+
+    <div class="part">Part four · The panel</div>
+
+    <!-- People: initials avatar, role, two lines of background, profile link. Only roles you have a source for -->
+    <section id="panel">
+      <span class="num">07</span>
+      <h2>Who you will meet</h2>
+      <div class="people">
+        <div class="card person">
+          <div class="avatar">AB</div>
+          <h3>First Last</h3>
+          <div class="role">Role, Organisation</div>
+          <p>Two lines of background taken from the profile.</p>
+          <a class="li" href="#" target="_blank" rel="noopener"><i data-lucide="linkedin"></i> LinkedIn profile</a>
+        </div>
+        <div class="card person">
+          <div class="avatar">CD</div>
+          <h3>First Last</h3>
+          <div class="role">Role, Organisation</div>
+          <p>Two lines of background taken from the profile.</p>
+          <a class="li" href="#" target="_blank" rel="noopener"><i data-lucide="linkedin"></i> LinkedIn profile</a>
+        </div>
+        <div class="card person">
+          <div class="avatar">EF</div>
+          <h3>First Last</h3>
+          <div class="role">Organisation</div>
+          <p>When the role is not known, leave it out rather than guess it.</p>
+          <a class="li" href="#" target="_blank" rel="noopener"><i data-lucide="linkedin"></i> LinkedIn profile</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<footer>
+  <div class="in">
+    <img src="logo.svg" alt="{{BRAND_NAME}}">
+    <span>Prepared by {{BRAND_NAME}} · {{DATE}}</span>
+  </div>
+</footer>
+
+<script src="https://unpkg.com/lucide@0.454.0/dist/umd/lucide.min.js"></script>
+<script>lucide.createIcons();</script>
+</body>
+</html>
