@@ -71,7 +71,7 @@ def build_signature(channel: str = 'cmd', ai_score: int = 70) -> Tuple[str, str]
 <div style="font-family:monospace,monospace;white-space:pre">{S}</div>
 <div style="font-family:monospace,monospace;white-space:pre"> web&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://giobi.com" style="color:#1a73e8;text-decoration:none">giobi.com</a></div>
 <div style="font-family:monospace,monospace;white-space:pre"> mail&nbsp;&nbsp;&nbsp;<a href="mailto:giobi@giobi.com" style="color:#1a73e8;text-decoration:none">giobi@giobi.com</a></div>
-<div style="font-family:monospace,monospace;white-space:pre"> wa&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://wa.me/393483697620" style="color:#1a73e8;text-decoration:none">+39 348 3697620</a></div>
+<div style="font-family:monospace,monospace;white-space:pre"> wa&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://wa.me/393274310470" style="color:#1a73e8;text-decoration:none">+39 327 4310470</a></div>
 <div style="font-family:monospace,monospace;white-space:pre"> addr&nbsp;&nbsp;&nbsp;Via 42 Martiri 165,</div>
 <div style="font-family:monospace,monospace;white-space:pre">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;28924 Verbania (VB)</div>
 <div style="font-family:monospace,monospace;white-space:pre">{S}</div>
@@ -90,7 +90,7 @@ g/
 ─────────────────────────────────────
  web    giobi.com
  mail   giobi@giobi.com
- wa     +39 348 3697620
+ wa     +39 327 4310470
  addr   Via 42 Martiri 165,
         28924 Verbania (VB)
 ─────────────────────────────────────
